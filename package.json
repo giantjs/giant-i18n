@@ -1,0 +1,42 @@
+{
+    "name"           : "v18n",
+    "version"        : "0.1.0",
+    "description"    : "Internationalization framework",
+    "keywords"       : [
+        "internationalization", "internationalisation",
+        "localization", "localisation",
+        "translation", "translatable"
+    ],
+    "author"         : "Dan Stocker <dan@kwaia.com>",
+    "copyright"      : "Copyright (c) 2015 Dan Stocker",
+    "license"        : "MIT",
+    "repository"     : {
+        "type": "git",
+        "url" : "git://github.com/danstocker/v18n.git"
+    },
+    "dependencies"   : {
+        "dessert" : "~0.3.2",
+        "troop"   : "~0.8.0",
+        "sntls"   : "~0.18.0 || ~0.19.0",
+        "evan"    : "~0.6.0",
+        "flock"   : "~0.3.8",
+        "bookworm": "~0.2.6"
+    },
+    "devDependencies": {
+        "phil"                : "~0.2.3",
+        "grunt"               : "~0.4.1",
+        "grunt-jstestdriver"  : "git://github.com/danstocker/grunt-jstestdriver.git",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-jshint": "~0.5.4",
+        "grunt-yui-compressor": "~0.3.0",
+        "grunt-contrib-copy"  : "~0.4.1",
+        "grunt-jsdoc"         : "~0.3.3",
+        "grunt-regex-replace" : "~0.2.5",
+        "common-gruntfile"    : "git://github.com/danstocker/common-gruntfile.git#0.1.7",
+        "QUnitAdapter"        : "https://dl.dropboxusercontent.com/u/9258903/packages/QUnitAdapter-0.1.0.tgz"
+    },
+    "files"          : [
+        "v18n.js"
+    ],
+    "main"           : "v18n.js"
+}
