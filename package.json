@@ -18,9 +18,9 @@
         "dessert" : "~0.3.2",
         "troop"   : "~0.8.0",
         "sntls"   : "~0.18.0 || ~0.19.0",
-        "evan"    : "~0.7.0",
-        "flock"   : "~0.3.9",
-        "bookworm": "~0.2.7"
+        "evan"    : "~0.6.0 || ~0.7.0",
+        "flock"   : "~0.3.8",
+        "bookworm": "~0.2.6"
     },
     "devDependencies": {
         "phil"                : "~0.2.3",

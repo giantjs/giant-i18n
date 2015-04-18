@@ -9,6 +9,8 @@ module.exports = function (grunt) {
             'js/LocaleDocument.js',
             'js/Locale.js',
             'js/Translatable.js',
+            'js/StringFormat.js',
+            'js/StringFormatCollection.js',
             'js/exports.js'
         ],
 
