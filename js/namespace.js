@@ -33,43 +33,15 @@ var sntls = sntls || require('sntls');
 
 /**
  * @namespace
- * @see https://github.com/danstocker/evan
+ * @see https://github.com/danstocker/flock
  */
-var evan = evan || require('evan');
-
-/**
- * @function
- * @see http://api.jquery.com
- */
-var jQuery = jQuery || require('jquery');
+var flock = flock || require('flock');
 
 /**
  * @namespace
  * @see https://github.com/danstocker/bookworm
  */
 var bookworm = bookworm || require('bookworm');
-
-/**
- * @namespace
- * @see https://github.com/danstocker/shoeshine
- */
-var shoeshine = shoeshine || require('shoeshine');
-
-if (typeof window === 'undefined') {
-    /**
-     * Built-in global window object.
-     * @type {Window}
-     */
-    window = undefined;
-}
-
-if (typeof document === 'undefined') {
-    /**
-     * Built-in global document object.
-     * @type {Document}
-     */
-    document = undefined;
-}
 
 /**
  * Native number class.

@@ -5,6 +5,8 @@ module.exports = function (grunt) {
     var params = {
         files: [
             'js/namespace.js',
+            'js/config.js',
+            'js/LocaleDocument.js',
             'js/exports.js'
         ],
 
