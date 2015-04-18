@@ -5,6 +5,15 @@ troop.amendPostponed(bookworm, 'config', function () {
     bookworm.config
         .setNode('document>document>locale'.toPath(), /** @class @lends v18n.LocaleNode*/{
             /** @type {string} */
+            name: 'string',
+
+            /**
+             * Reserved. Not used currently.
+             * @type {string}
+             */
+            timezone: 'string',
+
+            /** @type {string} */
             countryCode: 'string',
 
             /** @type {string} */

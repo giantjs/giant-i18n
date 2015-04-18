@@ -45,7 +45,16 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             },
 
             /**
-             * @param originalString
+             * Fetches the locale's name. Subject to translation.
+             * @returns {*}
+             */
+            getName: function () {
+                return this.getField('name').getValue();
+            },
+
+            /**
+             * Retrieves a translation for the specified string according to this locale.
+             * @param {string} originalString
              * @returns {string}
              */
             getTranslation: function (originalString) {
