@@ -46,7 +46,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
 
             /**
              * @param originalString
-             * @returns {*}
+             * @returns {string}
              */
             getTranslation: function (originalString) {
                 return this.getField('translations').getItem(originalString).getValue();

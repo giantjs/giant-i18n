@@ -17,6 +17,13 @@ troop.postpone(v18n, 'Locale', function () {
      * @extends troop.Base
      */
     v18n.Locale = self
+        .addConstants(/** @lends v18n.Locale */{
+            /**
+             * @type {bookworm.DocumentKey}
+             * @constant
+             */
+            currentLocaleKey: 'locale/current'.toDocumentKey()
+        })
         .addMethods(/** @lends v18n.Locale# */{
             /**
              * @param {bookworm.DocumentKey} localeKey
@@ -37,7 +44,7 @@ troop.postpone(v18n, 'Locale', function () {
              * @returns {v18n.Locale}
              */
             setAsCurrentLocale: function () {
-                'locale/current'.toDocument()
+                this.currentLocaleKey.toDocument()
                     .setNode(this.entityKey.toDocument().getNode());
                 return this;
             }
