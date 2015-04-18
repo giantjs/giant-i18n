@@ -6,6 +6,7 @@ module.exports = function (grunt) {
         files: [
             'js/namespace.js',
             'js/config.js',
+            'js/Stringifiable.js',
             'js/LocaleDocument.js',
             'js/Locale.js',
             'js/Translatable.js',

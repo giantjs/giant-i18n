@@ -1,5 +1,5 @@
 /*global dessert, troop, sntls, v18n */
-troop.postpone(v18n, 'Translatable', function (ns, className) {
+troop.postpone(v18n, 'Translatable', function () {
     "use strict";
 
     var base = troop.Base,
@@ -16,6 +16,7 @@ troop.postpone(v18n, 'Translatable', function (ns, className) {
      * Represents a string, that might manifest in different languages depending on the current locale.
      * @class
      * @extends troop.Base
+     * @extends v18n.Stringifiable
      */
     v18n.Translatable = self
         .addMethods(/** @lends v18n.Translatable# */{
