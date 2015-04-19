@@ -17,6 +17,9 @@ troop.postpone(v18n, 'Locale', function () {
      * @extends troop.Base
      */
     v18n.Locale = self
+        .setInstanceMapper(function (localeKey) {
+            return String(localeKey);
+        })
         .addConstants(/** @lends v18n.Locale */{
             /**
              * @type {bookworm.DocumentKey}
@@ -37,6 +40,12 @@ troop.postpone(v18n, 'Locale', function () {
                  * @type {bookworm.DocumentKey}
                  */
                 this.entityKey = localeKey;
+
+                /**
+                 * Function for determining plural form of a string.
+                 * @type {function}
+                 */
+                this.getPlural = undefined;
             },
 
             /**
@@ -47,6 +56,18 @@ troop.postpone(v18n, 'Locale', function () {
                 this.currentLocaleKey.toDocument()
                     .setNode(this.entityKey.toDocument().getNode());
                 return this;
+            },
+
+            /**
+             * TODO: Use pluralFormula stored in document.
+             * @param {string} originalString
+             * @param {number} [count]
+             * @returns {string}
+             */
+            getTranslation: function (originalString, count) {
+                count = count || 1;
+                var pluralIndex = 0;
+                return this.entityKey.toDocument().getTranslation(originalString, pluralIndex);
             }
         });
 });

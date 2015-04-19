@@ -19,6 +19,9 @@ troop.amendPostponed(bookworm, 'config', function () {
             /** @type {string} */
             languageCode: 'string',
 
+            /** @type {string} */
+            pluralFormula: 'string',
+
             /** @type {object} */
             translations: 'collection'
         });

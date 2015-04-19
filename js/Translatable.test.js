@@ -26,7 +26,7 @@
 
         'locale/current'.toDocument().setNode({
             translations: {
-                foo: 'bar'
+                foo: ['bar']
             }
         });
 

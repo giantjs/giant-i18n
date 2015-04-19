@@ -14,6 +14,7 @@ troop.postpone(v18n, 'Translatable', function () {
 
     /**
      * Represents a string, that might manifest in different languages depending on the current locale.
+     * TODO: Store count & replacements.
      * @class
      * @extends troop.Base
      * @extends v18n.Stringifiable
@@ -38,9 +39,10 @@ troop.postpone(v18n, 'Translatable', function () {
              * @returns {string}
              */
             toString: function () {
-                var originalString = this.originalString;
-                return v18n.Locale.currentLocaleKey.toDocument()
-                    .getTranslation(originalString) || originalString;
+                var originalString = this.originalString,
+                    currentLocaleKey = v18n.Locale.currentLocaleKey,
+                    locale = v18n.Locale.create(currentLocaleKey);
+                return locale.getTranslation(originalString) || originalString;
             }
         });
 });

@@ -27,11 +27,31 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             },
 
             /**
+             * Sets country code, eg. "us" or "uk"
+             * @param {string} countryCode
+             * @returns {v18n.LocaleDocument}
+             */
+            setCountryCode: function (countryCode) {
+                this.getField('countryCode').setValue(countryCode);
+                return this;
+            },
+
+            /**
              * Fetches language code, eg. "en" or "pt"
              * @returns {*}
              */
             getLanguageCode: function () {
                 return this.getField('languageCode').getValue();
+            },
+
+            /**
+             * Sets language code, eg. "en" or "pt"
+             * @param {string} languageCode
+             * @returns {v18n.LocaleDocument}
+             */
+            setLanguageCode: function (languageCode) {
+                this.getField('languageCode').setValue(languageCode);
+                return this;
             },
 
             /**
@@ -46,19 +66,50 @@ troop.postpone(v18n, 'LocaleDocument', function () {
 
             /**
              * Fetches the locale's name. Subject to translation.
-             * @returns {*}
+             * @returns {string}
              */
             getName: function () {
                 return this.getField('name').getValue();
             },
 
             /**
-             * Retrieves a translation for the specified string according to this locale.
-             * @param {string} originalString
+             * Sets the locale's name.
+             * @param {string} name
+             * @returns {v18n.LocaleDocument}
+             */
+            setName: function (name) {
+                this.getField('name').setValue(name);
+                return this;
+            },
+
+            /**
+             * Fetches plural formula stored as string.
              * @returns {string}
              */
-            getTranslation: function (originalString) {
-                return this.getField('translations').getItem(originalString).getValue();
+            getPluralFormula: function () {
+                return this.getField('pluralFormula').getValue();
+            },
+
+            /**
+             * Sets plural formula.
+             * TODO: Add assertion w/ format tester.
+             * @param {string} pluralFormula
+             * @returns {v18n.LocaleDocument}
+             */
+            setPluralFormula: function (pluralFormula) {
+                this.getField('pluralFormula').setValue(pluralFormula);
+                return this;
+            },
+
+            /**
+             * Retrieves a translation for the specified string according to this locale.
+             * @param {string} originalString
+             * @param {number} pluralIndex
+             * @returns {string}
+             */
+            getTranslation: function (originalString, pluralIndex) {
+                var translations = this.getField('translations').getItem(originalString).getValue();
+                return translations && translations[pluralIndex || 0];
             }
         });
 });
