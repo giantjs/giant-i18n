@@ -22,6 +22,12 @@ troop.postpone(v18n, 'Locale', function () {
         })
         .addConstants(/** @lends v18n.Locale */{
             /**
+             * @type {RegExp}
+             * @constant
+             */
+            RE_PLURAL_FORMULA_VALIDATOR: /^\s*nplurals\s*=\s*\d+;\s*plural\s*=\s*[()n\s\d!><=?:&|%]+\s*;\s*$/,
+
+            /**
              * @type {bookworm.DocumentKey}
              * @constant
              */
@@ -59,21 +65,46 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
-             * TODO: Use pluralFormula stored in document.
+             * TODO: Replace eval with parsing.
+             * TODO: Validate format before evaluating.
+             * TODO: Add tests.
              * @param {string} originalString
              * @param {number} [count]
              * @returns {string}
              */
             getTranslation: function (originalString, count) {
-                count = count || 1;
-                var pluralIndex = 0;
-                return this.entityKey.toDocument().getTranslation(originalString, pluralIndex);
+                var pluralFormula = this.entityKey.toDocument().getPluralFormula(),
+                // variables used in the formula
+                    n = count,
+                    nplurals, plural = 0;
+
+                dessert.isPluralFormulaOptional(pluralFormula, "Invalid plural formula");
+
+                if (pluralFormula) {
+                    /*jshint evil:true*/
+                    eval(pluralFormula);
+                }
+
+                return this.entityKey.toDocument().getTranslation(originalString, plural);
             }
         });
 });
 
 (function () {
     "use strict";
+
+    dessert.addTypes(/** @lends dessert */{
+        /** @param {string} expr */
+        isPluralFormula: function (expr) {
+            return v18n.Locale.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+        },
+
+        /** @param {string} expr */
+        isPluralFormulaOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   v18n.Locale.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+        }
+    });
 
     troop.Properties.addProperties.call(
         String.prototype,
