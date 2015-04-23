@@ -65,7 +65,7 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
-             * TODO: Replace eval with parsing.
+             * TODO: Replace eval with parsing. (long term)
              * TODO: Add tests.
              * @param {string} originalString
              * @param {number} [count]
