@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, v18n */
+/*global dessert, troop, sntls, rubberband, v18n */
 troop.postpone(v18n, 'Translatable', function () {
     "use strict";
 
@@ -8,13 +8,12 @@ troop.postpone(v18n, 'Translatable', function () {
     /**
      * @name v18n.Translatable.create
      * @function
-     * @param {string} originalText
+     * @param {string|rubberband.Stringifiable} originalString
      * @returns {v18n.Translatable}
      */
 
     /**
      * Represents a string, that might manifest in different languages depending on the current locale.
-     * TODO: Store count & replacements.
      * @class
      * @extends troop.Base
      * @extends rubberband.Stringifiable
@@ -22,14 +21,14 @@ troop.postpone(v18n, 'Translatable', function () {
     v18n.Translatable = self
         .addMethods(/** @lends v18n.Translatable# */{
             /**
-             * @param {string} originalString
+             * @param {string|rubberband.Stringifiable} originalString
              * @ignore
              */
             init: function (originalString) {
                 /**
                  * Original string associated with the translatable.
                  * This will be used as the key when looking up translations.
-                 * @type {string}
+                 * @type {string|rubberband.Stringifiable}
                  */
                 this.originalString = originalString;
             },
@@ -39,7 +38,7 @@ troop.postpone(v18n, 'Translatable', function () {
              * @returns {string}
              */
             toString: function () {
-                var originalString = this.originalString,
+                var originalString = rubberband.Stringifier.stringify(this.originalString),
                     currentLocaleKey = v18n.Locale.currentLocaleKey,
                     locale = v18n.Locale.create(currentLocaleKey);
                 return locale.getTranslation(originalString) || originalString;

@@ -16,7 +16,7 @@
         equal(translatable.originalString, 'foo', "should set originalSting property");
     });
 
-    test("Conversion to string", function () {
+    test("Serializing literal-based translatable", function () {
         var translatable = 'foo'.toTranslatable();
 
         'locale/current'.toDocument().unsetKey();
@@ -32,5 +32,22 @@
 
         equal(translatable.toString(), 'bar',
             "should return translated string when current locale is set");
+    });
+
+    test("Serializing stringifiable-based translatable", function () {
+        var template = 'hello {{ foo }} world'.toLiveTemplate()
+                .addReplacements({
+                    '{{ foo }}': "all the"
+                }),
+            translatable = v18n.Translatable.create(template);
+
+        'locale/current'.toDocument().setNode({
+            translations: {
+                'hello all the world': ["HELLO ALL THE WORLD"]
+            }
+        });
+
+        equal(translatable.toString(), "HELLO ALL THE WORLD",
+            "should return translated string according to resolved stringifiable");
     });
 }());
