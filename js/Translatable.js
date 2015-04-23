@@ -17,7 +17,7 @@ troop.postpone(v18n, 'Translatable', function () {
      * TODO: Store count & replacements.
      * @class
      * @extends troop.Base
-     * @extends v18n.Stringifiable
+     * @extends rubberband.Stringifiable
      */
     v18n.Translatable = self
         .addMethods(/** @lends v18n.Translatable# */{
