@@ -22,12 +22,6 @@ troop.postpone(v18n, 'Locale', function () {
         })
         .addConstants(/** @lends v18n.Locale */{
             /**
-             * @type {RegExp}
-             * @constant
-             */
-            RE_PLURAL_FORMULA_VALIDATOR: /^\s*nplurals\s*=\s*\d+;\s*plural\s*=\s*[()n\s\d!><=?:&|%]+\s*;\s*$/,
-
-            /**
              * @type {bookworm.DocumentKey}
              * @constant
              */
@@ -91,19 +85,6 @@ troop.postpone(v18n, 'Locale', function () {
 
 (function () {
     "use strict";
-
-    dessert.addTypes(/** @lends dessert */{
-        /** @param {string} expr */
-        isPluralFormula: function (expr) {
-            return v18n.Locale.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
-        },
-
-        /** @param {string} expr */
-        isPluralFormulaOptional: function (expr) {
-            return typeof expr === 'undefined' ||
-                   v18n.Locale.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
-        }
-    });
 
     troop.Properties.addProperties.call(
         String.prototype,

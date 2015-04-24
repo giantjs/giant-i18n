@@ -17,6 +17,14 @@ troop.postpone(v18n, 'LocaleDocument', function () {
      * @extends bookworm.Document
      */
     v18n.LocaleDocument = self
+        .addConstants(/** @lends v18n.LocaleDocument */{
+            /**
+             * @type {RegExp}
+             * @constant
+             * @link http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
+             */
+            RE_PLURAL_FORMULA_VALIDATOR: /^\s*nplurals\s*=\s*\d+;\s*plural\s*=\s*[()n\s\d!><=?:&|%]+\s*;\s*$/
+        })
         .addMethods(/** @lends v18n.LocaleDocument# */{
             /**
              * Fetches country code, eg. "us" or "uk"
@@ -92,11 +100,11 @@ troop.postpone(v18n, 'LocaleDocument', function () {
 
             /**
              * Sets plural formula.
-             * TODO: Add assertion w/ format tester.
              * @param {string} pluralFormula
              * @returns {v18n.LocaleDocument}
              */
             setPluralFormula: function (pluralFormula) {
+                dessert.isPluralFormula(pluralFormula, "Invalid plural formula");
                 this.getField('pluralFormula').setValue(pluralFormula);
                 return this;
             },
@@ -110,6 +118,27 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             getTranslation: function (originalString, pluralIndex) {
                 var translations = this.getField('translations').getItem(originalString).getValue();
                 return translations && translations[pluralIndex || 0];
+            },
+
+            /**
+             * Sets single translation.
+             * @param {string} originalString
+             * @param {string[]} pluralForms
+             * @returns {v18n.LocaleDocument}
+             */
+            setTranslation: function (originalString, pluralForms) {
+                this.getField('translations').getItem(originalString).setValue(pluralForms);
+                return this;
+            },
+
+            /**
+             * Sets all translations for a locale in one go.
+             * @param {object} translationsNode Translations indexed by original string.
+             * @returns {v18n.LocaleDocument}
+             */
+            setTranslations: function (translationsNode) {
+                this.getField('translations').setValue(translationsNode);
+                return this;
             }
         });
 });
@@ -122,3 +151,20 @@ troop.amendPostponed(bookworm, 'Document', function () {
             return documentKey && documentKey.documentType === 'locale';
         });
 });
+
+(function () {
+    "use strict";
+
+    dessert.addTypes(/** @lends dessert */{
+        /** @param {string} expr */
+        isPluralFormula: function (expr) {
+            return v18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+        },
+
+        /** @param {string} expr */
+        isPluralFormulaOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   v18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+        }
+    });
+}());
