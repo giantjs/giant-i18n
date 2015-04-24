@@ -13,6 +13,8 @@ troop.postpone(v18n, 'Locale', function () {
      */
 
     /**
+     * Represents a locale, such as 'en-us', or 'de-de'. Provides an API for setting a locale
+     * as current locale, as well as translating strings.
      * @class
      * @extends troop.Base
      */
@@ -27,6 +29,37 @@ troop.postpone(v18n, 'Locale', function () {
              */
             currentLocaleKey: 'locale/current'.toDocumentKey()
         })
+        .addPrivateMethods(/** @lends v18n.Locale# */{
+            /**
+             * TODO: Replace eval with parsing. (long term)
+             * @param multiplicity
+             * @returns {number}
+             * @private
+             */
+            _getPluralIndex: function (multiplicity) {
+                /*jshint evil:true*/
+                var pluralFormula;
+
+                if (!this.getPluralIndex) {
+                    pluralFormula = this.entityKey.toDocument().getPluralFormula();
+                    if (pluralFormula) {
+                        // plural formula is present in the cache
+                        // constructing function
+                        eval([
+                            //@formatter:off
+                            'this.getPluralIndex = function (n) {',
+                                'var nplurals, plural;',
+                                pluralFormula,
+                                'return Number(plural);',
+                            '}'
+                            //@formatter:on
+                        ].join('\n'));
+                    }
+                }
+
+                return this.getPluralIndex && this.getPluralIndex(multiplicity);
+            }
+        })
         .addMethods(/** @lends v18n.Locale# */{
             /**
              * @param {bookworm.DocumentKey} localeKey
@@ -40,6 +73,14 @@ troop.postpone(v18n, 'Locale', function () {
                  * @type {bookworm.DocumentKey}
                  */
                 this.entityKey = localeKey;
+
+                /**
+                 * Internal lookup function between multiplicity and plural index.
+                 * The plural index pin-points the translated string in the translation array.
+                 * @param {number} count
+                 * @type {function}
+                 */
+                this.getPluralIndex = undefined;
             },
 
             /**
@@ -53,25 +94,20 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
-             * TODO: Replace eval with parsing. (long term)
-             * @param {string} originalString
-             * @param {number} [count=1]
+             * Retrieves the translation for the specified string, according to the current locale.
+             * @param {string} originalString String to be translated.
+             * @param {number} [multiplicity=1] Multiplicity of the thing identified by originalString.
              * @returns {string}
              */
-            getTranslation: function (originalString, count) {
-                count = count || 1;
+            getTranslation: function (originalString, multiplicity) {
+                multiplicity = multiplicity || 1;
 
-                var pluralFormula = this.entityKey.toDocument().getPluralFormula(),
-                // variables used in the formula
-                    n = count,
-                    nplurals, plural = 0;
+                var pluralIndex = this._getPluralIndex(multiplicity) || 0,
+                    translation = this.entityKey.toDocument()
+                        .getTranslation(originalString, pluralIndex);
 
-                if (pluralFormula) {
-                    /*jshint evil:true*/
-                    eval(pluralFormula);
-                }
-
-                return this.entityKey.toDocument().getTranslation(originalString, Number(plural)) ||
+                return typeof translation === 'string' ?
+                    translation :
                     originalString;
             }
         });

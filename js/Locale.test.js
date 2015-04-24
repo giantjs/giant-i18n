@@ -59,10 +59,10 @@
         equal(locale.getTranslation('pear'), 'pear',
             "should return original string when there is no match");
         equal(locale.getTranslation('apple'), 'apple',
-            "should return singular form when count is not specified");
+            "should return singular form when multiplicity is not specified");
         equal(locale.getTranslation('apple', 1), 'apple',
-            "should return singular form when count is 1");
+            "should return singular form when multiplicity is 1");
         equal(locale.getTranslation('apple', 2), 'apples',
-            "should return singular form when count is 1");
+            "should return singular form when multiplicity is 1");
     });
 }());
