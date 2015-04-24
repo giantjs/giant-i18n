@@ -45,4 +45,24 @@
 
         bookworm.entities.removeMocks();
     });
+
+    test("Translation getter", function () {
+        'locale/en-uk'.toDocument()
+            .setPluralFormula('nplurals=2; plural=(n != 1);')
+            .setTranslations({
+                'apple': ['apple', 'apples']
+            });
+
+        var locale = 'en-uk'.toLocale()
+            .setAsCurrentLocale();
+
+        equal(locale.getTranslation('pear'), 'pear',
+            "should return original string when there is no match");
+        equal(locale.getTranslation('apple'), 'apple',
+            "should return singular form when count is not specified");
+        equal(locale.getTranslation('apple', 1), 'apple',
+            "should return singular form when count is 1");
+        equal(locale.getTranslation('apple', 2), 'apples',
+            "should return singular form when count is 1");
+    });
 }());

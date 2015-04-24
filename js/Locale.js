@@ -40,12 +40,6 @@ troop.postpone(v18n, 'Locale', function () {
                  * @type {bookworm.DocumentKey}
                  */
                 this.entityKey = localeKey;
-
-                /**
-                 * Function for determining plural form of a string.
-                 * @type {function}
-                 */
-                this.getPlural = undefined;
             },
 
             /**
@@ -60,25 +54,25 @@ troop.postpone(v18n, 'Locale', function () {
 
             /**
              * TODO: Replace eval with parsing. (long term)
-             * TODO: Add tests.
              * @param {string} originalString
-             * @param {number} [count]
+             * @param {number} [count=1]
              * @returns {string}
              */
             getTranslation: function (originalString, count) {
+                count = count || 1;
+
                 var pluralFormula = this.entityKey.toDocument().getPluralFormula(),
                 // variables used in the formula
                     n = count,
                     nplurals, plural = 0;
-
-                dessert.isPluralFormulaOptional(pluralFormula, "Invalid plural formula");
 
                 if (pluralFormula) {
                     /*jshint evil:true*/
                     eval(pluralFormula);
                 }
 
-                return this.entityKey.toDocument().getTranslation(originalString, plural);
+                return this.entityKey.toDocument().getTranslation(originalString, Number(plural)) ||
+                    originalString;
             }
         });
 });
