@@ -3,15 +3,8 @@
  */
 /*global require */
 /** @namespace */
-var v18n = {
-        /**
-         * Whether to poll input values at a regular interval.
-         * Set to true when change/input events do not get fired on form autofill, etc.
-         * @type {boolean}
-         */
-        pollInputValues: false
-    },
-    c$ = v18n;
+var v18n = {},
+    v$ = v18n;
 
 /**
  * @class
@@ -30,6 +23,12 @@ var troop = troop || require('troop');
  * @see https://github.com/danstocker/sntls
  */
 var sntls = sntls || require('sntls');
+
+/**
+ * @namespace
+ * @see https://github.com/danstocker/rubberband
+ */
+var rubberband = rubberband || require('rubberband');
 
 /**
  * @namespace
