@@ -31,6 +31,23 @@ troop.postpone(v18n, 'Translatable', function () {
                  * @type {string|rubberband.Stringifiable}
                  */
                 this.originalString = originalString;
+
+                /**
+                 * Indicates the current multiplicity of the translatable.
+                 * This value will be used in determining the plural form of the string.
+                 * @type {number}
+                 */
+                this.multiplicity = 1;
+            },
+
+            /**
+             * Sets multiplicity of translatable.
+             * @param {number} multiplicity
+             * @returns {v18n.Translatable}
+             */
+            setMultiplicity: function (multiplicity) {
+                this.multiplicity = multiplicity;
+                return this;
             },
 
             /**
@@ -41,7 +58,8 @@ troop.postpone(v18n, 'Translatable', function () {
                 var originalString = rubberband.Stringifier.stringify(this.originalString),
                     currentLocaleKey = v18n.Locale.currentLocaleKey,
                     locale = v18n.Locale.create(currentLocaleKey);
-                return locale.getTranslation(originalString) || originalString;
+
+                return locale.getTranslation(originalString, this.multiplicity);
             }
         });
 });
