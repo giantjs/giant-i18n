@@ -56,10 +56,11 @@ troop.postpone(v18n, 'Translatable', function () {
              */
             toString: function () {
                 var originalString = rubberband.Stringifier.stringify(this.originalString),
-                    currentLocaleKey = v18n.Locale.currentLocaleKey,
-                    locale = v18n.Locale.create(currentLocaleKey);
+                    currentLocale = v18n.LocaleEnvironment.create().getCurrentLocale();
 
-                return locale.getTranslation(originalString, this.multiplicity);
+                return currentLocale ?
+                    currentLocale.getTranslation(originalString, this.multiplicity) :
+                    originalString;
             }
         });
 });

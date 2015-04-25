@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, v18n */
+/*global dessert, troop, sntls, bookworm, v18n */
 troop.postpone(v18n, 'Locale', function () {
     "use strict";
 
@@ -21,13 +21,6 @@ troop.postpone(v18n, 'Locale', function () {
     v18n.Locale = self
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
-        })
-        .addConstants(/** @lends v18n.Locale */{
-            /**
-             * @type {bookworm.DocumentKey}
-             * @constant
-             */
-            currentLocaleKey: 'locale/current'.toDocumentKey()
         })
         .addPrivateMethods(/** @lends v18n.Locale# */{
             /**
@@ -88,8 +81,7 @@ troop.postpone(v18n, 'Locale', function () {
              * @returns {v18n.Locale}
              */
             setAsCurrentLocale: function () {
-                this.currentLocaleKey.toDocument()
-                    .setNode(this.entityKey.toDocument().getNode());
+                v18n.LocaleEnvironment.create().setCurrentLocale(this);
                 return this;
             },
 
@@ -113,8 +105,33 @@ troop.postpone(v18n, 'Locale', function () {
         });
 });
 
+troop.amendPostponed(bookworm, 'DocumentKey', function () {
+    "use strict";
+
+    bookworm.DocumentKey
+        .addMethods(/** @lends bookworm.DocumentKey */{
+            /** @returns {v18n.Locale} */
+            toLocale: function () {
+                return v18n.Locale.create(this);
+            }
+        });
+});
+
 (function () {
     "use strict";
+
+    dessert.addTypes(/** @lends dessert */{
+        /** @param {v18n.Locale} expr */
+        isLocale: function (expr) {
+            return v18n.Locale.isBaseOf(expr);
+        },
+
+        /** @param {v18n.Locale} [expr] */
+        isLocaleOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   v18n.Locale.isBaseOf(expr);
+        }
+    });
 
     troop.Properties.addProperties.call(
         String.prototype,

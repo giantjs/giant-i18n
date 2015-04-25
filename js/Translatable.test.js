@@ -26,19 +26,32 @@
     test("Serializing literal-based translatable", function () {
         var translatable = 'foo'.toTranslatable();
 
-        'locale/current'.toDocument().unsetKey();
-
-        equal(translatable.toString(), 'foo',
-            "should return original string when no current locale is set");
-
-        'locale/current'.toDocument().setNode({
-            translations: {
+        'locale/pt-br'.toDocument()
+            .setTranslations({
                 foo: ['bar']
+            });
+
+        v18n.LocaleEnvironment.addMocks({
+            getCurrentLocale: function () {
+                return undefined;
             }
         });
 
+        equal(translatable.toString(), 'foo',
+            "should return original string when no current locale is not set");
+
+        v18n.LocaleEnvironment
+            .removeMocks()
+            .addMocks({
+                getCurrentLocale: function () {
+                    return 'pt-br'.toLocale();
+                }
+            });
+
         equal(translatable.toString(), 'bar',
             "should return translated string when current locale is set");
+
+        v18n.LocaleEnvironment.removeMocks();
     });
 
     test("Serializing stringifiable-based translatable", function () {
@@ -48,13 +61,19 @@
                 }),
             translatable = v18n.Translatable.create(template);
 
-        'locale/current'.toDocument().setNode({
-            translations: {
-                'hello all the world': ["HELLO ALL THE WORLD"]
+        'locale/foo'.toDocument().setTranslations({
+            'hello all the world': ["HELLO ALL THE WORLD"]
+        });
+
+        v18n.LocaleEnvironment.addMocks({
+            getCurrentLocale: function () {
+                return 'foo'.toLocale();
             }
         });
 
         equal(translatable.toString(), "HELLO ALL THE WORLD",
             "should return translated string according to resolved stringifiable");
+
+        v18n.LocaleEnvironment.removeMocks();
     });
 }());

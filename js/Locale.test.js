@@ -22,28 +22,28 @@
         ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
     });
 
+    test("Conversion from document key", function () {
+        var localeKey = 'locale/pt-br'.toDocumentKey(),
+            locale = localeKey.toLocale();
+
+        ok(locale.isA(v18n.Locale), "should return Locale instance");
+        ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
+    });
+
     test("Current locale setter", function () {
-        expect(4);
+        expect(2);
 
-        var locale = 'pt-br'.toLocale(),
-            localeNode = {};
+        var ptBrLocale = 'pt-br'.toLocale();
 
-
-        bookworm.entities.addMocks({
-            getNode: function (path) {
-                ok(path.equals('document>locale>pt-br'.toPath()), "should get document node");
-                return localeNode;
-            },
-
-            setNode: function (path, node) {
-                ok(path.equals('document>locale>current'.toPath()), "should set current locale node");
-                strictEqual(node, localeNode, "should pass node fetched from specified locale");
+        v18n.LocaleEnvironment.addMocks({
+            setCurrentLocale: function (locale) {
+                strictEqual(locale, ptBrLocale, "should set as current locale on environment");
             }
         });
 
-        strictEqual(locale.setAsCurrentLocale(), locale, "should be chainable");
+        strictEqual(ptBrLocale.setAsCurrentLocale(), ptBrLocale, "should be chainable");
 
-        bookworm.entities.removeMocks();
+        v18n.LocaleEnvironment.removeMocks();
     });
 
     test("Translation getter", function () {
