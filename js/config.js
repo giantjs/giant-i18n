@@ -24,5 +24,12 @@ troop.amendPostponed(bookworm, 'config', function () {
 
             /** @type {object} */
             translations: 'collection'
+        })
+        .setNode('document>document>localeEnvironment'.toPath(), /** @class @lends v18n.LocaleEnvironmentNode*/{
+            /** @type {string} */
+            currentLocale: 'reference',
+
+            /** @type {object} */
+            locales: 'collection'
         });
 });
