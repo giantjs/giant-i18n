@@ -3,13 +3,7 @@
  */
 /*global require */
 /** @namespace */
-var v18n = {
-        /**
-         * Identifies default locale.
-         * @type {string}
-         */
-        defaultLocale: 'en'
-    },
+var v18n = {},
     v$ = v18n;
 
 /**
