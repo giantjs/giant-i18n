@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -91,20 +91,107 @@
         v18n.LocaleEnvironmentDocument.removeMocks();
     });
 
-    test("Locale change handler", function () {
+    test("Locale readiness tester", function () {
         expect(5);
+
+        var environment = v18n.LocaleEnvironment.create();
+
+        raises(function () {
+            environment.markLocaleAsReady();
+        }, "should raise exception on missing argument");
+
+        raises(function () {
+            environment.markLocaleAsReady('foo/bar'.toDocumentKey);
+        }, "should raise exception on invalid argument");
+
+        v18n.LocaleEnvironmentDocument.addMocks({
+            getReadyLocale: function (localeKey) {
+                ok('locale/foo'.toDocumentKey().equals(localeKey),
+                    "should fetch locale readiness from collection");
+                return undefined;
+            }
+        });
+
+        equal(environment.isLocaleMarkedAsReady('foo'.toLocale()), false,
+            "should return false for locale not in collection");
+
+        v18n.LocaleEnvironmentDocument
+            .removeMocks()
+            .addMocks({
+                getReadyLocale: function () {
+                    return true;
+                }
+            });
+
+        equal(environment.isLocaleMarkedAsReady('foo'.toLocale()), true,
+            "should return true for locale present in collection");
+
+        v18n.LocaleEnvironmentDocument.removeMocks();
+    });
+
+    test("Current locale change handler", function () {
+        expect(5);
+
+        function onLocaleChange(event) {
+            ok(event.isA(v18n.LocaleChangeEvent), "should trigger LocaleChangeEvent");
+            ok(event.localeBefore.isA(v18n.Locale), "should set before locale");
+            ok(event.localeBefore.entityKey.equals('locale/foo'.toDocumentKey()),
+                "should set before locale");
+            ok(event.localeAfter.isA(v18n.Locale), "should set after locale");
+            ok(event.localeAfter.entityKey.equals('locale/bar'.toDocumentKey()),
+                "should set before locale");
+        }
 
         v18n.LocaleEnvironment.create()
             .setCurrentLocale('foo'.toLocale())
-            .subscribeTo('locale.change', function (event) {
-                ok(event.isA(v18n.LocaleChangeEvent), "should trigger LocaleChangeEvent");
-                ok(event.localeBefore.isA(v18n.Locale), "should set before locale");
-                ok(event.localeBefore.entityKey.equals('locale/foo'.toDocumentKey()),
-                    "should set before locale");
-                ok(event.localeAfter.isA(v18n.Locale), "should set after locale");
-                ok(event.localeAfter.entityKey.equals('locale/bar'.toDocumentKey()),
-                    "should set before locale");
-            })
-            .setCurrentLocale('bar'.toLocale());
+            .subscribeTo('locale.change', onLocaleChange)
+            .setCurrentLocale('bar'.toLocale())
+            .unsubscribeFrom('locale.change', onLocaleChange);
+    });
+
+    test("Locale ready handler", function () {
+        expect(1);
+
+        ['localeEnvironment', 'default', 'readyLocales'].toField()
+            .unsetKey();
+
+        'foo'.toLocale().setAsCurrentLocale();
+
+        function onCurrentLocaleReady(event) {
+            ok(true, "should trigger 'current locale ready' event");
+        }
+
+        evan.eventSpace
+            .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+
+        'bar'.toLocale().markAsReady();
+
+        'foo'.toLocale().markAsReady();
+
+        'baz'.toLocale().markAsReady();
+
+        evan.eventSpace
+            .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+    });
+
+    test("Locale change handler", function () {
+        expect(1);
+
+        'localeEnvironment/default'.toDocument()
+            .unsetKey();
+
+        'pt-br'.toLocale().markAsReady();
+
+        function onCurrentLocaleReady(event) {
+            ok(true, "should trigger 'current locale ready' event");
+        }
+
+        evan.eventSpace
+            .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+
+        'pt-br'.toLocale().setAsCurrentLocale();
+
+        evan.eventSpace
+            .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 }());

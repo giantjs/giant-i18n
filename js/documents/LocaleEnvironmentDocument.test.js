@@ -47,7 +47,7 @@
         }, "should set specified locale key as current");
     });
 
-    test("Adding locale", function () {
+    test("Adding ready locale", function () {
         var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetKey();
 
         raises(function () {
@@ -66,5 +66,25 @@
                 'locale/foo': true
             }
         }, "should set specified locale key as current");
+    });
+
+    test("Ready locale getter", function () {
+        var environmentDocument = 'localeEnvironment/foo'.toDocument()
+            .unsetKey()
+            .addReadyLocale('locale/pt-br'.toDocumentKey());
+
+        raises(function () {
+            environmentDocument.getReadyLocale();
+        }, "should raise exception on missing argument");
+
+        raises(function () {
+            environmentDocument.getReadyLocale('foo');
+        }, "should raise exception on invalid argument");
+
+        ok(!environmentDocument.getReadyLocale('locale/en-uk'.toDocumentKey()),
+            "should return false for locale that is not marked ready");
+
+        ok(environmentDocument.getReadyLocale('locale/pt-br'.toDocumentKey()),
+            "should return true for locale that is marked ready");
     });
 }());

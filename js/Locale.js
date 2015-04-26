@@ -1,9 +1,10 @@
-/*global dessert, troop, sntls, bookworm, v18n */
+/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
 troop.postpone(v18n, 'Locale', function () {
     "use strict";
 
     var base = troop.Base,
-        self = base.extend();
+        self = base.extend()
+            .addTrait(evan.Evented);
 
     /**
      * @name v18n.Locale.create
@@ -17,10 +18,16 @@ troop.postpone(v18n, 'Locale', function () {
      * as current locale, as well as translating strings.
      * @class
      * @extends troop.Base
+     * @extends evan.Evented
      */
     v18n.Locale = self
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
+        })
+        .setEventSpace(evan.eventSpace)
+        .addConstants(/** @lends v18n.Locale */{
+            /** @constant */
+            EVENT_LOCALE_READY: 'locale.ready'
         })
         .addPrivateMethods(/** @lends v18n.Locale# */{
             /**
@@ -74,6 +81,8 @@ troop.postpone(v18n, 'Locale', function () {
                  * @type {function}
                  */
                 this.getPluralIndex = undefined;
+
+                this.setEventPath(['locale', localeKey.documentId].toPath());
             },
 
             /**
@@ -87,11 +96,22 @@ troop.postpone(v18n, 'Locale', function () {
 
             /**
              * Marks locale as ready for use.
+             * This is how the application signals to v18n that loading and merging the locale
+             * has finished. V18n is agnostic about the process by which locales are loaded,
+             * so the application needs to tell v18n explicitly that it has.
              * @returns {v18n.Locale}
              */
             markAsReady: function () {
                 v18n.LocaleEnvironment.create().markLocaleAsReady(this);
                 return this;
+            },
+
+            /**
+             * Tests whether locale is marked as ready.
+             * @returns {boolean}
+             */
+            isMarkedAsReady: function () {
+                return v18n.LocaleEnvironment.create().isLocaleMarkedAsReady(this);
             },
 
             /**
@@ -110,8 +130,33 @@ troop.postpone(v18n, 'Locale', function () {
                 return typeof translation === 'string' ?
                     translation :
                     originalString;
+            },
+
+            /**
+             * @param {flock.ChangeEvent} event
+             * @ignore
+             */
+            onLocaleMarkedAsReady: function (event) {
+                var link = evan.pushOriginalEvent(event);
+                this.triggerSync(this.EVENT_LOCALE_READY);
+                link.unLink();
             }
         });
+});
+
+troop.amendPostponed(bookworm, 'entities', function () {
+    "use strict";
+
+    bookworm.entities.eventSpace
+        .delegateSubscriptionTo(
+            flock.ChangeEvent.EVENT_CACHE_CHANGE,
+            'document>localeEnvironment>default>readyLocales'.toPath(),
+            'document>localeEnvironment>default>readyLocales>|'.toQuery(),
+            (function (event) {
+                var localeRef = event.originalPath.getLastKey();
+                v18n.Locale.create(localeRef.toDocumentKey())
+                    .onLocaleMarkedAsReady(event);
+            }));
 });
 
 troop.amendPostponed(bookworm, 'DocumentKey', function () {

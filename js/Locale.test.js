@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -13,6 +13,7 @@
         var locale = v18n.Locale.create('locale/pt-br'.toDocumentKey());
 
         ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
+        ok(locale.eventPath.equals('locale>pt-br'.toPath()), "should set eventPath property");
     });
 
     test("Conversion from string", function () {
@@ -62,6 +63,25 @@
         v18n.LocaleEnvironment.removeMocks();
     });
 
+    test("Testing for locale readiness", function () {
+        expect(2);
+
+        var ptBrLocale = 'pt-br'.toLocale(),
+            result = {};
+
+        v18n.LocaleEnvironment.addMocks({
+            isLocaleMarkedAsReady: function (locale) {
+                strictEqual(locale, ptBrLocale, "should test locale readiness on environment");
+                return result;
+            }
+        });
+
+        strictEqual(ptBrLocale.isMarkedAsReady(), result,
+            "should return value returned by environment");
+
+        v18n.LocaleEnvironment.removeMocks();
+    });
+
     test("Translation getter", function () {
         'locale/en-uk'.toDocument()
             .setPluralFormula('nplurals=2; plural=(n != 1);')
@@ -80,5 +100,26 @@
             "should return singular form when multiplicity is 1");
         equal(locale.getTranslation('apple', 2), 'apples',
             "should return singular form when multiplicity is 1");
+    });
+
+    test("Locale ready handler", function () {
+        expect(1);
+
+        ['localeEnvironment', 'default', 'readyLocals'].toField()
+            .unsetKey();
+
+        function onLocaleReady(event) {
+            ok(event.sender.entityKey.equals('locale/pt-br'.toDocumentKey()),
+                "should trigger ready event");
+        }
+
+        evan.eventSpace
+            .subscribeTo('locale.ready', 'locale'.toPath(), onLocaleReady);
+
+        ['localeEnvironment', 'default', 'readyLocales', 'locale/pt-br'].toItem()
+            .setValue(true);
+
+        evan.eventSpace
+            .unsubscribeFrom('locale.ready', 'locale'.toPath(), onLocaleReady);
     });
 }());

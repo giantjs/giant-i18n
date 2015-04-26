@@ -25,8 +25,20 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
         })
         .setEventSpace(evan.eventSpace)
         .addConstants(/** @lends v18n.LocaleEnvironment */{
-            /** @constant */
-            EVENT_LOCALE_CHANGE: 'locale.change'
+            /**
+             * Signals that the current locale has changed.
+             * Does not mean though that the new locale is loaded and is ready for use.
+             * @constant
+             */
+            EVENT_LOCALE_CHANGE: 'locale.change',
+
+            /**
+             * Signals that the current locale is ready for use.
+             * Triggered either when a) locales are loaded and current locale changes, or
+             * b) current locale is set which is then successfully loaded.
+             * @constant
+             */
+            EVENT_CURRENT_LOCALE_READY: 'locale.ready.current'
         })
         .addMethods(/** @lends v18n.LocaleEnvironment# */{
             /** @ignore */
@@ -79,6 +91,17 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             },
 
             /**
+             * Tests whether the specified locale is marked as ready.
+             * @param {v18n.Locale} locale
+             * @returns {boolean}
+             */
+            isLocaleMarkedAsReady: function (locale) {
+                dessert.isLocale(locale, "Invalid locale");
+                return !!this.entityKey.toDocument()
+                    .getReadyLocale(locale.entityKey);
+            },
+
+            /**
              * Triggered when the 'currentLocale' field changes on the localeEnvironment document.
              * TODO: Add handler for when the entire localeEnvironment document changes.
              * @param {flock.ChangeEvent} event
@@ -95,6 +118,37 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
                     .triggerSync();
 
                 link.unLink();
+            },
+
+            /**
+             * @param {evan.Event} event
+             * @ignore
+             */
+            onLocaleReady: function (event) {
+                var link = evan.pushOriginalEvent(event),
+                    locale = event.sender,
+                    currentLocaleKey = this.entityKey.toDocument().getCurrentLocaleKey();
+
+                if (locale.entityKey.equals(currentLocaleKey)) {
+                    this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
+                }
+
+                link.unLink();
+            },
+
+            /**
+             * @param {v18n.LocaleChangeEvent} event
+             * @ignore
+             */
+            onLocaleChange: function (event) {
+                var link = evan.pushOriginalEvent(event),
+                    locale = event.localeAfter;
+
+                if (locale.isMarkedAsReady()) {
+                    this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
+                }
+
+                link.unLink();
             }
         });
 });
@@ -102,10 +156,26 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
 troop.amendPostponed(bookworm, 'entities', function () {
     "use strict";
 
+    // TODO: Subscribe through keys once it's supported by bookworm.
     bookworm.entities.subscribeTo(
         flock.ChangeEvent.EVENT_CACHE_CHANGE,
         'document>localeEnvironment>default>currentLocale'.toPath(),
         function (event) {
-            v18n.LocaleEnvironment.create().onCurrentLocaleChange(event);
+            v18n.LocaleEnvironment.create()
+                .onCurrentLocaleChange(event);
+        });
+});
+
+troop.amendPostponed(v18n, 'LocaleEnvironment', function () {
+    "use strict";
+
+    v18n.LocaleEnvironment.create()
+        .subscribeTo(v18n.Locale.EVENT_LOCALE_READY, function (event) {
+            v18n.LocaleEnvironment.create()
+                .onLocaleReady(event);
+        })
+        .subscribeTo(v18n.LocaleEnvironment.EVENT_LOCALE_CHANGE, function (event) {
+            v18n.LocaleEnvironment.create()
+                .onLocaleChange(event);
         });
 });

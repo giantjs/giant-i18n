@@ -45,6 +45,15 @@ troop.postpone(v18n, 'LocaleEnvironmentDocument', function () {
                 dessert.isDocumentKey(localeKey, "Invalid locale key");
                 this.getField('readyLocales').getItem(localeKey.toString()).setValue(true);
                 return this;
+            },
+
+            /**
+             * @param {bookworm.DocumentKey} localeKey
+             * @returns {boolean}
+             */
+            getReadyLocale: function (localeKey) {
+                dessert.isDocumentKey(localeKey, "Invalid locale key");
+                return this.getField('readyLocales').getItem(localeKey.toString()).getValue();
             }
         });
 });
