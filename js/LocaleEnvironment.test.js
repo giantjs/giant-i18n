@@ -65,26 +65,27 @@
         v18n.LocaleEnvironmentDocument.removeMocks();
     });
 
-    test("Locale registration", function () {
+    test("Marking locale as ready", function () {
         expect(4);
 
         var environment = v18n.LocaleEnvironment.create();
 
         raises(function () {
-            environment.registerLocale();
+            environment.markLocaleAsReady();
         }, "should raise exception on missing argument");
 
         raises(function () {
-            environment.registerLocale('foo/bar'.toDocumentKey);
+            environment.markLocaleAsReady('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
         v18n.LocaleEnvironmentDocument.addMocks({
-            addLocale: function (localeKey) {
-                ok('locale/foo'.toDocumentKey().equals(localeKey), "should register the specified locale");
+            addReadyLocale: function (localeKey) {
+                ok('locale/foo'.toDocumentKey().equals(localeKey),
+                    "should add locale to ready locale collection");
             }
         });
 
-        strictEqual(environment.registerLocale('foo'.toLocale()), environment,
+        strictEqual(environment.markLocaleAsReady('foo'.toLocale()), environment,
             "should be chainable");
 
         v18n.LocaleEnvironmentDocument.removeMocks();

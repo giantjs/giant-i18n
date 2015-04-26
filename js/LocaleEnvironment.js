@@ -67,14 +67,14 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             },
 
             /**
-             * Registers locale as one of the available locales.
+             * Marks specified locale as ready for use.
              * @param {v18n.Locale} locale
              * @returns {v18n.LocaleEnvironment}
              */
-            registerLocale: function (locale) {
+            markLocaleAsReady: function (locale) {
                 dessert.isLocale(locale, "Invalid locale");
                 this.entityKey.toDocument()
-                    .addLocale(locale.entityKey);
+                    .addReadyLocale(locale.entityKey);
                 return this;
             },
 

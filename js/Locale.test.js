@@ -46,6 +46,22 @@
         v18n.LocaleEnvironment.removeMocks();
     });
 
+    test("Marking locale as ready", function () {
+        expect(2);
+
+        var ptBrLocale = 'pt-br'.toLocale();
+
+        v18n.LocaleEnvironment.addMocks({
+            markLocaleAsReady: function (locale) {
+                strictEqual(locale, ptBrLocale, "should mark as locale as ready on environment");
+            }
+        });
+
+        strictEqual(ptBrLocale.markAsReady(), ptBrLocale, "should be chainable");
+
+        v18n.LocaleEnvironment.removeMocks();
+    });
+
     test("Translation getter", function () {
         'locale/en-uk'.toDocument()
             .setPluralFormula('nplurals=2; plural=(n != 1);')

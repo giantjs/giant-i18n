@@ -41,9 +41,9 @@ troop.postpone(v18n, 'LocaleEnvironmentDocument', function () {
              * @param {bookworm.DocumentKey} localeKey
              * @returns {v18n.LocaleEnvironmentDocument}
              */
-            addLocale: function (localeKey) {
+            addReadyLocale: function (localeKey) {
                 dessert.isDocumentKey(localeKey, "Invalid locale key");
-                this.getField('locales').getItem(localeKey.toString()).setValue(true);
+                this.getField('readyLocales').getItem(localeKey.toString()).setValue(true);
                 return this;
             }
         });

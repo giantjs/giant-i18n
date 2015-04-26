@@ -86,6 +86,15 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
+             * Marks locale as ready for use.
+             * @returns {v18n.Locale}
+             */
+            markAsReady: function () {
+                v18n.LocaleEnvironment.create().markLocaleAsReady(this);
+                return this;
+            },
+
+            /**
              * Retrieves the translation for the specified string, according to the current locale.
              * @param {string} originalString String to be translated.
              * @param {number} [multiplicity=1] Multiplicity of the thing identified by originalString.

@@ -30,6 +30,6 @@ troop.amendPostponed(bookworm, 'config', function () {
             currentLocale: 'reference',
 
             /** @type {object} */
-            locales: 'collection'
+            readyLocales: 'collection'
         });
 });

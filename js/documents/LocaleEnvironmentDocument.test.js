@@ -51,18 +51,18 @@
         var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetKey();
 
         raises(function () {
-            environmentDocument.addLocale();
+            environmentDocument.addReadyLocale();
         }, "should raise exception on missing argument");
 
         raises(function () {
-            environmentDocument.addLocale('foo');
+            environmentDocument.addReadyLocale('foo');
         }, "should raise exception on invalid argument");
 
-        strictEqual(environmentDocument.addLocale('locale/foo'.toDocumentKey()), environmentDocument,
+        strictEqual(environmentDocument.addReadyLocale('locale/foo'.toDocumentKey()), environmentDocument,
             "should be chainable");
 
         deepEqual(environmentDocument.getNode(), {
-            locales: {
+            readyLocales: {
                 'locale/foo': true
             }
         }, "should set specified locale key as current");
