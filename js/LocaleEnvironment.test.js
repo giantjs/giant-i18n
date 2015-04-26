@@ -89,4 +89,21 @@
 
         v18n.LocaleEnvironmentDocument.removeMocks();
     });
+
+    test("Locale change handler", function () {
+        expect(5);
+
+        v18n.LocaleEnvironment.create()
+            .setCurrentLocale('foo'.toLocale())
+            .subscribeTo('locale.change', function (event) {
+                ok(event.isA(v18n.LocaleChangeEvent), "should trigger LocaleChangeEvent");
+                ok(event.localeBefore.isA(v18n.Locale), "should set before locale");
+                ok(event.localeBefore.entityKey.equals('locale/foo'.toDocumentKey()),
+                    "should set before locale");
+                ok(event.localeAfter.isA(v18n.Locale), "should set after locale");
+                ok(event.localeAfter.entityKey.equals('locale/bar'.toDocumentKey()),
+                    "should set before locale");
+            })
+            .setCurrentLocale('bar'.toLocale());
+    });
 }());
