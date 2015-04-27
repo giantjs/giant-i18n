@@ -10,17 +10,28 @@ The goal of v18n is to provide a simple API for localization based on and in lin
 Examples
 --------
 
+JsFiddle: [http://jsfiddle.net/danstocker/zwsutcL5/](http://jsfiddle.net/danstocker/zwsutcL5/)
+
 For the examples below, we assume that the locale documents are properly initialized.
 
-    'locale/en-uk'.toLocaleDocument()
+    'locale/en-uk'.toDocument()
         .setTranslations({
-            apple: ["apple", "apples"],
-        });
+            "You have {{appleCount}} {{appleForm}}.": ["You have {{appleCount}} {{appleForm}}."],
+            "apple": ["apple", "apples"]
+        })
+        .setPluralFormula("nplurals=2; plural=(n != 1);");
 
-    'locale/de-de'.toLocaleDocument()
+    'locale/de-de'.toDocument()
         .setTranslations({
-            apple: ["Apfel", "Äpfel"],
-        });
+            "You have {{appleCount}} {{appleForm}}.": ["Sie haben {{appleCount}} {{appleForm}}."],
+            "apple": ["Apfel", "Äpfel"]
+        })
+        .setPluralFormula("nplurals=2; plural=(n != 1);");
+
+In case we're loading these translations asynchronously, we might want to signal to the application that the locales are ready for use.
+
+    'en-uk'.toLocale().markAsReady();
+    'de-de'.toLocale().markAsReady();
 
 ### Using `Translatable`
 
@@ -51,6 +62,29 @@ In order to tell v18n to translate a term, it has to be converted to a `Translat
 
     apple.toString() // 'Äpfel'
 
-### Multi-term translation with formatting
+### Formatting
 
-    // ...
+V18n uses the templating engine of rubberband, and thus allows expressions like the following.
+
+    var sentence = rubberband.LiveTemplate.create("You have {{appleCount}} {{appleForm}}.".toTranslatable())
+        .addReplacements({
+            '{{appleCount}}': 6,
+            '{{appleForm}}': "apple".toTranslatable()
+                .setMultiplicity(6)
+        });
+
+    'en-uk'.toLocale().setAsCurrentLocale();
+    sentence.toString() // "You have 6 apples."
+
+    'de-de'.toLocale().setAsCurrentLocale();
+    sentence.toString() // "Sie haben 6 Äpfel."
+
+### Listening to locale changes
+
+Components of the application might need to listen to locale changes. The event 'locale.ready.current' or `v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY` signals that the current locale, already loaded and just changed, or previously set and just loaded, is ready for use.
+
+    v18n.LocaleEnvironment.create()
+        .subscribeTo(v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, function () {
+            console.log("current locale is ready for use");
+            // updating widgets, etc.
+        });
