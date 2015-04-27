@@ -112,12 +112,15 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Retrieves a translation for the specified string according to this locale.
              * @param {string} originalString
-             * @param {number} pluralIndex
+             * @param {number} [pluralIndex]
              * @returns {string}
              */
             getTranslation: function (originalString, pluralIndex) {
                 var translations = this.getField('translations').getItem(originalString).getValue();
-                return translations && translations[pluralIndex || 0];
+                return translations &&
+                       (translations instanceof Array ?
+                           translations[pluralIndex || 0] :
+                           translations);
             },
 
             /**

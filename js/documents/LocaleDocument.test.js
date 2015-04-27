@@ -43,12 +43,15 @@
 
         localeDocument.setNode({
             translations: {
-                cat: ['cat', 'cats']
+                cat : ['cat', 'cats'],
+                meow: 'meow'
             }
         });
 
         equal(typeof localeDocument.getTranslation('dog'), 'undefined',
             "should return undefined for missing translation");
+        equal(localeDocument.getTranslation('meow'), 'meow',
+            "should return string literal for no plural(s)");
         equal(localeDocument.getTranslation('cat'), 'cat',
             "should return zero plural-index translation when none is specified");
         equal(localeDocument.getTranslation('cat', 1), 'cats',

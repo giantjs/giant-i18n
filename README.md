@@ -16,14 +16,14 @@ For the examples below, we assume that the locale documents are properly initial
 
     'locale/en-uk'.toDocument()
         .setTranslations({
-            "You have {{appleCount}} {{appleForm}}.": ["You have {{appleCount}} {{appleForm}}."],
+            "You have {{appleCount}} {{appleForm}}.": "You have {{appleCount}} {{appleForm}}.",
             "apple": ["apple", "apples"]
         })
         .setPluralFormula("nplurals=2; plural=(n != 1);");
 
     'locale/de-de'.toDocument()
         .setTranslations({
-            "You have {{appleCount}} {{appleForm}}.": ["Sie haben {{appleCount}} {{appleForm}}."],
+            "You have {{appleCount}} {{appleForm}}.": "Sie haben {{appleCount}} {{appleForm}}.",
             "apple": ["Apfel", "Äpfel"]
         })
         .setPluralFormula("nplurals=2; plural=(n != 1);");
