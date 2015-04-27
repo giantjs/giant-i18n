@@ -102,6 +102,11 @@
             "should return singular form when multiplicity is 1");
     });
 
+    test("Serialization", function () {
+        var locale = 'pt-br'.toLocale();
+        equal(locale.toString(), 'pt-br', "should return locale document ID");
+    });
+
     test("Locale ready handler", function () {
         expect(1);
 

@@ -19,6 +19,7 @@ troop.postpone(v18n, 'Locale', function () {
      * @class
      * @extends troop.Base
      * @extends evan.Evented
+     * @extends rubberband.Stringifiable
      */
     v18n.Locale = self
         .setInstanceMapper(function (localeKey) {
@@ -130,6 +131,11 @@ troop.postpone(v18n, 'Locale', function () {
                 return typeof translation === 'string' ?
                     translation :
                     originalString;
+            },
+
+            /** @returns {string} */
+            toString: function () {
+                return this.entityKey.documentId;
             },
 
             /**

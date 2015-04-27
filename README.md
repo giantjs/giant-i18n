@@ -5,7 +5,7 @@ V18n
 
 *Internationalization framework*
 
-The goal of v18n is to provide a simple API for localization based on and in line with he design principles of [troop](https://github.com/danstocker/troop), [sntls](https://github.com/danstocker/sntls), and [rubberband](https://github.com/danstocker/rubberband). V18n's central class is the `Translatable`, that resolves to a translation depending on the current locale settings when serialized.
+The goal of v18n is to provide a simple API for localization based on and in line with the design principles of [troop](https://github.com/danstocker/troop), [sntls](https://github.com/danstocker/sntls), and [rubberband](https://github.com/danstocker/rubberband). V18n's central class is the `Translatable`, that resolves to a translation depending on the current locale settings when serialized.
 
 Examples
 --------
@@ -88,3 +88,11 @@ Components of the application might need to listen to locale changes. The event 
             console.log("current locale is ready for use");
             // updating widgets, etc.
         });
+
+### Getting the current locale
+
+The class `LocaleEnvironment` manages the current localization state.
+
+    'de-de'.toLocale().setAsCurrentLocale();
+
+    v18n.LocaleEnvironment.create().getCurrentLocale().toString() // 'de-de'
