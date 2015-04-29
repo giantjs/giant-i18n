@@ -85,9 +85,9 @@
     });
 
     test("Serializing stringifiable-based translatable", function () {
-        var template = 'hello {{ foo }} world'.toLiveTemplate()
+        var template = 'hello {{foo}} world'.toLiveTemplate()
                 .addReplacements({
-                    '{{ foo }}': "all the"
+                    '{{foo}}': "all the"
                 }),
             translatable = v18n.Translatable.create(template);
 
