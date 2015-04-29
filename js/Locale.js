@@ -156,8 +156,8 @@ troop.amendPostponed(bookworm, 'entities', function () {
     bookworm.entities.eventSpace
         .delegateSubscriptionTo(
             flock.ChangeEvent.EVENT_CACHE_CHANGE,
-            'document>localeEnvironment>default>readyLocales'.toPath(),
-            'document>localeEnvironment>default>readyLocales>|'.toQuery(),
+            'document>localeEnvironment>>readyLocales'.toPath(),
+            'document>localeEnvironment>>readyLocales>|'.toQuery(),
             (function (event) {
                 var localeRef = event.originalPath.getLastKey();
                 v18n.Locale.create(localeRef.toDocumentKey())

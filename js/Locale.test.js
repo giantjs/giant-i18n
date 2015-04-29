@@ -110,7 +110,7 @@
     test("Locale ready handler", function () {
         expect(1);
 
-        ['localeEnvironment', 'default', 'readyLocals'].toField()
+        ['localeEnvironment', '', 'readyLocals'].toField()
             .unsetKey();
 
         function onLocaleReady(event) {
@@ -121,7 +121,7 @@
         v18n.localeEventSpace
             .subscribeTo('locale.ready', 'locale'.toPath(), onLocaleReady);
 
-        ['localeEnvironment', 'default', 'readyLocales', 'locale/pt-br'].toItem()
+        ['localeEnvironment', '', 'readyLocales', 'locale/pt-br'].toItem()
             .setValue(true);
 
         v18n.localeEventSpace

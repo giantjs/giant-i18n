@@ -45,10 +45,10 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             init: function () {
                 /**
                  * Document key identifying environment.
-                 * Permanently set to 'localeEnvironment/default'.
+                 * Permanently set to 'localeEnvironment/'.
                  * @type {bookworm.DocumentKey}
                  */
-                this.entityKey = 'localeEnvironment/default'.toDocumentKey();
+                this.entityKey = 'localeEnvironment/'.toDocumentKey();
 
                 this.setEventPath('locale'.toPath());
             },
@@ -159,7 +159,7 @@ troop.amendPostponed(bookworm, 'entities', function () {
     // TODO: Subscribe through keys once it's supported by bookworm.
     bookworm.entities.subscribeTo(
         flock.ChangeEvent.EVENT_CACHE_CHANGE,
-        'document>localeEnvironment>default>currentLocale'.toPath(),
+        'document>localeEnvironment>>currentLocale'.toPath(),
         function (event) {
             v18n.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);

@@ -16,7 +16,7 @@
     test("Instantiation", function () {
         var locale = v18n.LocaleEnvironment.create();
 
-        ok(locale.entityKey.equals('localeEnvironment/default'.toDocumentKey()), "should set entityKey property");
+        ok(locale.entityKey.equals('localeEnvironment/'.toDocumentKey()), "should set entityKey property");
 
         strictEqual(v18n.LocaleEnvironment.create(), locale, "should be singleton");
     });
@@ -152,7 +152,7 @@
     test("Locale ready handler", function () {
         expect(1);
 
-        ['localeEnvironment', 'default', 'readyLocales'].toField()
+        ['localeEnvironment', '', 'readyLocales'].toField()
             .unsetKey();
 
         'foo'.toLocale().setAsCurrentLocale();
@@ -177,7 +177,7 @@
     test("Locale change handler", function () {
         expect(1);
 
-        'localeEnvironment/default'.toDocument()
+        'localeEnvironment/'.toDocument()
             .unsetKey();
 
         'pt-br'.toLocale().markAsReady();
