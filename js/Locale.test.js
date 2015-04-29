@@ -110,7 +110,7 @@
     test("Locale ready handler", function () {
         expect(1);
 
-        ['localeEnvironment', '', 'readyLocals'].toField()
+        ['localeEnvironment', '', 'readyLocales'].toField()
             .unsetKey();
 
         function onLocaleReady(event) {
