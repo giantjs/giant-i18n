@@ -12,6 +12,7 @@ module.exports = function (grunt) {
             'js/LocaleChangeEvent.js',
             'js/Locale.js',
             'js/LocaleEnvironment.js',
+            'js/LocaleBound.js',
             'js/Translatable.js',
             'js/exports.js'
         ],
