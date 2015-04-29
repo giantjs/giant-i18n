@@ -6,6 +6,7 @@ module.exports = function (grunt) {
         files: [
             'js/namespace.js',
             'js/config.js',
+            'js/globals/localeEventSpace.js',
             'js/documents/LocaleDocument.js',
             'js/documents/LocaleEnvironmentDocument.js',
             'js/LocaleChangeEvent.js',

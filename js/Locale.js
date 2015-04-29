@@ -25,7 +25,7 @@ troop.postpone(v18n, 'Locale', function () {
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
         })
-        .setEventSpace(evan.eventSpace)
+        .setEventSpace(v18n.localeEventSpace)
         .addConstants(/** @lends v18n.Locale */{
             /** @constant */
             EVENT_LOCALE_READY: 'locale.ready'

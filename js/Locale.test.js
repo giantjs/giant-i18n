@@ -118,13 +118,13 @@
                 "should trigger ready event");
         }
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .subscribeTo('locale.ready', 'locale'.toPath(), onLocaleReady);
 
         ['localeEnvironment', 'default', 'readyLocales', 'locale/pt-br'].toItem()
             .setValue(true);
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .unsubscribeFrom('locale.ready', 'locale'.toPath(), onLocaleReady);
     });
 }());

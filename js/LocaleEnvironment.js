@@ -23,7 +23,7 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .setEventSpace(evan.eventSpace)
+        .setEventSpace(v18n.localeEventSpace)
         .addConstants(/** @lends v18n.LocaleEnvironment */{
             /**
              * Signals that the current locale has changed.

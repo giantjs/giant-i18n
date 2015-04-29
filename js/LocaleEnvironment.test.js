@@ -161,7 +161,7 @@
             ok(true, "should trigger 'current locale ready' event");
         }
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'bar'.toLocale().markAsReady();
@@ -170,7 +170,7 @@
 
         'baz'.toLocale().markAsReady();
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 
@@ -186,12 +186,12 @@
             ok(true, "should trigger 'current locale ready' event");
         }
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
-        evan.eventSpace
+        v18n.localeEventSpace
             .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 }());
