@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, flock, bookworm, v18n */
+/*global dessert, troop, sntls, flock, rubberband, bookworm, v18n */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -50,6 +50,36 @@
 
         equal(translatable.toString(), 'bar',
             "should return translated string when current locale is set");
+
+        v18n.LocaleEnvironment.removeMocks();
+    });
+
+    test("Wrapping translatable in LiveTemplate", function () {
+            var translatable = 'hello {{foo}} world'.toTranslatable(),
+                template;
+
+        template = translatable.toLiveTemplate();
+
+        'locale/foo'.toDocument().setTranslations({
+            'hello {{foo}} world': "HELLO {{foo}} WORLD",
+            'all the': "ALL THE"
+        });
+
+        ok(template.isA(rubberband.LiveTemplate), "should return LiveTemplate instance");
+
+        template
+            .addReplacements({
+                '{{foo}}': "all the".toTranslatable()
+            });
+
+        v18n.LocaleEnvironment.addMocks({
+            getCurrentLocale: function () {
+                return 'foo'.toLocale();
+            }
+        });
+
+        equal(template.toString(), "HELLO ALL THE WORLD",
+            "should return resolved template with resolved translatables when serialized");
 
         v18n.LocaleEnvironment.removeMocks();
     });

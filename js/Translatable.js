@@ -51,6 +51,15 @@ troop.postpone(v18n, 'Translatable', function () {
             },
 
             /**
+             * Wraps translatable into a LiveTemplate instance.
+             * When the returned template is evaluated, so is the translatable.
+             * @returns {rubberband.LiveTemplate}
+             */
+            toLiveTemplate: function () {
+                return rubberband.LiveTemplate.create(this);
+            },
+
+            /**
              * Converts Translatable to a string, according to the current locale.
              * @returns {string}
              */
