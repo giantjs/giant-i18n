@@ -130,6 +130,8 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
                     currentLocaleKey = this.entityKey.toDocument().getCurrentLocaleKey();
 
                 if (locale.entityKey.equals(currentLocaleKey)) {
+                    // locale is teh current locale
+                    // signaling that current locale is ready for use
                     this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
                 }
 
@@ -145,7 +147,13 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
                     locale = event.localeAfter;
 
                 if (locale.isMarkedAsReady()) {
+                    // locale is marked ready for use
+                    // signaling that current locale is ready for use
                     this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
+                } else {
+                    // locale is not marked as ready
+                    // touching node to potentially signal that translations are not loaded yet
+                    locale.entityKey.toDocument().touchNode();
                 }
 
                 link.unLink();

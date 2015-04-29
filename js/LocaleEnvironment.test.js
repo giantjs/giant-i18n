@@ -175,7 +175,20 @@
     });
 
     test("Locale change handler", function () {
-        expect(1);
+        expect(2);
+
+        'localeEnvironment/'.toDocument()
+            .unsetKey();
+
+        bookworm.Document.addMocks({
+            touchNode: function () {
+                equal(this.entityKey.toString(), 'locale/pt-br', "should touch locale entity when locale is not marked ready");
+            }
+        });
+
+        'pt-br'.toLocale().setAsCurrentLocale();
+
+        bookworm.Document.removeMocks();
 
         'localeEnvironment/'.toDocument()
             .unsetKey();
@@ -183,7 +196,7 @@
         'pt-br'.toLocale().markAsReady();
 
         function onCurrentLocaleReady(event) {
-            ok(true, "should trigger 'current locale ready' event");
+            ok(true, "should trigger 'current locale ready' event when locale is marked ready");
         }
 
         v18n.localeEventSpace
