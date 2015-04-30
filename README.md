@@ -5,7 +5,7 @@ V18n
 
 *Internationalization framework*
 
-The goal of v18n is to provide a simple API for localization based on and in line with the design principles of [troop](https://github.com/danstocker/troop), [sntls](https://github.com/danstocker/sntls), and [rubberband](https://github.com/danstocker/rubberband). V18n's central class is the `Translatable`, that resolves to a translation depending on the current locale settings when serialized.
+The goal of v18n is to provide a simple API for localization based on and in line with the design principles of [troop](https://github.com/danstocker/troop), [sntls](https://github.com/danstocker/sntls), and [rubberband](https://github.com/danstocker/rubberband). In v18n, the central class is `Translatable`, which, when serialized,  resolves to a translation depending on the current locale settings. The library also introduces `LocaleEnvironment`, a singleton that manages the current locale, as well as the `LocaleBound` trait, which helps user-implemented classes to bind to locale changes.
 
 Examples
 --------
@@ -79,6 +79,14 @@ V18n uses the templating engine of rubberband, and thus allows expressions like 
     'de-de'.toLocale().setAsCurrentLocale();
     sentence.toString() // "Sie haben 6 Äpfel."
 
+### Getting the current locale
+
+The class `LocaleEnvironment` manages the current localization state.
+
+    'de-de'.toLocale().setAsCurrentLocale();
+
+    v18n.LocaleEnvironment.create().getCurrentLocale().toString() // 'de-de'
+
 ### Listening to locale changes
 
 Components of the application might need to listen to locale changes. The event 'locale.ready.current' or `v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY` signals that the current locale, already loaded and just changed, or previously set and just loaded, is ready for use.
@@ -89,10 +97,37 @@ Components of the application might need to listen to locale changes. The event 
             // updating widgets, etc.
         });
 
-### Getting the current locale
+### Binding to locale changes
 
-The class `LocaleEnvironment` manages the current localization state.
+In order to bind instances of any class to locale changes,
 
-    'de-de'.toLocale().setAsCurrentLocale();
+- You'll need to apply (add & initialize) the `LocaleBound` trait to the class.
+- Elevate the handler method.
+- Call `.bindToCurrentLocaleReady()` when the instance's life cycle begins.
+- Call `.unbindFromCurrentLocaleReady()` or `.unbindAll()` when the instance's life cycle ends.
+- Implement the handler method.
 
-    v18n.LocaleEnvironment.create().getCurrentLocale().toString() // 'de-de'
+For example,
+
+    var MyClass = troop.Base.extend()
+        .addTrait(v18n.LocaleBound)
+        .addMethods({
+            init: function () {
+                v18n.LocaleBound.init.call(this);
+                this.elevateMethod('onCurrentLocaleReady');
+            },
+
+            lifeCycleBegin: function () {
+                this.bindToCurrentLocaleReady(this.onCurrentLocaleReady);
+            },
+
+            lifeCycleEnd: function () {
+                this.unbindFromCurrentLocaleReady(this.onCurrentLocaleReady);
+            },
+
+            onCurrentLocaleReady: function () {
+                //... current locale is ready for use
+            }
+        });
+
+This is a very common pattern for [shoeshine](https://github.com/danstocker/shoeshine) widgets, which implement the callback methods `afterAdd()` and `afterRemove()`, corresponding to `lifeCycleBegin()` and `lifeCycleEnd()` in the example above.
