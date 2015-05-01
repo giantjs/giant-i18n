@@ -66,7 +66,7 @@ In order to tell v18n to translate a term, it has to be converted to a `Translat
 
 V18n uses the templating engine of rubberband, and thus allows expressions like the following.
 
-    var sentence = rubberband.LiveTemplate.create("You have {{appleCount}} {{appleForm}}.".toTranslatable())
+    var sentence = "You have {{appleCount}} {{appleForm}}.".toTranslatable().toLiveTemplate()
         .addReplacements({
             '{{appleCount}}': 6,
             '{{appleForm}}': "apple".toTranslatable()
