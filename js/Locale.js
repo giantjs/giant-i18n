@@ -122,7 +122,9 @@ troop.postpone(v18n, 'Locale', function () {
              * @returns {string}
              */
             getTranslation: function (originalString, multiplicity) {
-                multiplicity = multiplicity || 1;
+                if (typeof multiplicity === 'undefined') {
+                    multiplicity = 1;
+                }
 
                 var pluralIndex = this._getPluralIndex(multiplicity) || 0,
                     translation = this.entityKey.toDocument()
@@ -189,7 +191,7 @@ troop.amendPostponed(bookworm, 'DocumentKey', function () {
         /** @param {v18n.Locale} [expr] */
         isLocaleOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   v18n.Locale.isBaseOf(expr);
+                v18n.Locale.isBaseOf(expr);
         }
     });
 

@@ -96,10 +96,12 @@
             "should return original string when there is no match");
         equal(locale.getTranslation('apple'), 'apple',
             "should return singular form when multiplicity is not specified");
+        equal(locale.getTranslation('apple', 0), 'apples',
+            "should return plural form when multiplicity is 0");
         equal(locale.getTranslation('apple', 1), 'apple',
             "should return singular form when multiplicity is 1");
         equal(locale.getTranslation('apple', 2), 'apples',
-            "should return singular form when multiplicity is 1");
+            "should return plural form when multiplicity is 1");
     });
 
     test("Serialization", function () {
