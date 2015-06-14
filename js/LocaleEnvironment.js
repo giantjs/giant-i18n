@@ -161,14 +161,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
         });
 });
 
-troop.amendPostponed(bookworm, 'entityEventSpace', function () {
+troop.amendPostponed(bookworm, 'FieldKey', function () {
     "use strict";
 
-    // TODO: Subscribe through keys once it's supported by bookworm.
-    bookworm.entityEventSpace.subscribeTo(
-        bookworm.Entity.EVENT_ENTITY_CHANGE,
-        'entity>document>localeEnvironment>>currentLocale'.toPath(),
-        function (event) {
+    'localeEnvironment//currentLocale'.toFieldKey()
+        .subscribeTo(bookworm.Entity.EVENT_ENTITY_CHANGE, function (event) {
             v18n.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);
         });

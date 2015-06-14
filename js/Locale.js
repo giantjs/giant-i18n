@@ -155,7 +155,6 @@ troop.postpone(v18n, 'Locale', function () {
 troop.amendPostponed(bookworm, 'entityEventSpace', function () {
     "use strict";
 
-    // TODO: Refactor into key-based subscription
     bookworm.entityEventSpace
         .delegateSubscriptionTo(
             bookworm.Entity.EVENT_ENTITY_CHANGE,
