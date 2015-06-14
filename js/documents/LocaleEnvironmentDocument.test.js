@@ -22,14 +22,14 @@
 
         ok('locale/foo'.toDocumentKey().equals(localeKey), "should fetch current locale key from environment");
 
-        environmentDocument.unsetKey();
+        environmentDocument.unsetNode();
 
         equal(typeof environmentDocument.getCurrentLocaleKey(), 'undefined',
             "should return undefined when current locale is not set");
     });
 
     test("Current locale key setter", function () {
-        var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetKey();
+        var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetNode();
 
         raises(function () {
             environmentDocument.setCurrentLocaleKey();
@@ -48,7 +48,7 @@
     });
 
     test("Adding ready locale", function () {
-        var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetKey();
+        var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetNode();
 
         raises(function () {
             environmentDocument.addReadyLocale();
@@ -70,7 +70,7 @@
 
     test("Ready locale getter", function () {
         var environmentDocument = 'localeEnvironment/foo'.toDocument()
-            .unsetKey()
+            .unsetNode()
             .addReadyLocale('locale/pt-br'.toDocumentKey());
 
         raises(function () {

@@ -1,35 +1,18 @@
-/*global dessert, troop, sntls, flock, bookworm */
+/*global dessert, troop, sntls, bookworm */
 troop.amendPostponed(bookworm, 'config', function () {
     "use strict";
 
     bookworm.config
-        .setNode('document>document>locale'.toPath(), /** @class @lends v18n.LocaleNode*/{
-            /** @type {string} */
-            name: 'string',
+        .appendNode('document>field'.toPath(), {
+            'locale/name'         : {fieldType: 'string'},
+            /** Reserved. Not used currently. */
+            'locale/timezone'     : {fieldType: 'string'},
+            'locale/countryCode'  : {fieldType: 'string'},
+            'locale/languageCode' : {fieldType: 'string'},
+            'locale/pluralFormula': {fieldType: 'string'},
+            'locale/translations' : {fieldType: 'collection'},
 
-            /**
-             * Reserved. Not used currently.
-             * @type {string}
-             */
-            timezone: 'string',
-
-            /** @type {string} */
-            countryCode: 'string',
-
-            /** @type {string} */
-            languageCode: 'string',
-
-            /** @type {string} */
-            pluralFormula: 'string',
-
-            /** @type {object} */
-            translations: 'collection'
-        })
-        .setNode('document>document>localeEnvironment'.toPath(), /** @class @lends v18n.LocaleEnvironmentNode*/{
-            /** @type {string} */
-            currentLocale: 'reference',
-
-            /** @type {object} */
-            readyLocales: 'collection'
+            'localeEnvironment/currentLocale': {fieldType: 'reference'},
+            'localeEnvironment/readyLocales' : {fieldType: 'collection'}
         });
 });

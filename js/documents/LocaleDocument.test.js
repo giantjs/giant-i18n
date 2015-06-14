@@ -25,7 +25,7 @@
 
         bookworm.Field.addMocks({
             setValue: function (value) {
-                ok(this.entityKey.equals('locale/foo/pluralFormula'.toItemKey()),
+                ok(this.entityKey.equals('locale/foo/pluralFormula'.toFieldKey()),
                     "should set the correct field");
                 equal(value, 'nplurals=2; plural=(n != 1);',
                     "should pass formula to field value setter");
@@ -84,7 +84,7 @@
 
         bookworm.Field.addMocks({
             setValue: function (value) {
-                ok(this.entityKey.equals('locale/foo/translations'.toItemKey()),
+                ok(this.entityKey.equals('locale/foo/translations'.toFieldKey()),
                     "should set the correct field");
                 deepEqual(value, {
                     'hello': ['world'],

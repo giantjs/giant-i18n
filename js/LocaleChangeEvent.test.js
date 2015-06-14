@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, bookworm, v18n */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";

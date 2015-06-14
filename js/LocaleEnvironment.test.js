@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, bookworm, v18n */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -153,7 +153,7 @@
         expect(1);
 
         ['localeEnvironment', '', 'readyLocales'].toField()
-            .unsetKey();
+            .unsetNode();
 
         'foo'.toLocale().setAsCurrentLocale();
 
@@ -178,7 +178,7 @@
         expect(2);
 
         'localeEnvironment/'.toDocument()
-            .unsetKey();
+            .unsetNode();
 
         bookworm.Document.addMocks({
             touchNode: function () {
@@ -191,7 +191,7 @@
         bookworm.Document.removeMocks();
 
         'localeEnvironment/'.toDocument()
-            .unsetKey();
+            .unsetNode();
 
         'pt-br'.toLocale().markAsReady();
 

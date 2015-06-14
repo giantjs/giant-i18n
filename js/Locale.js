@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, bookworm, v18n */
 troop.postpone(v18n, 'Locale', function () {
     "use strict";
 
@@ -141,7 +141,7 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
-             * @param {flock.ChangeEvent} event
+             * @param {bookworm.EntityChangeEvent} event
              * @ignore
              */
             onLocaleMarkedAsReady: function (event) {
@@ -152,14 +152,15 @@ troop.postpone(v18n, 'Locale', function () {
         });
 });
 
-troop.amendPostponed(bookworm, 'entities', function () {
+troop.amendPostponed(bookworm, 'entityEventSpace', function () {
     "use strict";
 
-    bookworm.entities.eventSpace
+    // TODO: Refactor into key-based subscription
+    bookworm.entityEventSpace
         .delegateSubscriptionTo(
-            flock.ChangeEvent.EVENT_CACHE_CHANGE,
-            'document>localeEnvironment>>readyLocales'.toPath(),
-            'document>localeEnvironment>>readyLocales>|'.toQuery(),
+            bookworm.Entity.EVENT_ENTITY_CHANGE,
+            'entity>document>localeEnvironment>>readyLocales'.toPath(),
+            'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
             (function (event) {
                 var localeRef = event.originalPath.getLastKey();
                 v18n.Locale.create(localeRef.toDocumentKey())

@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, bookworm, v18n */
+/*global dessert, troop, sntls, evan, bookworm, v18n */
 troop.postpone(v18n, 'LocaleEnvironment', function () {
     "use strict";
 
@@ -104,13 +104,13 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             /**
              * Triggered when the 'currentLocale' field changes on the localeEnvironment document.
              * TODO: Add handler for when the entire localeEnvironment document changes.
-             * @param {flock.ChangeEvent} event
+             * @param {bookworm.EntityChangeEvent} event
              * @ignore
              */
             onCurrentLocaleChange: function (event) {
                 var link = evan.pushOriginalEvent(event),
-                    localeRefBefore = event.beforeValue,
-                    localeRefAfter = event.afterValue;
+                    localeRefBefore = event.beforeNode,
+                    localeRefAfter = event.afterNode;
 
                 this.spawnEvent(this.EVENT_LOCALE_CHANGE)
                     .setLocaleBefore(localeRefBefore && localeRefBefore.toDocumentKey().toLocale())
@@ -161,13 +161,13 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
         });
 });
 
-troop.amendPostponed(bookworm, 'entities', function () {
+troop.amendPostponed(bookworm, 'entityEventSpace', function () {
     "use strict";
 
     // TODO: Subscribe through keys once it's supported by bookworm.
-    bookworm.entities.subscribeTo(
-        flock.ChangeEvent.EVENT_CACHE_CHANGE,
-        'document>localeEnvironment>>currentLocale'.toPath(),
+    bookworm.entityEventSpace.subscribeTo(
+        bookworm.Entity.EVENT_ENTITY_CHANGE,
+        'entity>document>localeEnvironment>>currentLocale'.toPath(),
         function (event) {
             v18n.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);

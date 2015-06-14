@@ -38,12 +38,6 @@ var rubberband = rubberband || require('rubberband');
 
 /**
  * @namespace
- * @see https://github.com/danstocker/flock
- */
-var flock = flock || require('flock');
-
-/**
- * @namespace
  * @see https://github.com/danstocker/bookworm
  */
 var bookworm = bookworm || require('bookworm');
