@@ -4,21 +4,21 @@ module.exports = function (grunt) {
 
     var params = {
         files: [
-            'js/namespace.js',
-            'js/config.js',
-            'js/globals/localeEventSpace.js',
-            'js/documents/LocaleDocument.js',
-            'js/documents/LocaleEnvironmentDocument.js',
-            'js/LocaleChangeEvent.js',
-            'js/Locale.js',
-            'js/LocaleEnvironment.js',
-            'js/LocaleBound.js',
-            'js/Translatable.js',
-            'js/exports.js'
+            'src/namespace.js',
+            'src/config.js',
+            'src/globals/localeEventSpace.js',
+            'src/documents/LocaleDocument.js',
+            'src/documents/LocaleEnvironmentDocument.js',
+            'src/LocaleChangeEvent.js',
+            'src/Locale.js',
+            'src/LocaleEnvironment.js',
+            'src/LocaleBound.js',
+            'src/Translatable.js',
+            'src/exports.js'
         ],
 
         test: [
-            'js/jsTestDriver.conf'
+            'src/jsTestDriver.conf'
         ],
 
         globals: {}
