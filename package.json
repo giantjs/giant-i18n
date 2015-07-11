@@ -1,7 +1,7 @@
 {
     "name"           : "giant-i18n",
     "version"        : "0.0.3",
-    "description"    : "Internationalization framework",
+    "description"    : "Internationalization module for Giant",
     "keywords"       : [
         "internationalization",
         "internationalisation",
