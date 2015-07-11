@@ -1,4 +1,4 @@
-/*global giant, giant, giant, giant, giant */
+/*global giant */
 giant.postpone(giant, 'LocaleChangeEvent', function () {
     "use strict";
 

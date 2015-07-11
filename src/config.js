@@ -1,4 +1,4 @@
-/*global giant, giant, giant, giant */
+/*global giant */
 giant.amendPostponed(giant, 'config', function () {
     "use strict";
 
