@@ -1,6 +1,6 @@
 {
-    "name"           : "v18n",
-    "version"        : "0.3.0",
+    "name"           : "giant-i18n",
+    "version"        : "0.0.3",
     "description"    : "Internationalization framework",
     "keywords"       : [
         "internationalization",
@@ -15,7 +15,7 @@
     "license"        : "MIT",
     "repository"     : {
         "type": "git",
-        "url" : "git://github.com/danstocker/v18n.git"
+        "url" : "git@github.com:giantjs/giant-i18n.git"
     },
     "dependencies"   : {
         "bookworm"  : "~0.4.0",
