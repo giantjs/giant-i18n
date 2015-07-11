@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
+/*global giant, giant, giant, giant, giant, giant */
 /*global module, test, asyncTest, start, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -7,7 +7,7 @@
 
     test("Document surrogate", function () {
         var document = 'locale/foo'.toDocument();
-        ok(document.isA(v18n.LocaleDocument), "should return LocaleDocument instance");
+        ok(document.isA(giant.LocaleDocument), "should return LocaleDocument instance");
     });
 
     test("Plural formula setter", function () {
@@ -23,7 +23,7 @@
             localeDocument.setPluralFormula("foo bar baz");
         }, "should raise exception on invalid arguments");
 
-        bookworm.Field.addMocks({
+        giant.Field.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/pluralFormula'.toFieldKey()),
                     "should set the correct field");
@@ -35,7 +35,7 @@
         strictEqual(localeDocument.setPluralFormula('nplurals=2; plural=(n != 1);'), localeDocument,
             "should be chainable");
 
-        bookworm.Field.removeMocks();
+        giant.Field.removeMocks();
     });
 
     test("Translation getter", function () {
@@ -63,7 +63,7 @@
 
         var localeDocument = 'locale/foo'.toDocument();
 
-        bookworm.Item.addMocks({
+        giant.Item.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/translations/hello'.toItemKey()),
                     "should set the correct item");
@@ -74,7 +74,7 @@
         strictEqual(localeDocument.setTranslation('hello', ['world']), localeDocument,
             "should be chainable");
 
-        bookworm.Item.removeMocks();
+        giant.Item.removeMocks();
     });
 
     test("Translations setter", function () {
@@ -82,7 +82,7 @@
 
         var localeDocument = 'locale/foo'.toDocument();
 
-        bookworm.Field.addMocks({
+        giant.Field.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/translations'.toFieldKey()),
                     "should set the correct field");
@@ -98,6 +98,6 @@
             'apple': ['apple', 'apples']
         }), localeDocument, "should be chainable");
 
-        bookworm.Field.removeMocks();
+        giant.Field.removeMocks();
     });
 }());

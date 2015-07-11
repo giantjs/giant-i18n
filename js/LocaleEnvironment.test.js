@@ -1,31 +1,31 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
+/*global giant, giant, giant, giant, giant, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
     module("LocaleEnvironment", {
         setup: function () {
-            v18n.LocaleEnvironment.clearInstanceRegistry();
+            giant.LocaleEnvironment.clearInstanceRegistry();
         },
 
         teardown: function () {
-            v18n.LocaleEnvironment.clearInstanceRegistry();
+            giant.LocaleEnvironment.clearInstanceRegistry();
         }
     });
 
     test("Instantiation", function () {
-        var locale = v18n.LocaleEnvironment.create();
+        var locale = giant.LocaleEnvironment.create();
 
         ok(locale.entityKey.equals('localeEnvironment/'.toDocumentKey()), "should set entityKey property");
 
-        strictEqual(v18n.LocaleEnvironment.create(), locale, "should be singleton");
+        strictEqual(giant.LocaleEnvironment.create(), locale, "should be singleton");
     });
 
     test("Current locale getter", function () {
-        var environment = v18n.LocaleEnvironment.create(),
+        var environment = giant.LocaleEnvironment.create(),
             currentLocale;
 
-        v18n.LocaleEnvironmentDocument.addMocks({
+        giant.LocaleEnvironmentDocument.addMocks({
             getCurrentLocaleKey: function () {
                 ok(true, "should get current locale key from locale env document");
                 return 'locale/bt-br'.toDocumentKey();
@@ -34,16 +34,16 @@
 
         currentLocale = environment.getCurrentLocale();
 
-        v18n.LocaleEnvironmentDocument.removeMocks();
+        giant.LocaleEnvironmentDocument.removeMocks();
 
-        ok(currentLocale.isA(v18n.Locale), "should return Locale instance");
+        ok(currentLocale.isA(giant.Locale), "should return Locale instance");
         ok(currentLocale.entityKey.equals('locale/bt-br'.toDocumentKey()), "should set locale key in returned Locale");
     });
 
     test("Current locale setter", function () {
         expect(4);
 
-        var environment = v18n.LocaleEnvironment.create();
+        var environment = giant.LocaleEnvironment.create();
 
         raises(function () {
             environment.setCurrentLocale();
@@ -53,7 +53,7 @@
             environment.setCurrentLocale('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
-        v18n.LocaleEnvironmentDocument.addMocks({
+        giant.LocaleEnvironmentDocument.addMocks({
             setCurrentLocaleKey: function (localeKey) {
                 ok('locale/foo'.toDocumentKey().equals(localeKey), "should set the specified locale");
             }
@@ -62,13 +62,13 @@
         strictEqual(environment.setCurrentLocale('foo'.toLocale()), environment,
             "should be chainable");
 
-        v18n.LocaleEnvironmentDocument.removeMocks();
+        giant.LocaleEnvironmentDocument.removeMocks();
     });
 
     test("Marking locale as ready", function () {
         expect(4);
 
-        var environment = v18n.LocaleEnvironment.create();
+        var environment = giant.LocaleEnvironment.create();
 
         raises(function () {
             environment.markLocaleAsReady();
@@ -78,7 +78,7 @@
             environment.markLocaleAsReady('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
-        v18n.LocaleEnvironmentDocument.addMocks({
+        giant.LocaleEnvironmentDocument.addMocks({
             addReadyLocale: function (localeKey) {
                 ok('locale/foo'.toDocumentKey().equals(localeKey),
                     "should add locale to ready locale collection");
@@ -88,13 +88,13 @@
         strictEqual(environment.markLocaleAsReady('foo'.toLocale()), environment,
             "should be chainable");
 
-        v18n.LocaleEnvironmentDocument.removeMocks();
+        giant.LocaleEnvironmentDocument.removeMocks();
     });
 
     test("Locale readiness tester", function () {
         expect(5);
 
-        var environment = v18n.LocaleEnvironment.create();
+        var environment = giant.LocaleEnvironment.create();
 
         raises(function () {
             environment.markLocaleAsReady();
@@ -104,7 +104,7 @@
             environment.markLocaleAsReady('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
-        v18n.LocaleEnvironmentDocument.addMocks({
+        giant.LocaleEnvironmentDocument.addMocks({
             getReadyLocale: function (localeKey) {
                 ok('locale/foo'.toDocumentKey().equals(localeKey),
                     "should fetch locale readiness from collection");
@@ -115,7 +115,7 @@
         equal(environment.isLocaleMarkedAsReady('foo'.toLocale()), false,
             "should return false for locale not in collection");
 
-        v18n.LocaleEnvironmentDocument
+        giant.LocaleEnvironmentDocument
             .removeMocks()
             .addMocks({
                 getReadyLocale: function () {
@@ -126,23 +126,23 @@
         equal(environment.isLocaleMarkedAsReady('foo'.toLocale()), true,
             "should return true for locale present in collection");
 
-        v18n.LocaleEnvironmentDocument.removeMocks();
+        giant.LocaleEnvironmentDocument.removeMocks();
     });
 
     test("Current locale change handler", function () {
         expect(5);
 
         function onLocaleChange(event) {
-            ok(event.isA(v18n.LocaleChangeEvent), "should trigger LocaleChangeEvent");
-            ok(event.localeBefore.isA(v18n.Locale), "should set before locale");
+            ok(event.isA(giant.LocaleChangeEvent), "should trigger LocaleChangeEvent");
+            ok(event.localeBefore.isA(giant.Locale), "should set before locale");
             ok(event.localeBefore.entityKey.equals('locale/foo'.toDocumentKey()),
                 "should set before locale");
-            ok(event.localeAfter.isA(v18n.Locale), "should set after locale");
+            ok(event.localeAfter.isA(giant.Locale), "should set after locale");
             ok(event.localeAfter.entityKey.equals('locale/bar'.toDocumentKey()),
                 "should set before locale");
         }
 
-        v18n.LocaleEnvironment.create()
+        giant.LocaleEnvironment.create()
             .setCurrentLocale('foo'.toLocale())
             .subscribeTo('locale.change', onLocaleChange)
             .setCurrentLocale('bar'.toLocale())
@@ -161,7 +161,7 @@
             ok(true, "should trigger 'current locale ready' event");
         }
 
-        v18n.localeEventSpace
+        giant.localeEventSpace
             .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'bar'.toLocale().markAsReady();
@@ -170,7 +170,7 @@
 
         'baz'.toLocale().markAsReady();
 
-        v18n.localeEventSpace
+        giant.localeEventSpace
             .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 
@@ -180,7 +180,7 @@
         'localeEnvironment/'.toDocument()
             .unsetNode();
 
-        bookworm.Document.addMocks({
+        giant.Document.addMocks({
             touchNode: function () {
                 equal(this.entityKey.toString(), 'locale/pt-br', "should touch locale entity when locale is not marked ready");
             }
@@ -188,7 +188,7 @@
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
-        bookworm.Document.removeMocks();
+        giant.Document.removeMocks();
 
         'localeEnvironment/'.toDocument()
             .unsetNode();
@@ -199,12 +199,12 @@
             ok(true, "should trigger 'current locale ready' event when locale is marked ready");
         }
 
-        v18n.localeEventSpace
+        giant.localeEventSpace
             .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
-        v18n.localeEventSpace
+        giant.localeEventSpace
             .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 }());

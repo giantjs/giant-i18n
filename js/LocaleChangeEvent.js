@@ -1,46 +1,46 @@
-/*global dessert, troop, sntls, evan, v18n */
-troop.postpone(v18n, 'LocaleChangeEvent', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'LocaleChangeEvent', function () {
     "use strict";
 
-    var base = evan.Event,
+    var base = giant.Event,
         self = base.extend();
 
     /**
-     * @name v18n.LocaleChangeEvent.create
+     * @name giant.LocaleChangeEvent.create
      * @function
      * @param {string} eventName
-     * @param {evan.EventSpace} eventSpace
-     * @returns {v18n.LocaleChangeEvent}
+     * @param {giant.EventSpace} eventSpace
+     * @returns {giant.LocaleChangeEvent}
      */
 
     /**
      * @class
-     * @extends troop.Base
+     * @extends giant.Base
      */
-    v18n.LocaleChangeEvent = self
-        .addMethods(/** @lends v18n.LocaleChangeEvent# */{
+    giant.LocaleChangeEvent = self
+        .addMethods(/** @lends giant.LocaleChangeEvent# */{
             /**
              * @param {string} eventName
-             * @param {evan.EventSpace} eventSpace
+             * @param {giant.EventSpace} eventSpace
              * @ignore
              */
             init: function (eventName, eventSpace) {
                 base.init.call(this, eventName, eventSpace);
 
                 /**
-                 * @type {v18n.Locale}
+                 * @type {giant.Locale}
                  */
                 this.localeBefore = undefined;
 
                 /**
-                 * @type {v18n.Locale}
+                 * @type {giant.Locale}
                  */
                 this.localeAfter = undefined;
             },
 
             /**
-             * @param {v18n.Locale} localeBefore
-             * @returns {v18n.LocaleChangeEvent}
+             * @param {giant.Locale} localeBefore
+             * @returns {giant.LocaleChangeEvent}
              */
             setLocaleBefore: function (localeBefore) {
                 this.localeBefore = localeBefore;
@@ -48,8 +48,8 @@ troop.postpone(v18n, 'LocaleChangeEvent', function () {
             },
 
             /**
-             * @param {v18n.Locale} localeAfter
-             * @returns {v18n.LocaleChangeEvent}
+             * @param {giant.Locale} localeAfter
+             * @returns {giant.LocaleChangeEvent}
              */
             setLocaleAfter: function (localeAfter) {
                 this.localeAfter = localeAfter;
@@ -58,11 +58,11 @@ troop.postpone(v18n, 'LocaleChangeEvent', function () {
         });
 });
 
-troop.amendPostponed(evan, 'Event', function () {
+giant.amendPostponed(giant, 'Event', function () {
     "use strict";
 
-    evan.Event
-        .addSurrogate(v18n, 'LocaleChangeEvent', function (eventName) {
+    giant.Event
+        .addSurrogate(giant, 'LocaleChangeEvent', function (eventName) {
             var prefix = 'locale.change';
             return eventName.substr(0, prefix.length) === prefix;
         });

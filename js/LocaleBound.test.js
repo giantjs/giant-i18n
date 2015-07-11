@@ -1,22 +1,22 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
+/*global giant, giant, giant, giant, giant, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
     module("LocaleBound");
 
-    var LocaleBoundClass = troop.Base.extend()
-        .addTrait(v18n.LocaleBound)
+    var LocaleBoundClass = giant.Base.extend()
+        .addTrait(giant.LocaleBound)
         .addMethods({
             init: function () {
-                v18n.LocaleBound.init.call(this);
+                giant.LocaleBound.init.call(this);
             }
         });
 
     test("Instantiation", function () {
         var localeBound = LocaleBoundClass.create();
 
-        ok(localeBound.localeBindings.isA(sntls.Collection), "should initialize localeBindings property");
+        ok(localeBound.localeBindings.isA(giant.Collection), "should initialize localeBindings property");
         deepEqual(localeBound.localeBindings.items, {
             'locale.ready.current': []
         }, "should set localeBindings contents");
@@ -38,9 +38,9 @@
             localeBound.bindToCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 
-        v18n.LocaleEnvironment.addMocks({
+        giant.LocaleEnvironment.addMocks({
             subscribeTo: function (eventName, handler) {
-                equal(eventName, v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
+                equal(eventName, giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
                     "should subscribe to current locale change event");
                 strictEqual(handler, onCurrentLocaleReady, "should pass handler to subscription");
             }
@@ -52,7 +52,7 @@
             'locale.ready.current': [onCurrentLocaleReady]
         }, "should add handler to handler lookup");
 
-        v18n.LocaleEnvironment.removeMocks();
+        giant.LocaleEnvironment.removeMocks();
     });
 
     test("Re-binding to 'current locale change'", function () {
@@ -84,9 +84,9 @@
             localeBound.unbindFromCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 
-        v18n.LocaleEnvironment.addMocks({
+        giant.LocaleEnvironment.addMocks({
             unsubscribeFrom: function (eventName, handler) {
-                equal(eventName, v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
+                equal(eventName, giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
                     "should unsubscribe from current locale change event");
                 strictEqual(handler, onCurrentLocaleReady, "should pass handler to unsubscription");
             }
@@ -98,7 +98,7 @@
             'locale.ready.current': []
         }, "should remove handler from handler lookup");
 
-        v18n.LocaleEnvironment.removeMocks();
+        giant.LocaleEnvironment.removeMocks();
     });
 
     test("Re-unbinding from 'current locale change'", function () {
@@ -134,7 +134,7 @@
                 .bindToCurrentLocaleReady(onCurrentLocaleReady4),
             unsubscribedHandlers = [];
 
-        v18n.LocaleEnvironment.addMocks({
+        giant.LocaleEnvironment.addMocks({
             unsubscribeFrom: function (eventName, handler) {
                 unsubscribedHandlers.push([eventName, handler]);
             }
@@ -142,13 +142,13 @@
 
         strictEqual(localeBound.unbindAll(), localeBound, "should be chainable");
 
-        v18n.LocaleEnvironment.removeMocks();
+        giant.LocaleEnvironment.removeMocks();
 
         deepEqual(unsubscribedHandlers, [
-            [v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady1],
-            [v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady2],
-            [v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady3],
-            [v18n.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady4]
+            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady1],
+            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady2],
+            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady3],
+            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady4]
         ], "should unsubscribe from handlers");
 
         deepEqual(localeBound.localeBindings.items, {

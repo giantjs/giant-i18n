@@ -1,36 +1,36 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
-troop.postpone(v18n, 'Locale', function () {
+/*global giant, giant, giant, giant, giant, giant */
+giant.postpone(giant, 'Locale', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend()
-            .addTrait(evan.Evented);
+            .addTrait(giant.Evented);
 
     /**
-     * @name v18n.Locale.create
+     * @name giant.Locale.create
      * @function
-     * @param {bookworm.DocumentKey} localeKey
-     * @returns {v18n.Locale}
+     * @param {giant.DocumentKey} localeKey
+     * @returns {giant.Locale}
      */
 
     /**
      * Represents a locale, such as 'en-us', or 'de-de'. Provides an API for setting a locale
      * as current locale, as well as translating strings.
      * @class
-     * @extends troop.Base
-     * @extends evan.Evented
-     * @extends rubberband.Stringifiable
+     * @extends giant.Base
+     * @extends giant.Evented
+     * @extends giant.Stringifiable
      */
-    v18n.Locale = self
+    giant.Locale = self
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
         })
-        .setEventSpace(v18n.localeEventSpace)
-        .addConstants(/** @lends v18n.Locale */{
+        .setEventSpace(giant.localeEventSpace)
+        .addConstants(/** @lends giant.Locale */{
             /** @constant */
             EVENT_LOCALE_READY: 'locale.ready'
         })
-        .addPrivateMethods(/** @lends v18n.Locale# */{
+        .addPrivateMethods(/** @lends giant.Locale# */{
             /**
              * TODO: Replace eval with parsing. (long term)
              * @param multiplicity
@@ -61,17 +61,17 @@ troop.postpone(v18n, 'Locale', function () {
                 return this.getPluralIndex && this.getPluralIndex(multiplicity);
             }
         })
-        .addMethods(/** @lends v18n.Locale# */{
+        .addMethods(/** @lends giant.Locale# */{
             /**
-             * @param {bookworm.DocumentKey} localeKey
+             * @param {giant.DocumentKey} localeKey
              * @ignore
              */
             init: function (localeKey) {
-                dessert.isDocumentKey(localeKey, "Invalid locale key");
+                giant.isDocumentKey(localeKey, "Invalid locale key");
 
                 /**
                  * Document key identifying locale.
-                 * @type {bookworm.DocumentKey}
+                 * @type {giant.DocumentKey}
                  */
                 this.entityKey = localeKey;
 
@@ -88,22 +88,22 @@ troop.postpone(v18n, 'Locale', function () {
 
             /**
              * Sets this locale as current.
-             * @returns {v18n.Locale}
+             * @returns {giant.Locale}
              */
             setAsCurrentLocale: function () {
-                v18n.LocaleEnvironment.create().setCurrentLocale(this);
+                giant.LocaleEnvironment.create().setCurrentLocale(this);
                 return this;
             },
 
             /**
              * Marks locale as ready for use.
-             * This is how the application signals to v18n that loading and merging the locale
+             * This is how the application signals to giant that loading and merging the locale
              * has finished. V18n is agnostic about the process by which locales are loaded,
-             * so the application needs to tell v18n explicitly that it has.
-             * @returns {v18n.Locale}
+             * so the application needs to tell giant explicitly that it has.
+             * @returns {giant.Locale}
              */
             markAsReady: function () {
-                v18n.LocaleEnvironment.create().markLocaleAsReady(this);
+                giant.LocaleEnvironment.create().markLocaleAsReady(this);
                 return this;
             },
 
@@ -112,7 +112,7 @@ troop.postpone(v18n, 'Locale', function () {
              * @returns {boolean}
              */
             isMarkedAsReady: function () {
-                return v18n.LocaleEnvironment.create().isLocaleMarkedAsReady(this);
+                return giant.LocaleEnvironment.create().isLocaleMarkedAsReady(this);
             },
 
             /**
@@ -141,40 +141,40 @@ troop.postpone(v18n, 'Locale', function () {
             },
 
             /**
-             * @param {bookworm.EntityChangeEvent} event
+             * @param {giant.EntityChangeEvent} event
              * @ignore
              */
             onLocaleMarkedAsReady: function (event) {
-                var link = evan.pushOriginalEvent(event);
+                var link = giant.pushOriginalEvent(event);
                 this.triggerSync(this.EVENT_LOCALE_READY);
                 link.unLink();
             }
         });
 });
 
-troop.amendPostponed(bookworm, 'entityEventSpace', function () {
+giant.amendPostponed(giant, 'entityEventSpace', function () {
     "use strict";
 
-    bookworm.entityEventSpace
+    giant.entityEventSpace
         .delegateSubscriptionTo(
-            bookworm.Entity.EVENT_ENTITY_CHANGE,
+            giant.Entity.EVENT_ENTITY_CHANGE,
             'entity>document>localeEnvironment>>readyLocales'.toPath(),
             'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
             (function (event) {
                 var localeRef = event.originalPath.getLastKey();
-                v18n.Locale.create(localeRef.toDocumentKey())
+                giant.Locale.create(localeRef.toDocumentKey())
                     .onLocaleMarkedAsReady(event);
             }));
 });
 
-troop.amendPostponed(bookworm, 'DocumentKey', function () {
+giant.amendPostponed(giant, 'DocumentKey', function () {
     "use strict";
 
-    bookworm.DocumentKey
-        .addMethods(/** @lends bookworm.DocumentKey */{
-            /** @returns {v18n.Locale} */
+    giant.DocumentKey
+        .addMethods(/** @lends giant.DocumentKey */{
+            /** @returns {giant.Locale} */
             toLocale: function () {
-                return v18n.Locale.create(this);
+                return giant.Locale.create(this);
             }
         });
 });
@@ -182,28 +182,28 @@ troop.amendPostponed(bookworm, 'DocumentKey', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
-        /** @param {v18n.Locale} expr */
+    giant.addTypes(/** @lends giant */{
+        /** @param {giant.Locale} expr */
         isLocale: function (expr) {
-            return v18n.Locale.isBaseOf(expr);
+            return giant.Locale.isBaseOf(expr);
         },
 
-        /** @param {v18n.Locale} [expr] */
+        /** @param {giant.Locale} [expr] */
         isLocaleOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                v18n.Locale.isBaseOf(expr);
+                giant.Locale.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
-             * @returns {v18n.Locale}
+             * @returns {giant.Locale}
              */
             toLocale: function () {
                 var localeKey = ['locale', this.valueOf()].toDocumentKey();
-                return v18n.Locale.create(localeKey);
+                return giant.Locale.create(localeKey);
             }
         },
         false, false, false);

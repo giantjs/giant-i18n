@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls, bookworm, v18n */
-troop.postpone(v18n, 'LocaleEnvironmentDocument', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
     "use strict";
 
-    var base = bookworm.Document,
+    var base = giant.Document,
         self = base.extend();
 
     /**
-     * @name v18n.LocaleEnvironmentDocument.create
+     * @name giant.LocaleEnvironmentDocument.create
      * @function
-     * @param {bookworm.DocumentKey} localeEnvironmentKey
-     * @returns {v18n.LocaleEnvironmentDocument}
+     * @param {giant.DocumentKey} localeEnvironmentKey
+     * @returns {giant.LocaleEnvironmentDocument}
      */
 
     /**
      * @class
-     * @extends bookworm.Document
+     * @extends giant.Document
      */
-    v18n.LocaleEnvironmentDocument = self
-        .addMethods(/** @lends v18n.LocaleEnvironmentDocument# */{
+    giant.LocaleEnvironmentDocument = self
+        .addMethods(/** @lends giant.LocaleEnvironmentDocument# */{
             /**
              * Retrieves the current document key.
-             * @returns {bookworm.DocumentKey}
+             * @returns {giant.DocumentKey}
              */
             getCurrentLocaleKey: function () {
                 var localeRef = this.getField('currentLocale').getValue();
@@ -28,41 +28,41 @@ troop.postpone(v18n, 'LocaleEnvironmentDocument', function () {
             },
 
             /**
-             * @param {bookworm.DocumentKey} localeKey
-             * @returns {v18n.LocaleEnvironmentDocument}
+             * @param {giant.DocumentKey} localeKey
+             * @returns {giant.LocaleEnvironmentDocument}
              */
             setCurrentLocaleKey: function (localeKey) {
-                dessert.isDocumentKey(localeKey, "Invalid locale key");
+                giant.isDocumentKey(localeKey, "Invalid locale key");
                 this.getField('currentLocale').setValue(localeKey.toString());
                 return this;
             },
 
             /**
-             * @param {bookworm.DocumentKey} localeKey
-             * @returns {v18n.LocaleEnvironmentDocument}
+             * @param {giant.DocumentKey} localeKey
+             * @returns {giant.LocaleEnvironmentDocument}
              */
             addReadyLocale: function (localeKey) {
-                dessert.isDocumentKey(localeKey, "Invalid locale key");
+                giant.isDocumentKey(localeKey, "Invalid locale key");
                 this.getField('readyLocales').getItem(localeKey.toString()).setValue(true);
                 return this;
             },
 
             /**
-             * @param {bookworm.DocumentKey} localeKey
+             * @param {giant.DocumentKey} localeKey
              * @returns {boolean}
              */
             getReadyLocale: function (localeKey) {
-                dessert.isDocumentKey(localeKey, "Invalid locale key");
+                giant.isDocumentKey(localeKey, "Invalid locale key");
                 return this.getField('readyLocales').getItem(localeKey.toString()).getValue();
             }
         });
 });
 
-troop.amendPostponed(bookworm, 'Document', function () {
+giant.amendPostponed(giant, 'Document', function () {
     "use strict";
 
-    bookworm.Document
-        .addSurrogate(v18n, 'LocaleEnvironmentDocument', function (documentKey) {
+    giant.Document
+        .addSurrogate(giant, 'LocaleEnvironmentDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'localeEnvironment';
         });
 });

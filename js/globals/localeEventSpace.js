@@ -1,10 +1,10 @@
-/*global dessert, troop, sntls, v18n */
-troop.postpone(v18n, 'localeEventSpace', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'localeEventSpace', function () {
     "use strict";
 
     /**
      * Event space dedicated to locale events.
-     * @type {evan.EventSpace}
+     * @type {giant.EventSpace}
      */
-    v18n.localeEventSpace = evan.EventSpace.create();
+    giant.localeEventSpace = giant.EventSpace.create();
 });

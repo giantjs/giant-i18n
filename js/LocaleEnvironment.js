@@ -1,30 +1,30 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
-troop.postpone(v18n, 'LocaleEnvironment', function () {
+/*global giant, giant, giant, giant, giant, giant */
+giant.postpone(giant, 'LocaleEnvironment', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend()
-            .addTrait(evan.Evented);
+            .addTrait(giant.Evented);
 
     /**
      * Creates or retrieves a LocaleEnvironment instance.
-     * @name v18n.LocaleEnvironment.create
+     * @name giant.LocaleEnvironment.create
      * @function
-     * @returns {v18n.LocaleEnvironment}
+     * @returns {giant.LocaleEnvironment}
      */
 
     /**
      * Manages current locale settings.
      * @class
-     * @extends troop.Base
-     * @extends evan.Evented
+     * @extends giant.Base
+     * @extends giant.Evented
      */
-    v18n.LocaleEnvironment = self
+    giant.LocaleEnvironment = self
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .setEventSpace(v18n.localeEventSpace)
-        .addConstants(/** @lends v18n.LocaleEnvironment */{
+        .setEventSpace(giant.localeEventSpace)
+        .addConstants(/** @lends giant.LocaleEnvironment */{
             /**
              * Signals that the current locale has changed.
              * Does not mean though that the new locale is loaded and is ready for use.
@@ -40,13 +40,13 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
              */
             EVENT_CURRENT_LOCALE_READY: 'locale.ready.current'
         })
-        .addMethods(/** @lends v18n.LocaleEnvironment# */{
+        .addMethods(/** @lends giant.LocaleEnvironment# */{
             /** @ignore */
             init: function () {
                 /**
                  * Document key identifying environment.
                  * Permanently set to 'localeEnvironment/'.
-                 * @type {bookworm.DocumentKey}
+                 * @type {giant.DocumentKey}
                  */
                 this.entityKey = 'localeEnvironment/'.toDocumentKey();
 
@@ -55,7 +55,7 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
 
             /**
              * Fetches current locale as a Locale instance.
-             * @returns {v18n.Locale}
+             * @returns {giant.Locale}
              */
             getCurrentLocale: function () {
                 var localeKey = this.entityKey.toDocument().getCurrentLocaleKey();
@@ -66,13 +66,13 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
              * Sets current locale.
              * There is a shorthand for this on the Locale class.
              * @example
-             * v18n.LocaleEnvironment.create().setCurrentLocale('pt-br'.toLocale())
-             * @param {v18n.Locale} locale
-             * @returns {v18n.LocaleEnvironment}
-             * @see v18n.Locale#setAsCurrentLocale
+             * giant.LocaleEnvironment.create().setCurrentLocale('pt-br'.toLocale())
+             * @param {giant.Locale} locale
+             * @returns {giant.LocaleEnvironment}
+             * @see giant.Locale#setAsCurrentLocale
              */
             setCurrentLocale: function (locale) {
-                dessert.isLocale(locale, "Invalid locale");
+                giant.isLocale(locale, "Invalid locale");
                 this.entityKey.toDocument()
                     .setCurrentLocaleKey(locale.entityKey);
                 return this;
@@ -80,11 +80,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
 
             /**
              * Marks specified locale as ready for use.
-             * @param {v18n.Locale} locale
-             * @returns {v18n.LocaleEnvironment}
+             * @param {giant.Locale} locale
+             * @returns {giant.LocaleEnvironment}
              */
             markLocaleAsReady: function (locale) {
-                dessert.isLocale(locale, "Invalid locale");
+                giant.isLocale(locale, "Invalid locale");
                 this.entityKey.toDocument()
                     .addReadyLocale(locale.entityKey);
                 return this;
@@ -92,11 +92,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
 
             /**
              * Tests whether the specified locale is marked as ready.
-             * @param {v18n.Locale} locale
+             * @param {giant.Locale} locale
              * @returns {boolean}
              */
             isLocaleMarkedAsReady: function (locale) {
-                dessert.isLocale(locale, "Invalid locale");
+                giant.isLocale(locale, "Invalid locale");
                 return !!this.entityKey.toDocument()
                     .getReadyLocale(locale.entityKey);
             },
@@ -104,11 +104,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             /**
              * Triggered when the 'currentLocale' field changes on the localeEnvironment document.
              * TODO: Add handler for when the entire localeEnvironment document changes.
-             * @param {bookworm.EntityChangeEvent} event
+             * @param {giant.EntityChangeEvent} event
              * @ignore
              */
             onCurrentLocaleChange: function (event) {
-                var link = evan.pushOriginalEvent(event),
+                var link = giant.pushOriginalEvent(event),
                     localeRefBefore = event.beforeNode,
                     localeRefAfter = event.afterNode;
 
@@ -121,11 +121,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             },
 
             /**
-             * @param {evan.Event} event
+             * @param {giant.Event} event
              * @ignore
              */
             onLocaleReady: function (event) {
-                var link = evan.pushOriginalEvent(event),
+                var link = giant.pushOriginalEvent(event),
                     locale = event.sender,
                     currentLocaleKey = this.entityKey.toDocument().getCurrentLocaleKey();
 
@@ -139,11 +139,11 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
             },
 
             /**
-             * @param {v18n.LocaleChangeEvent} event
+             * @param {giant.LocaleChangeEvent} event
              * @ignore
              */
             onLocaleChange: function (event) {
-                var link = evan.pushOriginalEvent(event),
+                var link = giant.pushOriginalEvent(event),
                     locale = event.localeAfter;
 
                 if (locale.isMarkedAsReady()) {
@@ -161,26 +161,26 @@ troop.postpone(v18n, 'LocaleEnvironment', function () {
         });
 });
 
-troop.amendPostponed(bookworm, 'FieldKey', function () {
+giant.amendPostponed(giant, 'FieldKey', function () {
     "use strict";
 
     'localeEnvironment//currentLocale'.toFieldKey()
-        .subscribeTo(bookworm.Entity.EVENT_ENTITY_CHANGE, function (event) {
-            v18n.LocaleEnvironment.create()
+        .subscribeTo(giant.Entity.EVENT_ENTITY_CHANGE, function (event) {
+            giant.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);
         });
 });
 
-troop.amendPostponed(v18n, 'LocaleEnvironment', function () {
+giant.amendPostponed(giant, 'LocaleEnvironment', function () {
     "use strict";
 
-    v18n.LocaleEnvironment.create()
-        .subscribeTo(v18n.Locale.EVENT_LOCALE_READY, function (event) {
-            v18n.LocaleEnvironment.create()
+    giant.LocaleEnvironment.create()
+        .subscribeTo(giant.Locale.EVENT_LOCALE_READY, function (event) {
+            giant.LocaleEnvironment.create()
                 .onLocaleReady(event);
         })
-        .subscribeTo(v18n.LocaleEnvironment.EVENT_LOCALE_CHANGE, function (event) {
-            v18n.LocaleEnvironment.create()
+        .subscribeTo(giant.LocaleEnvironment.EVENT_LOCALE_CHANGE, function (event) {
+            giant.LocaleEnvironment.create()
                 .onLocaleChange(event);
         });
 });

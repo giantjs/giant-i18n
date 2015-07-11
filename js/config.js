@@ -1,8 +1,8 @@
-/*global dessert, troop, sntls, bookworm */
-troop.amendPostponed(bookworm, 'config', function () {
+/*global giant, giant, giant, giant */
+giant.amendPostponed(giant, 'config', function () {
     "use strict";
 
-    bookworm.config
+    giant.config
         .appendNode('document>field'.toPath(), {
             'locale/name'         : {fieldType: 'string'},
             /** Reserved. Not used currently. */

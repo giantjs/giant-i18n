@@ -1,7 +1,7 @@
 /**
  * Library exports
  */
-/*global v18n, module */
+/*global giant, module */
 if (typeof module === 'object') {
-    module.exports = v18n;
+    module.exports = giant;
 }

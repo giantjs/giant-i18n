@@ -1,34 +1,34 @@
-/*global dessert, troop, sntls, rubberband, v18n */
-troop.postpone(v18n, 'Translatable', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'Translatable', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend();
 
     /**
-     * @name v18n.Translatable.create
+     * @name giant.Translatable.create
      * @function
-     * @param {string|rubberband.Stringifiable} originalString
-     * @returns {v18n.Translatable}
+     * @param {string|giant.Stringifiable} originalString
+     * @returns {giant.Translatable}
      */
 
     /**
      * Represents a string, that might manifest in different languages depending on the current locale.
      * @class
-     * @extends troop.Base
-     * @extends rubberband.Stringifiable
+     * @extends giant.Base
+     * @extends giant.Stringifiable
      */
-    v18n.Translatable = self
-        .addMethods(/** @lends v18n.Translatable# */{
+    giant.Translatable = self
+        .addMethods(/** @lends giant.Translatable# */{
             /**
-             * @param {string|rubberband.Stringifiable} originalString
+             * @param {string|giant.Stringifiable} originalString
              * @ignore
              */
             init: function (originalString) {
                 /**
                  * Original string associated with the translatable.
                  * This will be used as the key when looking up translations.
-                 * @type {string|rubberband.Stringifiable}
+                 * @type {string|giant.Stringifiable}
                  */
                 this.originalString = originalString;
 
@@ -43,7 +43,7 @@ troop.postpone(v18n, 'Translatable', function () {
             /**
              * Sets multiplicity of translatable.
              * @param {number} multiplicity
-             * @returns {v18n.Translatable}
+             * @returns {giant.Translatable}
              */
             setMultiplicity: function (multiplicity) {
                 this.multiplicity = multiplicity;
@@ -53,10 +53,10 @@ troop.postpone(v18n, 'Translatable', function () {
             /**
              * Wraps translatable into a LiveTemplate instance.
              * When the returned template is evaluated, so is the translatable.
-             * @returns {rubberband.LiveTemplate}
+             * @returns {giant.LiveTemplate}
              */
             toLiveTemplate: function () {
-                return rubberband.LiveTemplate.create(this);
+                return giant.LiveTemplate.create(this);
             },
 
             /**
@@ -64,8 +64,8 @@ troop.postpone(v18n, 'Translatable', function () {
              * @returns {string}
              */
             toString: function () {
-                var originalString = rubberband.Stringifier.stringify(this.originalString),
-                    currentLocale = v18n.LocaleEnvironment.create().getCurrentLocale();
+                var originalString = giant.Stringifier.stringify(this.originalString),
+                    currentLocale = giant.LocaleEnvironment.create().getCurrentLocale();
 
                 return currentLocale ?
                     currentLocale.getTranslation(originalString, this.multiplicity) :
@@ -77,15 +77,15 @@ troop.postpone(v18n, 'Translatable', function () {
 (function () {
     "use strict";
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
              * Converts string to a translatable.
-             * @returns {v18n.Translatable}
+             * @returns {giant.Translatable}
              */
             toTranslatable: function () {
-                return v18n.Translatable.create(this.valueOf());
+                return giant.Translatable.create(this.valueOf());
             }
         },
         false, false, false);

@@ -1,23 +1,23 @@
-/*global dessert, troop, sntls, bookworm, v18n */
-troop.postpone(v18n, 'LocaleDocument', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'LocaleDocument', function () {
     "use strict";
 
-    var base = bookworm.Document,
+    var base = giant.Document,
         self = base.extend();
 
     /**
-     * @name v18n.LocaleDocument.create
+     * @name giant.LocaleDocument.create
      * @function
-     * @param {bookworm.DocumentKey} localeKey
-     * @returns {v18n.LocaleDocument}
+     * @param {giant.DocumentKey} localeKey
+     * @returns {giant.LocaleDocument}
      */
 
     /**
      * @class
-     * @extends bookworm.Document
+     * @extends giant.Document
      */
-    v18n.LocaleDocument = self
-        .addConstants(/** @lends v18n.LocaleDocument */{
+    giant.LocaleDocument = self
+        .addConstants(/** @lends giant.LocaleDocument */{
             /**
              * @type {RegExp}
              * @constant
@@ -25,7 +25,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
              */
             RE_PLURAL_FORMULA_VALIDATOR: /^\s*nplurals\s*=\s*\d+;\s*plural\s*=\s*[()n\s\d!><=?:&|%]+\s*;\s*$/
         })
-        .addMethods(/** @lends v18n.LocaleDocument# */{
+        .addMethods(/** @lends giant.LocaleDocument# */{
             /**
              * Fetches country code, eg. "us" or "uk"
              * @returns {string}
@@ -37,7 +37,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Sets country code, eg. "us" or "uk"
              * @param {string} countryCode
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setCountryCode: function (countryCode) {
                 this.getField('countryCode').setValue(countryCode);
@@ -55,7 +55,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Sets language code, eg. "en" or "pt"
              * @param {string} languageCode
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setLanguageCode: function (languageCode) {
                 this.getField('languageCode').setValue(languageCode);
@@ -83,7 +83,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Sets the locale's name.
              * @param {string} name
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setName: function (name) {
                 this.getField('name').setValue(name);
@@ -101,10 +101,10 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Sets plural formula.
              * @param {string} pluralFormula
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setPluralFormula: function (pluralFormula) {
-                dessert.isPluralFormula(pluralFormula, "Invalid plural formula");
+                giant.isPluralFormula(pluralFormula, "Invalid plural formula");
                 this.getField('pluralFormula').setValue(pluralFormula);
                 return this;
             },
@@ -127,7 +127,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
              * Sets single translation.
              * @param {string} originalString
              * @param {string[]} pluralForms
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setTranslation: function (originalString, pluralForms) {
                 this.getField('translations').getItem(originalString).setValue(pluralForms);
@@ -137,7 +137,7 @@ troop.postpone(v18n, 'LocaleDocument', function () {
             /**
              * Sets all translations for a locale in one go.
              * @param {object} translationsNode Translations indexed by original string.
-             * @returns {v18n.LocaleDocument}
+             * @returns {giant.LocaleDocument}
              */
             setTranslations: function (translationsNode) {
                 this.getField('translations').setValue(translationsNode);
@@ -146,11 +146,11 @@ troop.postpone(v18n, 'LocaleDocument', function () {
         });
 });
 
-troop.amendPostponed(bookworm, 'Document', function () {
+giant.amendPostponed(giant, 'Document', function () {
     "use strict";
 
-    bookworm.Document
-        .addSurrogate(v18n, 'LocaleDocument', function (documentKey) {
+    giant.Document
+        .addSurrogate(giant, 'LocaleDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'locale';
         });
 });
@@ -158,16 +158,16 @@ troop.amendPostponed(bookworm, 'Document', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         /** @param {string} expr */
         isPluralFormula: function (expr) {
-            return v18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+            return giant.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
         },
 
         /** @param {string} expr */
         isPluralFormulaOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   v18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+                   giant.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
         }
     });
 }());

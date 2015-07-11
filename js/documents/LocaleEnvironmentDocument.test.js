@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, bookworm, v18n */
+/*global giant, giant, giant, giant, giant, giant */
 /*global module, test, asyncTest, start, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -7,7 +7,7 @@
 
     test("Document surrogate", function () {
         var document = 'localeEnvironment/foo'.toDocument();
-        ok(document.isA(v18n.LocaleEnvironmentDocument), "should return LocaleEnvironmentDocument instance");
+        ok(document.isA(giant.LocaleEnvironmentDocument), "should return LocaleEnvironmentDocument instance");
     });
 
     test("Current locale key getter", function () {

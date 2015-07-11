@@ -1,5 +1,5 @@
+/*.tgz
 /.idea/
+/giant-i18n.js
 /node_modules/
 /out/
-/v18n.js
-/*.tgz

@@ -1,46 +1,16 @@
-/**
- * Top-Level Library Namespace
- */
-/*global require */
+/*jshint node:true */
+
 /** @namespace */
-var v18n = {},
-    v$ = v18n;
+var giant = giant || require('giant-namespace');
 
-/**
- * @class
- * @see https://github.com/production-minds/dessert
- */
-var dessert = dessert || require('dessert');
-
-/**
- * @namespace
- * @see https://github.com/production-minds/troop
- */
-var troop = troop || require('troop');
-
-/**
- * @namespace
- * @see https://github.com/danstocker/sntls
- */
-var sntls = sntls || require('sntls');
-
-/**
- * @namespace
- * @see https://github.com/danstocker/evan
- */
-var evan = evan || require('evan');
-
-/**
- * @namespace
- * @see https://github.com/danstocker/rubberband
- */
-var rubberband = rubberband || require('rubberband');
-
-/**
- * @namespace
- * @see https://github.com/danstocker/bookworm
- */
-var bookworm = bookworm || require('bookworm');
+if (module.exports) {
+    require('giant-assertion');
+    require('giant-oop');
+    require('giant-data');
+    require('giant-event');
+    require('giant-templating');
+    require('giant-entity');
+}
 
 /**
  * Native number class.
@@ -61,6 +31,6 @@ var bookworm = bookworm || require('bookworm');
  */
 
 /**
- * @name sntls.Hash
+ * @name giant.Hash
  * @class
  */
