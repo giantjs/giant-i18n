@@ -25,6 +25,7 @@
         "giant-namespace" : "0.0.4",
         "giant-oop"       : "0.0.4",
         "giant-templating": "0.0.4",
+        "giant-utils"     : "0.0.4",
         "q"               : "^1.4.0"
     },
     "devDependencies": {
