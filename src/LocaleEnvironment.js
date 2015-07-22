@@ -153,7 +153,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 } else {
                     // locale is not marked as ready
                     // touching node to potentially signal that translations are not loaded yet
-                    locale.entityKey.toDocument().touchNode();
+                    locale.entityKey.toDocument().getField('translations').touchNode();
                 }
 
                 link.unLink();
