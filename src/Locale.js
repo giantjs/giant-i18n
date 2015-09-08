@@ -147,7 +147,7 @@ giant.postpone(giant, 'Locale', function () {
             onLocaleMarkedAsReady: function (event) {
                 var link = giant.pushOriginalEvent(event);
                 this.triggerSync(this.EVENT_LOCALE_READY);
-                link.unLink();
+                link.unlink();
             }
         });
 });

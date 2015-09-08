@@ -117,7 +117,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                     .setLocaleAfter(localeRefAfter && localeRefAfter.toDocumentKey().toLocale())
                     .triggerSync();
 
-                link.unLink();
+                link.unlink();
             },
 
             /**
@@ -135,7 +135,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                     this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
                 }
 
-                link.unLink();
+                link.unlink();
             },
 
             /**
@@ -156,7 +156,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                     locale.entityKey.toDocument().getField('translations').touchNode();
                 }
 
-                link.unLink();
+                link.unlink();
             }
         });
 });
