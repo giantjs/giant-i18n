@@ -141,13 +141,10 @@ giant.postpone(giant, 'Locale', function () {
             },
 
             /**
-             * @param {giant.EntityChangeEvent} event
              * @ignore
              */
-            onLocaleMarkedAsReady: function (event) {
-                var link = giant.pushOriginalEvent(event);
+            onLocaleMarkedAsReady: function () {
                 this.triggerSync(this.EVENT_LOCALE_READY);
-                link.unlink();
             }
         });
 });

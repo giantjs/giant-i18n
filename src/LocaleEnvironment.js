@@ -108,16 +108,13 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @ignore
              */
             onCurrentLocaleChange: function (event) {
-                var link = giant.pushOriginalEvent(event),
-                    localeRefBefore = event.beforeNode,
+                var localeRefBefore = event.beforeNode,
                     localeRefAfter = event.afterNode;
 
                 this.spawnEvent(this.EVENT_LOCALE_CHANGE)
                     .setLocaleBefore(localeRefBefore && localeRefBefore.toDocumentKey().toLocale())
                     .setLocaleAfter(localeRefAfter && localeRefAfter.toDocumentKey().toLocale())
                     .triggerSync();
-
-                link.unlink();
             },
 
             /**
@@ -125,8 +122,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @ignore
              */
             onLocaleReady: function (event) {
-                var link = giant.pushOriginalEvent(event),
-                    locale = event.sender,
+                var locale = event.sender,
                     currentLocaleKey = this.entityKey.toDocument().getCurrentLocaleKey();
 
                 if (locale.entityKey.equals(currentLocaleKey)) {
@@ -134,8 +130,6 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                     // signaling that current locale is ready for use
                     this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
                 }
-
-                link.unlink();
             },
 
             /**
@@ -143,8 +137,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @ignore
              */
             onLocaleChange: function (event) {
-                var link = giant.pushOriginalEvent(event),
-                    locale = event.localeAfter;
+                var locale = event.localeAfter;
 
                 if (locale.isMarkedAsReady()) {
                     // locale is marked ready for use
@@ -155,8 +148,6 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                     // touching node to potentially signal that translations are not loaded yet
                     locale.entityKey.toDocument().getField('translations').touchNode();
                 }
-
-                link.unlink();
             }
         });
 });
