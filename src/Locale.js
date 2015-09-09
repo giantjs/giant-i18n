@@ -192,16 +192,13 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
         }
     });
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * @returns {giant.Locale}
-             */
-            toLocale: function () {
-                var localeKey = ['locale', this.valueOf()].toDocumentKey();
-                return giant.Locale.create(localeKey);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * @returns {giant.Locale}
+         */
+        toLocale: function () {
+            var localeKey = ['locale', this.valueOf()].toDocumentKey();
+            return giant.Locale.create(localeKey);
+        }
+    });
 }());

@@ -77,16 +77,13 @@ giant.postpone(giant, 'Translatable', function () {
 (function () {
     "use strict";
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * Converts string to a translatable.
-             * @returns {giant.Translatable}
-             */
-            toTranslatable: function () {
-                return giant.Translatable.create(this.valueOf());
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * Converts string to a translatable.
+         * @returns {giant.Translatable}
+         */
+        toTranslatable: function () {
+            return giant.Translatable.create(this.valueOf());
+        }
+    });
 }());
