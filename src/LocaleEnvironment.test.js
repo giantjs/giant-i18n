@@ -44,11 +44,11 @@
 
         var environment = giant.LocaleEnvironment.create();
 
-        raises(function () {
+        throws(function () {
             environment.setCurrentLocale();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environment.setCurrentLocale('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
@@ -69,11 +69,11 @@
 
         var environment = giant.LocaleEnvironment.create();
 
-        raises(function () {
+        throws(function () {
             environment.markLocaleAsReady();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environment.markLocaleAsReady('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 
@@ -95,11 +95,11 @@
 
         var environment = giant.LocaleEnvironment.create();
 
-        raises(function () {
+        throws(function () {
             environment.markLocaleAsReady();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environment.markLocaleAsReady('foo/bar'.toDocumentKey);
         }, "should raise exception on invalid argument");
 

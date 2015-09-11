@@ -30,11 +30,11 @@
     test("Current locale key setter", function () {
         var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetNode();
 
-        raises(function () {
+        throws(function () {
             environmentDocument.setCurrentLocaleKey();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environmentDocument.setCurrentLocaleKey('foo');
         }, "should raise exception on invalid argument");
 
@@ -49,11 +49,11 @@
     test("Adding ready locale", function () {
         var environmentDocument = 'localeEnvironment/foo'.toDocument().unsetNode();
 
-        raises(function () {
+        throws(function () {
             environmentDocument.addReadyLocale();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environmentDocument.addReadyLocale('foo');
         }, "should raise exception on invalid argument");
 
@@ -72,11 +72,11 @@
             .unsetNode()
             .addReadyLocale('locale/pt-br'.toDocumentKey());
 
-        raises(function () {
+        throws(function () {
             environmentDocument.getReadyLocale();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             environmentDocument.getReadyLocale('foo');
         }, "should raise exception on invalid argument");
 

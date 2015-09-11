@@ -14,11 +14,11 @@
 
         var localeDocument = 'locale/foo'.toDocument();
 
-        raises(function () {
+        throws(function () {
             localeDocument.setPluralFormula();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             localeDocument.setPluralFormula("foo bar baz");
         }, "should raise exception on invalid arguments");
 

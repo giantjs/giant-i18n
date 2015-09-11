@@ -29,11 +29,11 @@
 
         var localeBound = LocaleBoundClass.create();
 
-        raises(function () {
+        throws(function () {
             localeBound.bindToCurrentLocaleReady();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             localeBound.bindToCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 
@@ -75,11 +75,11 @@
         var localeBound = LocaleBoundClass.create()
             .bindToCurrentLocaleReady(onCurrentLocaleReady);
 
-        raises(function () {
+        throws(function () {
             localeBound.unbindFromCurrentLocaleReady();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             localeBound.unbindFromCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 

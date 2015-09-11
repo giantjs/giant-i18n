@@ -5,7 +5,7 @@
     module("Locale");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Locale.create();
         }, "should raise exception on missing arguments");
 
