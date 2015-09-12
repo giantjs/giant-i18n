@@ -30,7 +30,7 @@
   },
   "devDependencies": {},
   "files": [
-    "giant-i18n.js"
+    "lib"
   ],
-  "main": "giant-i18n.js"
+  "main": "lib/giant-i18n.js"
 }
