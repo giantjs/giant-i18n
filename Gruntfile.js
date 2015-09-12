@@ -2,28 +2,47 @@
 module.exports = function (grunt) {
     "use strict";
 
-    var params = {
-        files: [
-            'src/namespace.js',
-            'src/config.js',
-            'src/globals/localeEventSpace.js',
-            'src/documents/LocaleDocument.js',
-            'src/documents/LocaleEnvironmentDocument.js',
-            'src/LocaleChangeEvent.js',
-            'src/Locale.js',
-            'src/LocaleEnvironment.js',
-            'src/LocaleBound.js',
-            'src/Translatable.js',
-            'src/exports.js'
-        ],
+    var grocer = require('grocer'),
+        packageNode = require('./package.json'),
+        manifestNode = require('./manifest.json'),
+        manifest = grocer.Manifest.create(manifestNode),
+        multiTasks = [].toMultiTaskCollection(),
+        gruntTasks = [].toGruntTaskCollection();
 
-        test: [
-            'src/jsTestDriver.conf'
-        ],
+    grocer.GruntProxy.create()
+        .setGruntObject(grunt);
 
-        globals: {}
-    };
+    'concat'
+        .toMultiTask({
+            'default': {
+                src : manifest.getAssets('js')
+                    .getAssetNames(),
+                dest: 'lib/' + packageNode.name + '.js'
+            }
+        })
+        .setPackageName('grunt-contrib-concat')
+        .addToCollection(multiTasks);
 
-    // invoking common grunt process
-    require('common-gruntfile')(grunt, params);
+    'karma'
+        .toMultiTask({
+            'default': {
+                configFile: 'karma.conf.js',
+                singleRun : true
+            }
+        })
+        .setPackageName('grunt-karma')
+        .addToCollection(multiTasks);
+
+    'build'
+        .toAliasTask()
+        .addSubTasks('karma', 'concat')
+        .addToCollection(gruntTasks);
+
+    // registering tasks
+    multiTasks.toGruntConfig()
+        .applyConfig()
+        .getAliasTasksGroupedByTarget()
+        .mergeWith(multiTasks.toGruntTaskCollection())
+        .mergeWith(gruntTasks)
+        .applyTask();
 };

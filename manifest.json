@@ -1,0 +1,19 @@
+{
+  "main": {
+    "assets": {
+      "js": [
+        "src/namespace.js",
+        "src/config.def.js",
+        "src/globals/localeEventSpace.def.js",
+        "src/documents/LocaleDocument.def.js",
+        "src/documents/LocaleEnvironmentDocument.def.js",
+        "src/LocaleChangeEvent.def.js",
+        "src/Locale.def.js",
+        "src/LocaleEnvironment.def.js",
+        "src/LocaleBound.def.js",
+        "src/Translatable.def.js",
+        "src/exports.js"
+      ]
+    }
+  }
+}
