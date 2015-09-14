@@ -17,7 +17,7 @@
 
         ok(localeBound.localeBindings.isA(giant.Collection), "should initialize localeBindings property");
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
+            'giant.Locale.ready.current': []
         }, "should set localeBindings contents");
     });
 
@@ -48,7 +48,7 @@
         strictEqual(localeBound.bindToCurrentLocaleReady(onCurrentLocaleReady), localeBound, "should be chainable");
 
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': [onCurrentLocaleReady]
+            'giant.Locale.ready.current': [onCurrentLocaleReady]
         }, "should add handler to handler lookup");
 
         giant.LocaleEnvironment.removeMocks();
@@ -62,7 +62,7 @@
             .bindToCurrentLocaleReady(onCurrentLocaleReady);
 
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': [onCurrentLocaleReady]
+            'giant.Locale.ready.current': [onCurrentLocaleReady]
         }, "should not change handler lookup");
     });
 
@@ -94,7 +94,7 @@
         strictEqual(localeBound.unbindFromCurrentLocaleReady(onCurrentLocaleReady), localeBound, "should be chainable");
 
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
+            'giant.Locale.ready.current': []
         }, "should remove handler from handler lookup");
 
         giant.LocaleEnvironment.removeMocks();
@@ -109,7 +109,7 @@
             .unbindFromCurrentLocaleReady(onCurrentLocaleReady);
 
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
+            'giant.Locale.ready.current': []
         }, "should not change handler lookup");
     });
 
@@ -151,7 +151,7 @@
         ], "should unsubscribe from handlers");
 
         deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
+            'giant.Locale.ready.current': []
         }, "should remove all handlers from lookup");
     });
 }());

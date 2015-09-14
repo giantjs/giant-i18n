@@ -143,9 +143,9 @@
 
         giant.LocaleEnvironment.create()
             .setCurrentLocale('foo'.toLocale())
-            .subscribeTo('locale.change', onLocaleChange)
+            .subscribeTo('giant.Locale.change', onLocaleChange)
             .setCurrentLocale('bar'.toLocale())
-            .unsubscribeFrom('locale.change', onLocaleChange);
+            .unsubscribeFrom('giant.Locale.change', onLocaleChange);
     });
 
     test("Locale ready handler", function () {
@@ -161,7 +161,7 @@
         }
 
         giant.localeEventSpace
-            .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .subscribeTo('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'bar'.toLocale().markAsReady();
 
@@ -170,7 +170,7 @@
         'baz'.toLocale().markAsReady();
 
         giant.localeEventSpace
-            .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .unsubscribeFrom('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 
     test("Locale change handler", function () {
@@ -200,11 +200,11 @@
         }
 
         giant.localeEventSpace
-            .subscribeTo('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .subscribeTo('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
         giant.localeEventSpace
-            .unsubscribeFrom('locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .unsubscribeFrom('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
     });
 }());

@@ -63,7 +63,7 @@ giant.amendPostponed(giant, 'Event', function () {
 
     giant.Event
         .addSurrogate(giant, 'LocaleChangeEvent', function (eventName) {
-            var prefix = 'locale.change';
+            var prefix = 'giant.Locale.change';
             return eventName.substr(0, prefix.length) === prefix;
         });
 });

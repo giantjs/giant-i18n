@@ -30,7 +30,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * Does not mean though that the new locale is loaded and is ready for use.
              * @constant
              */
-            EVENT_LOCALE_CHANGE: 'locale.change',
+            EVENT_LOCALE_CHANGE: 'giant.Locale.change',
 
             /**
              * Signals that the current locale is ready for use.
@@ -38,7 +38,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * b) current locale is set which is then successfully loaded.
              * @constant
              */
-            EVENT_CURRENT_LOCALE_READY: 'locale.ready.current'
+            EVENT_CURRENT_LOCALE_READY: 'giant.Locale.ready.current'
         })
         .addMethods(/** @lends giant.LocaleEnvironment# */{
             /** @ignore */
@@ -111,7 +111,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 var localeRefBefore = event.beforeNode,
                     localeRefAfter = event.afterNode;
 
-                this.spawnEvent(this.EVENT_LOCALE_CHANGE)
+                this.spawnEvent(self.EVENT_LOCALE_CHANGE)
                     .setLocaleBefore(localeRefBefore && localeRefBefore.toDocumentKey().toLocale())
                     .setLocaleAfter(localeRefAfter && localeRefAfter.toDocumentKey().toLocale())
                     .triggerSync();
@@ -128,7 +128,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.entityKey.equals(currentLocaleKey)) {
                     // locale is teh current locale
                     // signaling that current locale is ready for use
-                    this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync(self.EVENT_CURRENT_LOCALE_READY);
                 }
             },
 
@@ -142,7 +142,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.isMarkedAsReady()) {
                     // locale is marked ready for use
                     // signaling that current locale is ready for use
-                    this.triggerSync(this.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync(self.EVENT_CURRENT_LOCALE_READY);
                 } else {
                     // locale is not marked as ready
                     // touching node to potentially signal that translations are not loaded yet

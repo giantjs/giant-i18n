@@ -28,7 +28,7 @@ giant.postpone(giant, 'Locale', function () {
         .setEventSpace(giant.localeEventSpace)
         .addConstants(/** @lends giant.Locale */{
             /** @constant */
-            EVENT_LOCALE_READY: 'locale.ready'
+            EVENT_LOCALE_READY: 'giant.Locale.ready'
         })
         .addPrivateMethods(/** @lends giant.Locale# */{
             /**
@@ -144,7 +144,7 @@ giant.postpone(giant, 'Locale', function () {
              * @ignore
              */
             onLocaleMarkedAsReady: function () {
-                this.triggerSync(this.EVENT_LOCALE_READY);
+                this.triggerSync(self.EVENT_LOCALE_READY);
             }
         });
 });
