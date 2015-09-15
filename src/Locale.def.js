@@ -26,10 +26,6 @@ giant.postpone(giant, 'Locale', function () {
             return String(localeKey);
         })
         .setEventSpace(giant.localeEventSpace)
-        .addConstants(/** @lends giant.Locale */{
-            /** @constant */
-            EVENT_LOCALE_READY: 'giant.Locale.ready'
-        })
         .addPrivateMethods(/** @lends giant.Locale# */{
             /**
              * TODO: Replace eval with parsing. (long term)
@@ -144,7 +140,7 @@ giant.postpone(giant, 'Locale', function () {
              * @ignore
              */
             onLocaleMarkedAsReady: function () {
-                this.triggerSync(self.EVENT_LOCALE_READY);
+                this.triggerSync(giant.EVENT_LOCALE_READY);
             }
         });
 });
@@ -154,7 +150,7 @@ giant.amendPostponed(giant, 'entityEventSpace', function () {
 
     giant.entityEventSpace
         .delegateSubscriptionTo(
-            giant.Entity.EVENT_ENTITY_CHANGE,
+            giant.EVENT_ENTITY_CHANGE,
             'entity>document>localeEnvironment>>readyLocales'.toPath(),
             'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
             (function (event) {
@@ -178,6 +174,12 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
 
 (function () {
     "use strict";
+
+    /**
+     * Signals that a locale is ready for use.
+     * @constant
+     */
+    giant.EVENT_LOCALE_READY = 'giant.Locale.ready';
 
     giant.addTypes(/** @lends giant */{
         /** @param {giant.Locale} expr */

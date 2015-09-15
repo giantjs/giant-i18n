@@ -24,22 +24,6 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
             return 'singleton';
         })
         .setEventSpace(giant.localeEventSpace)
-        .addConstants(/** @lends giant.LocaleEnvironment */{
-            /**
-             * Signals that the current locale has changed.
-             * Does not mean though that the new locale is loaded and is ready for use.
-             * @constant
-             */
-            EVENT_LOCALE_CHANGE: 'giant.Locale.change',
-
-            /**
-             * Signals that the current locale is ready for use.
-             * Triggered either when a) locales are loaded and current locale changes, or
-             * b) current locale is set which is then successfully loaded.
-             * @constant
-             */
-            EVENT_CURRENT_LOCALE_READY: 'giant.Locale.ready.current'
-        })
         .addMethods(/** @lends giant.LocaleEnvironment# */{
             /** @ignore */
             init: function () {
@@ -111,7 +95,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 var localeRefBefore = event.beforeNode,
                     localeRefAfter = event.afterNode;
 
-                this.spawnEvent(self.EVENT_LOCALE_CHANGE)
+                this.spawnEvent(giant.EVENT_LOCALE_CHANGE)
                     .setLocaleBefore(localeRefBefore && localeRefBefore.toDocumentKey().toLocale())
                     .setLocaleAfter(localeRefAfter && localeRefAfter.toDocumentKey().toLocale())
                     .triggerSync();
@@ -128,7 +112,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.entityKey.equals(currentLocaleKey)) {
                     // locale is teh current locale
                     // signaling that current locale is ready for use
-                    this.triggerSync(self.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
                 }
             },
 
@@ -142,7 +126,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.isMarkedAsReady()) {
                     // locale is marked ready for use
                     // signaling that current locale is ready for use
-                    this.triggerSync(self.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
                 } else {
                     // locale is not marked as ready
                     // touching node to potentially signal that translations are not loaded yet
@@ -152,11 +136,30 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
         });
 });
 
+(function () {
+    "use strict";
+
+    /**
+     * Signals that the current locale has changed.
+     * Does not mean though that the new locale is loaded and is ready for use.
+     * @constant
+     */
+    giant.EVENT_LOCALE_CHANGE = 'giant.Locale.change';
+
+    /**
+     * Signals that the current locale is ready for use.
+     * Triggered either when a) locales are loaded and current locale changes, or
+     * b) current locale is set which is then successfully loaded.
+     * @constant
+     */
+    giant.EVENT_CURRENT_LOCALE_READY = 'giant.Locale.ready.current';
+}());
+
 giant.amendPostponed(giant, 'FieldKey', function () {
     "use strict";
 
     'localeEnvironment//currentLocale'.toFieldKey()
-        .subscribeTo(giant.Entity.EVENT_ENTITY_CHANGE, function (event) {
+        .subscribeTo(giant.EVENT_ENTITY_CHANGE, function (event) {
             giant.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);
         });
@@ -166,11 +169,11 @@ giant.amendPostponed(giant, 'LocaleEnvironment', function () {
     "use strict";
 
     giant.LocaleEnvironment.create()
-        .subscribeTo(giant.Locale.EVENT_LOCALE_READY, function (event) {
+        .subscribeTo(giant.EVENT_LOCALE_READY, function (event) {
             giant.LocaleEnvironment.create()
                 .onLocaleReady(event);
         })
-        .subscribeTo(giant.LocaleEnvironment.EVENT_LOCALE_CHANGE, function (event) {
+        .subscribeTo(giant.EVENT_LOCALE_CHANGE, function (event) {
             giant.LocaleEnvironment.create()
                 .onLocaleChange(event);
         });

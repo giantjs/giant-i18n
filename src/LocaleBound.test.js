@@ -39,7 +39,7 @@
 
         giant.LocaleEnvironment.addMocks({
             subscribeTo: function (eventName, handler) {
-                equal(eventName, giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
+                equal(eventName, giant.EVENT_CURRENT_LOCALE_READY,
                     "should subscribe to current locale change event");
                 strictEqual(handler, onCurrentLocaleReady, "should pass handler to subscription");
             }
@@ -85,7 +85,7 @@
 
         giant.LocaleEnvironment.addMocks({
             unsubscribeFrom: function (eventName, handler) {
-                equal(eventName, giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
+                equal(eventName, giant.EVENT_CURRENT_LOCALE_READY,
                     "should unsubscribe from current locale change event");
                 strictEqual(handler, onCurrentLocaleReady, "should pass handler to unsubscription");
             }
@@ -144,10 +144,10 @@
         giant.LocaleEnvironment.removeMocks();
 
         deepEqual(unsubscribedHandlers, [
-            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady1],
-            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady2],
-            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady3],
-            [giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady4]
+            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady1],
+            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady2],
+            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady3],
+            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady4]
         ], "should unsubscribe from handlers");
 
         deepEqual(localeBound.localeBindings.items, {

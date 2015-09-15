@@ -16,7 +16,7 @@ giant.postpone(giant, 'LocaleBound', function () {
             init: function () {
                 /** @type {giant.Collection} */
                 this.localeBindings = giant.Collection.create()
-                    .setItem(giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY, []);
+                    .setItem(giant.EVENT_CURRENT_LOCALE_READY, []);
             },
 
             /**
@@ -27,7 +27,7 @@ giant.postpone(giant, 'LocaleBound', function () {
             bindToCurrentLocaleReady: function (handler) {
                 giant.isFunction(handler, "Invalid handler");
 
-                var EVENT_CURRENT_LOCALE_READY = giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
+                var EVENT_CURRENT_LOCALE_READY = giant.EVENT_CURRENT_LOCALE_READY,
                     handlers = this.localeBindings.getItem(EVENT_CURRENT_LOCALE_READY),
                     handlerIndex = handlers.indexOf(handler);
 
@@ -48,8 +48,8 @@ giant.postpone(giant, 'LocaleBound', function () {
             unbindFromCurrentLocaleReady: function (handler) {
                 giant.isFunction(handler, "Invalid handler");
 
-                var EVENT_CURRENT_LOCALE_READY = giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY,
-                    handlers = this.localeBindings.getItem(giant.LocaleEnvironment.EVENT_CURRENT_LOCALE_READY),
+                var EVENT_CURRENT_LOCALE_READY = giant.EVENT_CURRENT_LOCALE_READY,
+                    handlers = this.localeBindings.getItem(giant.EVENT_CURRENT_LOCALE_READY),
                     handlerIndex = handlers.indexOf(handler);
 
                 if (handlerIndex !== -1) {
