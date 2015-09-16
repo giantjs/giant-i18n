@@ -139,20 +139,22 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
 (function () {
     "use strict";
 
-    /**
-     * Signals that the current locale has changed.
-     * Does not mean though that the new locale is loaded and is ready for use.
-     * @constant
-     */
-    giant.EVENT_LOCALE_CHANGE = 'giant.Locale.change';
+    giant.addGlobalConstants(/** @lends giant */{
+        /**
+         * Signals that the current locale has changed.
+         * Does not mean though that the new locale is loaded and is ready for use.
+         * @constant
+         */
+        EVENT_LOCALE_CHANGE: 'giant.Locale.change',
 
-    /**
-     * Signals that the current locale is ready for use.
-     * Triggered either when a) locales are loaded and current locale changes, or
-     * b) current locale is set which is then successfully loaded.
-     * @constant
-     */
-    giant.EVENT_CURRENT_LOCALE_READY = 'giant.Locale.ready.current';
+        /**
+         * Signals that the current locale is ready for use.
+         * Triggered either when a) locales are loaded and current locale changes, or
+         * b) current locale is set which is then successfully loaded.
+         * @constant
+         */
+        EVENT_CURRENT_LOCALE_READY: 'giant.Locale.ready.current'
+    });
 }());
 
 giant.amendPostponed(giant, 'FieldKey', function () {

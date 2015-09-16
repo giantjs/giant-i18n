@@ -150,14 +150,14 @@ giant.amendPostponed(giant, 'entityEventSpace', function () {
 
     giant.entityEventSpace
         .delegateSubscriptionTo(
-            giant.EVENT_ENTITY_CHANGE,
-            'entity>document>localeEnvironment>>readyLocales'.toPath(),
-            'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
-            (function (event) {
-                var localeRef = event.originalPath.getLastKey();
-                giant.Locale.create(localeRef.toDocumentKey())
-                    .onLocaleMarkedAsReady(event);
-            }));
+        giant.EVENT_ENTITY_CHANGE,
+        'entity>document>localeEnvironment>>readyLocales'.toPath(),
+        'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
+        (function (event) {
+            var localeRef = event.originalPath.getLastKey();
+            giant.Locale.create(localeRef.toDocumentKey())
+                .onLocaleMarkedAsReady(event);
+        }));
 });
 
 giant.amendPostponed(giant, 'DocumentKey', function () {
@@ -175,11 +175,13 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
 (function () {
     "use strict";
 
-    /**
-     * Signals that a locale is ready for use.
-     * @constant
-     */
-    giant.EVENT_LOCALE_READY = 'giant.Locale.ready';
+    giant.addGlobalConstants(/** @lends giant */{
+        /**
+         * Signals that a locale is ready for use.
+         * @constant
+         */
+        EVENT_LOCALE_READY: 'giant.Locale.ready'
+    });
 
     giant.addTypes(/** @lends giant */{
         /** @param {giant.Locale} expr */
