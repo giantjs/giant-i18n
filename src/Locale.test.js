@@ -120,12 +120,12 @@
         }
 
         giant.localeEventSpace
-            .subscribeTo('giant.Locale.ready', 'locale'.toPath(), onLocaleReady);
+            .subscribeTo(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
 
         ['localeEnvironment', '', 'readyLocales', 'locale/pt-br'].toItem()
             .setValue(true);
 
         giant.localeEventSpace
-            .unsubscribeFrom('giant.Locale.ready', 'locale'.toPath(), onLocaleReady);
+            .unsubscribeFrom(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
     });
 }());

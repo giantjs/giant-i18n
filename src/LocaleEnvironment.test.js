@@ -143,9 +143,9 @@
 
         giant.LocaleEnvironment.create()
             .setCurrentLocale('foo'.toLocale())
-            .subscribeTo('giant.Locale.change', onLocaleChange)
+            .subscribeTo(giant.EVENT_LOCALE_CHANGE, onLocaleChange)
             .setCurrentLocale('bar'.toLocale())
-            .unsubscribeFrom('giant.Locale.change', onLocaleChange);
+            .unsubscribeFrom(giant.EVENT_LOCALE_CHANGE, onLocaleChange);
     });
 
     test("Locale ready handler", function () {
@@ -161,7 +161,7 @@
         }
 
         giant.localeEventSpace
-            .subscribeTo('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .subscribeTo(giant.EVENT_CURRENT_LOCALE_READY, 'locale'.toPath(), onCurrentLocaleReady);
 
         'bar'.toLocale().markAsReady();
 
@@ -170,7 +170,7 @@
         'baz'.toLocale().markAsReady();
 
         giant.localeEventSpace
-            .unsubscribeFrom('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .unsubscribeFrom(giant.EVENT_CURRENT_LOCALE_READY, 'locale'.toPath(), onCurrentLocaleReady);
     });
 
     test("Locale change handler", function () {
@@ -200,11 +200,11 @@
         }
 
         giant.localeEventSpace
-            .subscribeTo('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .subscribeTo(giant.EVENT_CURRENT_LOCALE_READY, 'locale'.toPath(), onCurrentLocaleReady);
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
         giant.localeEventSpace
-            .unsubscribeFrom('giant.Locale.ready.current', 'locale'.toPath(), onCurrentLocaleReady);
+            .unsubscribeFrom(giant.EVENT_CURRENT_LOCALE_READY, 'locale'.toPath(), onCurrentLocaleReady);
     });
 }());

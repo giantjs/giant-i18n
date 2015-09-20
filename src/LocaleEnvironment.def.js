@@ -145,7 +145,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
          * Does not mean though that the new locale is loaded and is ready for use.
          * @constant
          */
-        EVENT_LOCALE_CHANGE: 'giant.Locale.change',
+        EVENT_LOCALE_CHANGE: 'locale.change',
 
         /**
          * Signals that the current locale is ready for use.
@@ -153,7 +153,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
          * b) current locale is set which is then successfully loaded.
          * @constant
          */
-        EVENT_CURRENT_LOCALE_READY: 'giant.Locale.ready.current'
+        EVENT_CURRENT_LOCALE_READY: 'locale.ready.current'
     });
 }());
 

@@ -12,7 +12,7 @@
     });
 
     test("Conversion from Event", function () {
-        var event = giant.Event.create('giant.Locale.change.foo', giant.eventSpace);
+        var event = giant.Event.create('locale.change.foo', giant.eventSpace);
         ok(event.isA(giant.LocaleChangeEvent), "should return LocaleChangeEvent instance");
     });
 }());

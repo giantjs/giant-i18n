@@ -180,7 +180,7 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
          * Signals that a locale is ready for use.
          * @constant
          */
-        EVENT_LOCALE_READY: 'giant.Locale.ready'
+        EVENT_LOCALE_READY: 'locale.ready'
     });
 
     giant.addTypes(/** @lends giant */{
