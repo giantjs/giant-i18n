@@ -156,15 +156,19 @@ troop.amendPostponed(bookworm, 'entityEventSpace', function () {
     "use strict";
 
     bookworm.entityEventSpace
-        .delegateSubscriptionTo(
-            bookworm.Entity.EVENT_ENTITY_CHANGE,
-            'entity>document>localeEnvironment>>readyLocales'.toPath(),
-            'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
-            (function (event) {
-                var localeRef = event.originalPath.getLastKey();
-                v18n.Locale.create(localeRef.toDocumentKey())
+        .subscribeTo(
+        bookworm.Entity.EVENT_ENTITY_CHANGE,
+        'entity>document>localeEnvironment>>readyLocales'.toPath(),
+        (function (event) {
+            var itemKey = event.affectedKey,
+                localeRef = itemKey && itemKey.itemId,
+                localeKey = localeRef && localeRef.toDocumentKey();
+
+            if (localeKey) {
+                v18n.Locale.create(localeKey)
                     .onLocaleMarkedAsReady(event);
-            }));
+            }
+        }));
 });
 
 troop.amendPostponed(bookworm, 'DocumentKey', function () {

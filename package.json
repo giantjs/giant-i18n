@@ -1,6 +1,6 @@
 {
     "name"           : "v18n",
-    "version"        : "0.3.1",
+    "version"        : "0.3.2",
     "description"    : "Internationalization framework",
     "keywords"       : [
         "internationalization",
@@ -18,7 +18,7 @@
         "url" : "git://github.com/danstocker/v18n.git"
     },
     "dependencies"   : {
-        "bookworm"  : "~0.4.0",
+        "bookworm"  : "~0.4.2",
         "dessert"   : "~0.3.2",
         "evan"      : "~0.8.0",
         "rubberband": "~0.2.0",
