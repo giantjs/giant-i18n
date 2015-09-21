@@ -25,7 +25,7 @@ giant.postpone(giant, 'Locale', function () {
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
         })
-        .setEventSpace(giant.localeEventSpace)
+        .setEventSpace(giant.eventSpace)
         .addPrivateMethods(/** @lends giant.Locale# */{
             /**
              * TODO: Replace eval with parsing. (long term)

@@ -23,7 +23,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .setEventSpace(giant.localeEventSpace)
+        .setEventSpace(giant.eventSpace)
         .addMethods(/** @lends giant.LocaleEnvironment# */{
             /** @ignore */
             init: function () {
