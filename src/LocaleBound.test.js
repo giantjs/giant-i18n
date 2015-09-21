@@ -94,7 +94,7 @@
         strictEqual(localeBound.unbindFromCurrentLocaleReady(onCurrentLocaleReady), localeBound, "should be chainable");
 
         deepEqual(localeBound.localeBindings.items, {
-            'giant.Locale.ready.current': []
+            'locale.ready.current': []
         }, "should remove handler from handler lookup");
 
         giant.LocaleEnvironment.removeMocks();
