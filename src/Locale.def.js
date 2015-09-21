@@ -149,14 +149,18 @@ giant.amendPostponed(giant, 'entityEventSpace', function () {
     "use strict";
 
     giant.entityEventSpace
-        .delegateSubscriptionTo(
+        .subscribeTo(
         giant.EVENT_ENTITY_CHANGE,
         'entity>document>localeEnvironment>>readyLocales'.toPath(),
-        'entity>document>localeEnvironment>>readyLocales>|'.toQuery(),
         (function (event) {
-            var localeRef = event.originalPath.getLastKey();
-            giant.Locale.create(localeRef.toDocumentKey())
-                .onLocaleMarkedAsReady(event);
+            var itemKey = event.affectedKey,
+                localeRef = itemKey && itemKey.itemId,
+                localeKey = localeRef && localeRef.toDocumentKey();
+
+            if (localeKey) {
+                giant.Locale.create(localeKey)
+                    .onLocaleMarkedAsReady(event);
+            }
         }));
 });
 
