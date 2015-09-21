@@ -9,23 +9,22 @@
         .addMethods({
             init: function () {
                 giant.LocaleBound.init.call(this);
+            },
+
+            onCurrentLocaleReady: function () {
             }
         });
 
     test("Instantiation", function () {
         var localeBound = LocaleBoundClass.create();
 
-        ok(localeBound.localeBindings.isA(giant.Collection), "should initialize localeBindings property");
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
-        }, "should set localeBindings contents");
+        ok(localeBound.localeBindings.isA(giant.Tree),
+            "should initialize localeBindings property");
+        deepEqual(localeBound.localeBindings.items, {}, "should set localeBindings contents");
     });
 
     test("Binding to 'current locale change'", function () {
-        expect(6);
-
-        function onCurrentLocaleReady() {
-        }
+        expect(5);
 
         var localeBound = LocaleBoundClass.create();
 
@@ -37,43 +36,43 @@
             localeBound.bindToCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 
-        giant.LocaleEnvironment.addMocks({
-            subscribeTo: function (eventName, handler) {
-                equal(eventName, giant.EVENT_CURRENT_LOCALE_READY,
-                    "should subscribe to current locale change event");
-                strictEqual(handler, onCurrentLocaleReady, "should pass handler to subscription");
+        localeBound.addMocks({
+            onCurrentLocaleReady: function (event) {
+                strictEqual(event.sender, giant.LocaleEnvironment.create(),
+                    "should set sender on event");
+                equal(event.eventName, 'locale.ready.current', "should set eventName on event");
             }
         });
 
-        strictEqual(localeBound.bindToCurrentLocaleReady(onCurrentLocaleReady), localeBound, "should be chainable");
+        strictEqual(localeBound.bindToCurrentLocaleReady('onCurrentLocaleReady'), localeBound,
+            "should be chainable");
 
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': [onCurrentLocaleReady]
-        }, "should add handler to handler lookup");
+        // should trigger
+        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+
+        localeBound.unbindAll();
+    });
+
+    test("Re-binding to 'current locale change'", function () {
+        expect(0);
+
+        var localeBound = LocaleBoundClass.create()
+            .bindToCurrentLocaleReady('onCurrentLocaleReady');
+
+        giant.LocaleEnvironment.addMocks({
+            subscribeTo: function () {
+                ok(false, "should not subscribe again");
+            }
+        });
+
+        localeBound.bindToCurrentLocaleReady('onCurrentLocaleReady');
 
         giant.LocaleEnvironment.removeMocks();
     });
 
-    test("Re-binding to 'current locale change'", function () {
-        function onCurrentLocaleReady() {
-        }
-
-        var localeBound = LocaleBoundClass.create()
-            .bindToCurrentLocaleReady(onCurrentLocaleReady);
-
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': [onCurrentLocaleReady]
-        }, "should not change handler lookup");
-    });
-
     test("Unbinding from 'current locale change'", function () {
-        expect(6);
-
-        function onCurrentLocaleReady() {
-        }
-
         var localeBound = LocaleBoundClass.create()
-            .bindToCurrentLocaleReady(onCurrentLocaleReady);
+            .bindToCurrentLocaleReady('onCurrentLocaleReady');
 
         throws(function () {
             localeBound.unbindFromCurrentLocaleReady();
@@ -83,75 +82,64 @@
             localeBound.unbindFromCurrentLocaleReady('foo');
         }, "should raise exception on invalid arguments");
 
-        giant.LocaleEnvironment.addMocks({
-            unsubscribeFrom: function (eventName, handler) {
-                equal(eventName, giant.EVENT_CURRENT_LOCALE_READY,
-                    "should unsubscribe from current locale change event");
-                strictEqual(handler, onCurrentLocaleReady, "should pass handler to unsubscription");
+        localeBound.addMocks({
+            onCurrentLocaleReady: function () {
+                ok(false, "should not trigger");
             }
         });
 
-        strictEqual(localeBound.unbindFromCurrentLocaleReady(onCurrentLocaleReady), localeBound, "should be chainable");
+        strictEqual(localeBound.unbindFromCurrentLocaleReady('onCurrentLocaleReady'), localeBound,
+            "should be chainable");
 
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
-        }, "should remove handler from handler lookup");
-
-        giant.LocaleEnvironment.removeMocks();
+        // should NOT trigger
+        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
     });
 
     test("Re-unbinding from 'current locale change'", function () {
-        function onCurrentLocaleReady() {
-        }
+        expect(0);
 
         var localeBound = LocaleBoundClass.create()
-            .bindToCurrentLocaleReady(onCurrentLocaleReady)
-            .unbindFromCurrentLocaleReady(onCurrentLocaleReady);
-
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
-        }, "should not change handler lookup");
-    });
-
-    test("Unbinding from all locale bindings", function () {
-        function onCurrentLocaleReady1() {
-        }
-
-        function onCurrentLocaleReady2() {
-        }
-
-        function onCurrentLocaleReady3() {
-        }
-
-        function onCurrentLocaleReady4() {
-        }
-
-        var localeBound = LocaleBoundClass.create()
-                .bindToCurrentLocaleReady(onCurrentLocaleReady1)
-                .bindToCurrentLocaleReady(onCurrentLocaleReady2)
-                .bindToCurrentLocaleReady(onCurrentLocaleReady3)
-                .bindToCurrentLocaleReady(onCurrentLocaleReady4),
-            unsubscribedHandlers = [];
+            .bindToCurrentLocaleReady('onCurrentLocaleReady')
+            .unbindFromCurrentLocaleReady('onCurrentLocaleReady');
 
         giant.LocaleEnvironment.addMocks({
-            unsubscribeFrom: function (eventName, handler) {
-                unsubscribedHandlers.push([eventName, handler]);
+            unsubscribeFrom: function () {
+                ok(false, "should not subscribe again");
             }
         });
 
-        strictEqual(localeBound.unbindAll(), localeBound, "should be chainable");
+        localeBound.unbindFromCurrentLocaleReady('onCurrentLocaleReady');
 
         giant.LocaleEnvironment.removeMocks();
+    });
 
-        deepEqual(unsubscribedHandlers, [
-            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady1],
-            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady2],
-            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady3],
-            [giant.EVENT_CURRENT_LOCALE_READY, onCurrentLocaleReady4]
-        ], "should unsubscribe from handlers");
+    test("Unbinding from all locale bindings", function () {
+        LocaleBoundClass.addMocks({
+            onCurrentLocaleReady1: function () {
+                ok(false, "should not trigger any handler");
+            },
+            onCurrentLocaleReady2: function () {
+                ok(false, "should not trigger any handler");
+            },
+            onCurrentLocaleReady3: function () {
+                ok(false, "should not trigger any handler");
+            },
+            onCurrentLocaleReady4: function () {
+                ok(false, "should not trigger any handler");
+            }
+        });
 
-        deepEqual(localeBound.localeBindings.items, {
-            'locale.ready.current': []
-        }, "should remove all handlers from lookup");
+        var localeBound = LocaleBoundClass.create()
+            .bindToCurrentLocaleReady('onCurrentLocaleReady1')
+            .bindToCurrentLocaleReady('onCurrentLocaleReady2')
+            .bindToCurrentLocaleReady('onCurrentLocaleReady3')
+            .bindToCurrentLocaleReady('onCurrentLocaleReady4');
+
+        strictEqual(localeBound.unbindAll(), localeBound, "should be chainable");
+
+        // should NOT trigger
+        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+
+        LocaleBoundClass.removeMocks();
     });
 }());

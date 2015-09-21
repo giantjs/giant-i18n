@@ -14,27 +14,33 @@ giant.postpone(giant, 'LocaleBound', function () {
         .addMethods(/** @lends giant.LocaleBound# */{
             /** @ignore */
             init: function () {
-                /** @type {giant.Collection} */
-                this.localeBindings = giant.Collection.create()
-                    .setItem(giant.EVENT_CURRENT_LOCALE_READY, []);
+                /** @type {giant.Tree} */
+                this.localeBindings = giant.Tree.create();
             },
 
             /**
              * Binds the specified handler to current locale readiness event.
-             * @param {function} handler
+             * @param {string} methodName
              * @returns {giant.LocaleBound}
              */
-            bindToCurrentLocaleReady: function (handler) {
-                giant.isFunction(handler, "Invalid handler");
+            bindToCurrentLocaleReady: function (methodName) {
+                giant.isFunction(this[methodName], "Attempting to bind non-method");
 
-                var EVENT_CURRENT_LOCALE_READY = giant.EVENT_CURRENT_LOCALE_READY,
-                    handlers = this.localeBindings.getItem(EVENT_CURRENT_LOCALE_READY),
-                    handlerIndex = handlers.indexOf(handler);
+                var eventName = giant.EVENT_CURRENT_LOCALE_READY,
+                    localeBindings = this.localeBindings,
+                    bindingPath = [eventName, methodName].toPath(),
+                    bindingInfo = localeBindings.getNode(bindingPath),
+                    handler;
 
-                if (handlerIndex === -1) {
-                    handlers.push(handler);
+                if (!bindingInfo) {
+                    handler = this[methodName].bind(this);
                     giant.LocaleEnvironment.create()
-                        .subscribeTo(EVENT_CURRENT_LOCALE_READY, handler);
+                        .subscribeTo(eventName, handler);
+                    localeBindings.setNode(bindingPath, {
+                        eventName : eventName,
+                        methodName: methodName,
+                        handler   : handler
+                    });
                 }
 
                 return this;
@@ -42,20 +48,23 @@ giant.postpone(giant, 'LocaleBound', function () {
 
             /**
              * Unbinds specified handler from current locale readiness event.
-             * @param {function} handler
+             * @param {string} methodName
              * @returns {giant.LocaleBound}
              */
-            unbindFromCurrentLocaleReady: function (handler) {
-                giant.isFunction(handler, "Invalid handler");
+            unbindFromCurrentLocaleReady: function (methodName) {
+                giant.isFunction(this[methodName], "Attempting to unbind non-method");
 
-                var EVENT_CURRENT_LOCALE_READY = giant.EVENT_CURRENT_LOCALE_READY,
-                    handlers = this.localeBindings.getItem(giant.EVENT_CURRENT_LOCALE_READY),
-                    handlerIndex = handlers.indexOf(handler);
+                var eventName = giant.EVENT_CURRENT_LOCALE_READY,
+                    localeBindings = this.localeBindings,
+                    bindingPath = [eventName, methodName].toPath(),
+                    bindingInfo = localeBindings.getNode(bindingPath),
+                    handler;
 
-                if (handlerIndex !== -1) {
-                    handlers.splice(handlerIndex, 1);
+                if (bindingInfo) {
+                    handler = bindingInfo.handler;
                     giant.LocaleEnvironment.create()
-                        .unsubscribeFrom(EVENT_CURRENT_LOCALE_READY, handler);
+                        .unsubscribeFrom(eventName, handler);
+                    localeBindings.unsetPath(bindingPath);
                 }
 
                 return this;
@@ -66,15 +75,14 @@ giant.postpone(giant, 'LocaleBound', function () {
              * @returns {giant.LocaleBound}
              */
             unbindAll: function () {
-                var localeEnvironment = giant.LocaleEnvironment.create();
+                var that = this;
 
-                this.localeBindings = this.localeBindings
-                    .forEachItem(function (handlers, eventName) {
-                        handlers.toCollection()
-                            .passEachItemTo(localeEnvironment.unsubscribeFrom, localeEnvironment, 1, eventName);
-                    })
-                    .mapValues(function () {
-                        return [];
+                // querying all binding parameters
+                this.localeBindings
+                    .queryValuesAsHash('|>|'.toQuery())
+                    .toCollection()
+                    .forEachItem(function (bindingInfo) {
+                        that.unbindFromCurrentLocaleReady(bindingInfo.methodName);
                     });
 
                 return this;
