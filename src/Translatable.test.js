@@ -67,7 +67,7 @@
         ok(template.isA(giant.LiveTemplate), "should return LiveTemplate instance");
 
         template
-            .addReplacements({
+            .setParameterValues({
                 '{{foo}}': "all the".toTranslatable()
             });
 
@@ -85,7 +85,7 @@
 
     test("Serializing stringifiable-based translatable", function () {
         var template = 'hello {{foo}} world'.toLiveTemplate()
-                .addReplacements({
+                .setParameterValues({
                     '{{foo}}': "all the"
                 }),
             translatable = giant.Translatable.create(template);
