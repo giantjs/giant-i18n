@@ -64,7 +64,7 @@
             'all the': "ALL THE"
         });
 
-        ok(template.isA(giant.LiveTemplate), "should return LiveTemplate instance");
+        ok(template.isA($templating.LiveTemplate), "should return LiveTemplate instance");
 
         template
             .setParameterValues({

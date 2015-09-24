@@ -53,10 +53,10 @@ $oop.postpone(giant, 'Translatable', function () {
             /**
              * Wraps translatable into a LiveTemplate instance.
              * When the returned template is evaluated, so is the translatable.
-             * @returns {giant.LiveTemplate}
+             * @returns {$templating.LiveTemplate}
              */
             toLiveTemplate: function () {
-                return giant.LiveTemplate.create(this);
+                return $templating.LiveTemplate.create(this);
             },
 
             /**

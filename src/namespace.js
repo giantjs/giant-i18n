@@ -21,9 +21,8 @@ var $event = $event || require('giant-event');
 /** @namespace */
 var $entity = $entity || require('giant-entity');
 
-if (typeof require === 'function') {
-    require('giant-templating');
-}
+/** @namespace */
+var $templating = $templating || require('giant-templating');
 
 /**
  * Native number class.
