@@ -19,7 +19,7 @@ $oop.postpone(giant, 'Locale', function () {
      * @class
      * @extends $oop.Base
      * @extends giant.Evented
-     * @extends giant.Stringifiable
+     * @extends $utils.Stringifiable
      */
     giant.Locale = self
         .setInstanceMapper(function (localeKey) {

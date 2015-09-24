@@ -8,7 +8,7 @@ $oop.postpone(giant, 'Translatable', function () {
     /**
      * @name giant.Translatable.create
      * @function
-     * @param {string|giant.Stringifiable} originalString
+     * @param {string|$utils.Stringifiable} originalString
      * @returns {giant.Translatable}
      */
 
@@ -16,19 +16,19 @@ $oop.postpone(giant, 'Translatable', function () {
      * Represents a string, that might manifest in different languages depending on the current locale.
      * @class
      * @extends $oop.Base
-     * @extends giant.Stringifiable
+     * @extends $utils.Stringifiable
      */
     giant.Translatable = self
         .addMethods(/** @lends giant.Translatable# */{
             /**
-             * @param {string|giant.Stringifiable} originalString
+             * @param {string|$utils.Stringifiable} originalString
              * @ignore
              */
             init: function (originalString) {
                 /**
                  * Original string associated with the translatable.
                  * This will be used as the key when looking up translations.
-                 * @type {string|giant.Stringifiable}
+                 * @type {string|$utils.Stringifiable}
                  */
                 this.originalString = originalString;
 
@@ -64,7 +64,7 @@ $oop.postpone(giant, 'Translatable', function () {
              * @returns {string}
              */
             toString: function () {
-                var originalString = giant.Stringifier.stringify(this.originalString),
+                var originalString = $utils.Stringifier.stringify(this.originalString),
                     currentLocale = giant.LocaleEnvironment.create().getCurrentLocale();
 
                 return currentLocale ?
