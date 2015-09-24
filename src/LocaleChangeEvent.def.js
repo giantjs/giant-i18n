@@ -1,24 +1,24 @@
-/*global giant */
-$oop.postpone(giant, 'LocaleChangeEvent', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'LocaleChangeEvent', function () {
     "use strict";
 
     var base = $event.Event,
         self = base.extend();
 
     /**
-     * @name giant.LocaleChangeEvent.create
+     * @name $i18n.LocaleChangeEvent.create
      * @function
      * @param {string} eventName
      * @param {$event.EventSpace} eventSpace
-     * @returns {giant.LocaleChangeEvent}
+     * @returns {$i18n.LocaleChangeEvent}
      */
 
     /**
      * @class
      * @extends $oop.Base
      */
-    giant.LocaleChangeEvent = self
-        .addMethods(/** @lends giant.LocaleChangeEvent# */{
+    $i18n.LocaleChangeEvent = self
+        .addMethods(/** @lends $i18n.LocaleChangeEvent# */{
             /**
              * @param {string} eventName
              * @param {$event.EventSpace} eventSpace
@@ -28,19 +28,19 @@ $oop.postpone(giant, 'LocaleChangeEvent', function () {
                 base.init.call(this, eventName, eventSpace);
 
                 /**
-                 * @type {giant.Locale}
+                 * @type {$i18n.Locale}
                  */
                 this.localeBefore = undefined;
 
                 /**
-                 * @type {giant.Locale}
+                 * @type {$i18n.Locale}
                  */
                 this.localeAfter = undefined;
             },
 
             /**
-             * @param {giant.Locale} localeBefore
-             * @returns {giant.LocaleChangeEvent}
+             * @param {$i18n.Locale} localeBefore
+             * @returns {$i18n.LocaleChangeEvent}
              */
             setLocaleBefore: function (localeBefore) {
                 this.localeBefore = localeBefore;
@@ -48,8 +48,8 @@ $oop.postpone(giant, 'LocaleChangeEvent', function () {
             },
 
             /**
-             * @param {giant.Locale} localeAfter
-             * @returns {giant.LocaleChangeEvent}
+             * @param {$i18n.Locale} localeAfter
+             * @returns {$i18n.LocaleChangeEvent}
              */
             setLocaleAfter: function (localeAfter) {
                 this.localeAfter = localeAfter;
@@ -62,7 +62,7 @@ $oop.amendPostponed($event, 'Event', function () {
     "use strict";
 
     $event.Event
-        .addSurrogate(giant, 'LocaleChangeEvent', function (eventName) {
+        .addSurrogate($i18n, 'LocaleChangeEvent', function (eventName) {
             var prefix = 'locale.change';
             return eventName.substr(0, prefix.length) === prefix;
         });

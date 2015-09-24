@@ -1,4 +1,4 @@
-/*global giant */
+/*global $i18n */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Document surrogate", function () {
         var document = 'locale/foo'.toDocument();
-        ok(document.isA(giant.LocaleDocument), "should return LocaleDocument instance");
+        ok(document.isA($i18n.LocaleDocument), "should return LocaleDocument instance");
     });
 
     test("Plural formula setter", function () {

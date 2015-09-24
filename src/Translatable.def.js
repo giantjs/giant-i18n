@@ -1,15 +1,15 @@
-/*global giant */
-$oop.postpone(giant, 'Translatable', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'Translatable', function () {
     "use strict";
 
     var base = $oop.Base,
         self = base.extend();
 
     /**
-     * @name giant.Translatable.create
+     * @name $i18n.Translatable.create
      * @function
      * @param {string|$utils.Stringifiable} originalString
-     * @returns {giant.Translatable}
+     * @returns {$i18n.Translatable}
      */
 
     /**
@@ -18,8 +18,8 @@ $oop.postpone(giant, 'Translatable', function () {
      * @extends $oop.Base
      * @extends $utils.Stringifiable
      */
-    giant.Translatable = self
-        .addMethods(/** @lends giant.Translatable# */{
+    $i18n.Translatable = self
+        .addMethods(/** @lends $i18n.Translatable# */{
             /**
              * @param {string|$utils.Stringifiable} originalString
              * @ignore
@@ -43,7 +43,7 @@ $oop.postpone(giant, 'Translatable', function () {
             /**
              * Sets multiplicity of translatable.
              * @param {number} multiplicity
-             * @returns {giant.Translatable}
+             * @returns {$i18n.Translatable}
              */
             setMultiplicity: function (multiplicity) {
                 this.multiplicity = multiplicity;
@@ -65,7 +65,7 @@ $oop.postpone(giant, 'Translatable', function () {
              */
             toString: function () {
                 var originalString = $utils.Stringifier.stringify(this.originalString),
-                    currentLocale = giant.LocaleEnvironment.create().getCurrentLocale();
+                    currentLocale = $i18n.LocaleEnvironment.create().getCurrentLocale();
 
                 return currentLocale ?
                     currentLocale.getTranslation(originalString, this.multiplicity) :
@@ -80,10 +80,10 @@ $oop.postpone(giant, 'Translatable', function () {
     $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Converts string to a translatable.
-         * @returns {giant.Translatable}
+         * @returns {$i18n.Translatable}
          */
         toTranslatable: function () {
-            return giant.Translatable.create(this.valueOf());
+            return $i18n.Translatable.create(this.valueOf());
         }
     });
 }());

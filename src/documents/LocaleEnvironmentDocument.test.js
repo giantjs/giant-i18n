@@ -1,4 +1,4 @@
-/*global giant */
+/*global $i18n */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Document surrogate", function () {
         var document = 'localeEnvironment/foo'.toDocument();
-        ok(document.isA(giant.LocaleEnvironmentDocument), "should return LocaleEnvironmentDocument instance");
+        ok(document.isA($i18n.LocaleEnvironmentDocument), "should return LocaleEnvironmentDocument instance");
     });
 
     test("Current locale key getter", function () {

@@ -1,4 +1,4 @@
-/*global giant */
+/*global $i18n */
 (function () {
     "use strict";
 
@@ -6,10 +6,10 @@
 
     test("Instantiation", function () {
         throws(function () {
-            giant.Locale.create();
+            $i18n.Locale.create();
         }, "should raise exception on missing arguments");
 
-        var locale = giant.Locale.create('locale/pt-br'.toDocumentKey());
+        var locale = $i18n.Locale.create('locale/pt-br'.toDocumentKey());
 
         ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
         ok(locale.eventPath.equals('locale>pt-br'.toPath()), "should set eventPath property");
@@ -18,7 +18,7 @@
     test("Conversion from string", function () {
         var locale = 'pt-br'.toLocale();
 
-        ok(locale.isA(giant.Locale), "should return Locale instance");
+        ok(locale.isA($i18n.Locale), "should return Locale instance");
         ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
     });
 
@@ -26,7 +26,7 @@
         var localeKey = 'locale/pt-br'.toDocumentKey(),
             locale = localeKey.toLocale();
 
-        ok(locale.isA(giant.Locale), "should return Locale instance");
+        ok(locale.isA($i18n.Locale), "should return Locale instance");
         ok(locale.entityKey.equals('locale/pt-br'.toDocumentKey()), "should set entityKey property");
     });
 
@@ -35,7 +35,7 @@
 
         var ptBrLocale = 'pt-br'.toLocale();
 
-        giant.LocaleEnvironment.addMocks({
+        $i18n.LocaleEnvironment.addMocks({
             setCurrentLocale: function (locale) {
                 strictEqual(locale, ptBrLocale, "should set as current locale on environment");
             }
@@ -43,7 +43,7 @@
 
         strictEqual(ptBrLocale.setAsCurrentLocale(), ptBrLocale, "should be chainable");
 
-        giant.LocaleEnvironment.removeMocks();
+        $i18n.LocaleEnvironment.removeMocks();
     });
 
     test("Marking locale as ready", function () {
@@ -51,7 +51,7 @@
 
         var ptBrLocale = 'pt-br'.toLocale();
 
-        giant.LocaleEnvironment.addMocks({
+        $i18n.LocaleEnvironment.addMocks({
             markLocaleAsReady: function (locale) {
                 strictEqual(locale, ptBrLocale, "should mark as locale as ready on environment");
             }
@@ -59,7 +59,7 @@
 
         strictEqual(ptBrLocale.markAsReady(), ptBrLocale, "should be chainable");
 
-        giant.LocaleEnvironment.removeMocks();
+        $i18n.LocaleEnvironment.removeMocks();
     });
 
     test("Testing for locale readiness", function () {
@@ -68,7 +68,7 @@
         var ptBrLocale = 'pt-br'.toLocale(),
             result = {};
 
-        giant.LocaleEnvironment.addMocks({
+        $i18n.LocaleEnvironment.addMocks({
             isLocaleMarkedAsReady: function (locale) {
                 strictEqual(locale, ptBrLocale, "should test locale readiness on environment");
                 return result;
@@ -78,7 +78,7 @@
         strictEqual(ptBrLocale.isMarkedAsReady(), result,
             "should return value returned by environment");
 
-        giant.LocaleEnvironment.removeMocks();
+        $i18n.LocaleEnvironment.removeMocks();
     });
 
     test("Translation getter", function () {
@@ -120,12 +120,12 @@
         }
 
         $event.eventSpace
-            .subscribeTo(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
+            .subscribeTo($i18n.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
 
         ['localeEnvironment', '', 'readyLocales', 'locale/pt-br'].toItem()
             .setValue(true);
 
         $event.eventSpace
-            .unsubscribeFrom(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
+            .unsubscribeFrom($i18n.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
     });
 }());

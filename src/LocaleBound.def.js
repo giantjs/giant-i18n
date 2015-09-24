@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'LocaleBound', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'LocaleBound', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -10,8 +10,8 @@ $oop.postpone(giant, 'LocaleBound', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.LocaleBound = self
-        .addMethods(/** @lends giant.LocaleBound# */{
+    $i18n.LocaleBound = self
+        .addMethods(/** @lends $i18n.LocaleBound# */{
             /** @ignore */
             init: function () {
                 /** @type {$data.Tree} */
@@ -21,12 +21,12 @@ $oop.postpone(giant, 'LocaleBound', function () {
             /**
              * Binds the specified handler to current locale readiness event.
              * @param {string} methodName
-             * @returns {giant.LocaleBound}
+             * @returns {$i18n.LocaleBound}
              */
             bindToCurrentLocaleReady: function (methodName) {
                 $assertion.isFunction(this[methodName], "Attempting to bind non-method");
 
-                var eventName = giant.EVENT_CURRENT_LOCALE_READY,
+                var eventName = $i18n.EVENT_CURRENT_LOCALE_READY,
                     localeBindings = this.localeBindings,
                     bindingPath = [eventName, methodName].toPath(),
                     bindingInfo = localeBindings.getNode(bindingPath),
@@ -34,7 +34,7 @@ $oop.postpone(giant, 'LocaleBound', function () {
 
                 if (!bindingInfo) {
                     handler = this[methodName].bind(this);
-                    giant.LocaleEnvironment.create()
+                    $i18n.LocaleEnvironment.create()
                         .subscribeTo(eventName, handler);
                     localeBindings.setNode(bindingPath, {
                         eventName : eventName,
@@ -49,12 +49,12 @@ $oop.postpone(giant, 'LocaleBound', function () {
             /**
              * Unbinds specified handler from current locale readiness event.
              * @param {string} methodName
-             * @returns {giant.LocaleBound}
+             * @returns {$i18n.LocaleBound}
              */
             unbindFromCurrentLocaleReady: function (methodName) {
                 $assertion.isFunction(this[methodName], "Attempting to unbind non-method");
 
-                var eventName = giant.EVENT_CURRENT_LOCALE_READY,
+                var eventName = $i18n.EVENT_CURRENT_LOCALE_READY,
                     localeBindings = this.localeBindings,
                     bindingPath = [eventName, methodName].toPath(),
                     bindingInfo = localeBindings.getNode(bindingPath),
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'LocaleBound', function () {
 
                 if (bindingInfo) {
                     handler = bindingInfo.handler;
-                    giant.LocaleEnvironment.create()
+                    $i18n.LocaleEnvironment.create()
                         .unsubscribeFrom(eventName, handler);
                     localeBindings.unsetPath(bindingPath);
                 }
@@ -72,7 +72,7 @@ $oop.postpone(giant, 'LocaleBound', function () {
 
             /**
              * Unbinds all locale related handlers.
-             * @returns {giant.LocaleBound}
+             * @returns {$i18n.LocaleBound}
              */
             unbindAll: function () {
                 var that = this;

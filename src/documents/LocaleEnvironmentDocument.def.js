@@ -1,23 +1,23 @@
-/*global giant */
-$oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'LocaleEnvironmentDocument', function () {
     "use strict";
 
     var base = $entity.Document,
         self = base.extend();
 
     /**
-     * @name giant.LocaleEnvironmentDocument.create
+     * @name $i18n.LocaleEnvironmentDocument.create
      * @function
      * @param {$entity.DocumentKey} localeEnvironmentKey
-     * @returns {giant.LocaleEnvironmentDocument}
+     * @returns {$i18n.LocaleEnvironmentDocument}
      */
 
     /**
      * @class
      * @extends $entity.Document
      */
-    giant.LocaleEnvironmentDocument = self
-        .addMethods(/** @lends giant.LocaleEnvironmentDocument# */{
+    $i18n.LocaleEnvironmentDocument = self
+        .addMethods(/** @lends $i18n.LocaleEnvironmentDocument# */{
             /**
              * Retrieves the current document key.
              * @returns {$entity.DocumentKey}
@@ -29,7 +29,7 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
 
             /**
              * @param {$entity.DocumentKey} localeKey
-             * @returns {giant.LocaleEnvironmentDocument}
+             * @returns {$i18n.LocaleEnvironmentDocument}
              */
             setCurrentLocaleKey: function (localeKey) {
                 $assertion.isDocumentKey(localeKey, "Invalid locale key");
@@ -39,7 +39,7 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
 
             /**
              * @param {$entity.DocumentKey} localeKey
-             * @returns {giant.LocaleEnvironmentDocument}
+             * @returns {$i18n.LocaleEnvironmentDocument}
              */
             addReadyLocale: function (localeKey) {
                 $assertion.isDocumentKey(localeKey, "Invalid locale key");
@@ -62,7 +62,7 @@ $oop.amendPostponed($entity, 'Document', function () {
     "use strict";
 
     $entity.Document
-        .addSurrogate(giant, 'LocaleEnvironmentDocument', function (documentKey) {
+        .addSurrogate($i18n, 'LocaleEnvironmentDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'localeEnvironment';
         });
 });

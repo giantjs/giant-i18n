@@ -1,23 +1,23 @@
-/*global giant */
-$oop.postpone(giant, 'LocaleDocument', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'LocaleDocument', function () {
     "use strict";
 
     var base = $entity.Document,
         self = base.extend();
 
     /**
-     * @name giant.LocaleDocument.create
+     * @name $i18n.LocaleDocument.create
      * @function
      * @param {$entity.DocumentKey} localeKey
-     * @returns {giant.LocaleDocument}
+     * @returns {$i18n.LocaleDocument}
      */
 
     /**
      * @class
      * @extends $entity.Document
      */
-    giant.LocaleDocument = self
-        .addConstants(/** @lends giant.LocaleDocument */{
+    $i18n.LocaleDocument = self
+        .addConstants(/** @lends $i18n.LocaleDocument */{
             /**
              * @type {RegExp}
              * @constant
@@ -25,7 +25,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
              */
             RE_PLURAL_FORMULA_VALIDATOR: /^\s*nplurals\s*=\s*\d+;\s*plural\s*=\s*[()n\s\d!><=?:&|%]+\s*;\s*$/
         })
-        .addMethods(/** @lends giant.LocaleDocument# */{
+        .addMethods(/** @lends $i18n.LocaleDocument# */{
             /**
              * Fetches country code, eg. "us" or "uk"
              * @returns {string}
@@ -37,7 +37,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
             /**
              * Sets country code, eg. "us" or "uk"
              * @param {string} countryCode
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setCountryCode: function (countryCode) {
                 this.getField('countryCode').setValue(countryCode);
@@ -55,7 +55,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
             /**
              * Sets language code, eg. "en" or "pt"
              * @param {string} languageCode
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setLanguageCode: function (languageCode) {
                 this.getField('languageCode').setValue(languageCode);
@@ -83,7 +83,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
             /**
              * Sets the locale's name.
              * @param {string} name
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setName: function (name) {
                 this.getField('name').setValue(name);
@@ -101,7 +101,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
             /**
              * Sets plural formula.
              * @param {string} pluralFormula
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setPluralFormula: function (pluralFormula) {
                 $assertion.isPluralFormula(pluralFormula, "Invalid plural formula");
@@ -127,7 +127,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
              * Sets single translation.
              * @param {string} originalString
              * @param {string[]} pluralForms
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setTranslation: function (originalString, pluralForms) {
                 this.getField('translations').getItem(originalString).setValue(pluralForms);
@@ -137,7 +137,7 @@ $oop.postpone(giant, 'LocaleDocument', function () {
             /**
              * Sets all translations for a locale in one go.
              * @param {object} translationsNode Translations indexed by original string.
-             * @returns {giant.LocaleDocument}
+             * @returns {$i18n.LocaleDocument}
              */
             setTranslations: function (translationsNode) {
                 this.getField('translations').setValue(translationsNode);
@@ -150,7 +150,7 @@ $oop.amendPostponed($entity, 'Document', function () {
     "use strict";
 
     $entity.Document
-        .addSurrogate(giant, 'LocaleDocument', function (documentKey) {
+        .addSurrogate($i18n, 'LocaleDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'locale';
         });
 });
@@ -158,16 +158,16 @@ $oop.amendPostponed($entity, 'Document', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $i18n */{
         /** @param {string} expr */
         isPluralFormula: function (expr) {
-            return giant.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+            return $i18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
         },
 
         /** @param {string} expr */
         isPluralFormulaOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
+                   $i18n.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);
         }
     });
 }());

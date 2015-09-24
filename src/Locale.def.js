@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'Locale', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'Locale', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -7,10 +7,10 @@ $oop.postpone(giant, 'Locale', function () {
             .addTrait($event.Evented);
 
     /**
-     * @name giant.Locale.create
+     * @name $i18n.Locale.create
      * @function
      * @param {$entity.DocumentKey} localeKey
-     * @returns {giant.Locale}
+     * @returns {$i18n.Locale}
      */
 
     /**
@@ -21,12 +21,12 @@ $oop.postpone(giant, 'Locale', function () {
      * @extends $event.Evented
      * @extends $utils.Stringifiable
      */
-    giant.Locale = self
+    $i18n.Locale = self
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
         })
         .setEventSpace($event.eventSpace)
-        .addPrivateMethods(/** @lends giant.Locale# */{
+        .addPrivateMethods(/** @lends $i18n.Locale# */{
             /**
              * TODO: Replace eval with parsing. (long term)
              * @param multiplicity
@@ -57,7 +57,7 @@ $oop.postpone(giant, 'Locale', function () {
                 return this.getPluralIndex && this.getPluralIndex(multiplicity);
             }
         })
-        .addMethods(/** @lends giant.Locale# */{
+        .addMethods(/** @lends $i18n.Locale# */{
             /**
              * @param {$entity.DocumentKey} localeKey
              * @ignore
@@ -84,22 +84,22 @@ $oop.postpone(giant, 'Locale', function () {
 
             /**
              * Sets this locale as current.
-             * @returns {giant.Locale}
+             * @returns {$i18n.Locale}
              */
             setAsCurrentLocale: function () {
-                giant.LocaleEnvironment.create().setCurrentLocale(this);
+                $i18n.LocaleEnvironment.create().setCurrentLocale(this);
                 return this;
             },
 
             /**
              * Marks locale as ready for use.
-             * This is how the application signals to giant that loading and merging the locale
+             * This is how the application signals to $i18n that loading and merging the locale
              * has finished. V18n is agnostic about the process by which locales are loaded,
-             * so the application needs to tell giant explicitly that it has.
-             * @returns {giant.Locale}
+             * so the application needs to tell $i18n explicitly that it has.
+             * @returns {$i18n.Locale}
              */
             markAsReady: function () {
-                giant.LocaleEnvironment.create().markLocaleAsReady(this);
+                $i18n.LocaleEnvironment.create().markLocaleAsReady(this);
                 return this;
             },
 
@@ -108,7 +108,7 @@ $oop.postpone(giant, 'Locale', function () {
              * @returns {boolean}
              */
             isMarkedAsReady: function () {
-                return giant.LocaleEnvironment.create().isLocaleMarkedAsReady(this);
+                return $i18n.LocaleEnvironment.create().isLocaleMarkedAsReady(this);
             },
 
             /**
@@ -140,7 +140,7 @@ $oop.postpone(giant, 'Locale', function () {
              * @ignore
              */
             onLocaleMarkedAsReady: function () {
-                this.triggerSync(giant.EVENT_LOCALE_READY);
+                this.triggerSync($i18n.EVENT_LOCALE_READY);
             }
         });
 });
@@ -158,7 +158,7 @@ $oop.amendPostponed($entity, 'entityEventSpace', function () {
                 localeKey = localeRef && localeRef.toDocumentKey();
 
             if (localeKey) {
-                giant.Locale.create(localeKey)
+                $i18n.Locale.create(localeKey)
                     .onLocaleMarkedAsReady(event);
             }
         }));
@@ -169,9 +169,9 @@ $oop.amendPostponed($entity, 'DocumentKey', function () {
 
     $entity.DocumentKey
         .addMethods(/** @lends $entity.DocumentKey */{
-            /** @returns {giant.Locale} */
+            /** @returns {$i18n.Locale} */
             toLocale: function () {
-                return giant.Locale.create(this);
+                return $i18n.Locale.create(this);
             }
         });
 });
@@ -179,7 +179,7 @@ $oop.amendPostponed($entity, 'DocumentKey', function () {
 (function () {
     "use strict";
 
-    $oop.addGlobalConstants.call(giant, /** @lends giant */{
+    $oop.addGlobalConstants.call($i18n, /** @lends $i18n */{
         /**
          * Signals that a locale is ready for use.
          * @constant
@@ -187,26 +187,26 @@ $oop.amendPostponed($entity, 'DocumentKey', function () {
         EVENT_LOCALE_READY: 'locale.ready'
     });
 
-    $assertion.addTypes(/** @lends giant */{
-        /** @param {giant.Locale} expr */
+    $assertion.addTypes(/** @lends $i18n */{
+        /** @param {$i18n.Locale} expr */
         isLocale: function (expr) {
-            return giant.Locale.isBaseOf(expr);
+            return $i18n.Locale.isBaseOf(expr);
         },
 
-        /** @param {giant.Locale} [expr] */
+        /** @param {$i18n.Locale} [expr] */
         isLocaleOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Locale.isBaseOf(expr);
+                $i18n.Locale.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
-         * @returns {giant.Locale}
+         * @returns {$i18n.Locale}
          */
         toLocale: function () {
             var localeKey = ['locale', this.valueOf()].toDocumentKey();
-            return giant.Locale.create(localeKey);
+            return $i18n.Locale.create(localeKey);
         }
     });
 }());

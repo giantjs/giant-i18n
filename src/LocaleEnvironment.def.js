@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'LocaleEnvironment', function () {
+/*global $i18n */
+$oop.postpone($i18n, 'LocaleEnvironment', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -8,9 +8,9 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 
     /**
      * Creates or retrieves a LocaleEnvironment instance.
-     * @name giant.LocaleEnvironment.create
+     * @name $i18n.LocaleEnvironment.create
      * @function
-     * @returns {giant.LocaleEnvironment}
+     * @returns {$i18n.LocaleEnvironment}
      */
 
     /**
@@ -19,12 +19,12 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
      * @extends $oop.Base
      * @extends $event.Evented
      */
-    giant.LocaleEnvironment = self
+    $i18n.LocaleEnvironment = self
         .setInstanceMapper(function () {
             return 'singleton';
         })
         .setEventSpace($event.eventSpace)
-        .addMethods(/** @lends giant.LocaleEnvironment# */{
+        .addMethods(/** @lends $i18n.LocaleEnvironment# */{
             /** @ignore */
             init: function () {
                 /**
@@ -39,7 +39,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 
             /**
              * Fetches current locale as a Locale instance.
-             * @returns {giant.Locale}
+             * @returns {$i18n.Locale}
              */
             getCurrentLocale: function () {
                 var localeKey = this.entityKey.toDocument().getCurrentLocaleKey();
@@ -50,10 +50,10 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
              * Sets current locale.
              * There is a shorthand for this on the Locale class.
              * @example
-             * giant.LocaleEnvironment.create().setCurrentLocale('pt-br'.toLocale())
-             * @param {giant.Locale} locale
-             * @returns {giant.LocaleEnvironment}
-             * @see giant.Locale#setAsCurrentLocale
+             * $i18n.LocaleEnvironment.create().setCurrentLocale('pt-br'.toLocale())
+             * @param {$i18n.Locale} locale
+             * @returns {$i18n.LocaleEnvironment}
+             * @see $i18n.Locale#setAsCurrentLocale
              */
             setCurrentLocale: function (locale) {
                 $assertion.isLocale(locale, "Invalid locale");
@@ -64,8 +64,8 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 
             /**
              * Marks specified locale as ready for use.
-             * @param {giant.Locale} locale
-             * @returns {giant.LocaleEnvironment}
+             * @param {$i18n.Locale} locale
+             * @returns {$i18n.LocaleEnvironment}
              */
             markLocaleAsReady: function (locale) {
                 $assertion.isLocale(locale, "Invalid locale");
@@ -76,7 +76,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 
             /**
              * Tests whether the specified locale is marked as ready.
-             * @param {giant.Locale} locale
+             * @param {$i18n.Locale} locale
              * @returns {boolean}
              */
             isLocaleMarkedAsReady: function (locale) {
@@ -95,7 +95,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
                 var localeRefBefore = event.beforeNode,
                     localeRefAfter = event.afterNode;
 
-                this.spawnEvent(giant.EVENT_LOCALE_CHANGE)
+                this.spawnEvent($i18n.EVENT_LOCALE_CHANGE)
                     .setLocaleBefore(localeRefBefore && localeRefBefore.toDocumentKey().toLocale())
                     .setLocaleAfter(localeRefAfter && localeRefAfter.toDocumentKey().toLocale())
                     .triggerSync();
@@ -112,12 +112,12 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.entityKey.equals(currentLocaleKey)) {
                     // locale is teh current locale
                     // signaling that current locale is ready for use
-                    this.triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync($i18n.EVENT_CURRENT_LOCALE_READY);
                 }
             },
 
             /**
-             * @param {giant.LocaleChangeEvent} event
+             * @param {$i18n.LocaleChangeEvent} event
              * @ignore
              */
             onLocaleChange: function (event) {
@@ -126,7 +126,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
                 if (locale.isMarkedAsReady()) {
                     // locale is marked ready for use
                     // signaling that current locale is ready for use
-                    this.triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+                    this.triggerSync($i18n.EVENT_CURRENT_LOCALE_READY);
                 } else {
                     // locale is not marked as ready
                     // touching node to potentially signal that translations are not loaded yet
@@ -139,7 +139,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 (function () {
     "use strict";
 
-    $oop.addGlobalConstants.call(giant, /** @lends giant */{
+    $oop.addGlobalConstants.call($i18n, /** @lends $i18n */{
         /**
          * Signals that the current locale has changed.
          * Does not mean though that the new locale is loaded and is ready for use.
@@ -162,21 +162,21 @@ $oop.amendPostponed($entity, 'FieldKey', function () {
 
     'localeEnvironment//currentLocale'.toFieldKey()
         .subscribeTo($entity.EVENT_ENTITY_CHANGE, function (event) {
-            giant.LocaleEnvironment.create()
+            $i18n.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);
         });
 });
 
-$oop.amendPostponed(giant, 'LocaleEnvironment', function () {
+$oop.amendPostponed($i18n, 'LocaleEnvironment', function () {
     "use strict";
 
-    giant.LocaleEnvironment.create()
-        .subscribeTo(giant.EVENT_LOCALE_READY, function (event) {
-            giant.LocaleEnvironment.create()
+    $i18n.LocaleEnvironment.create()
+        .subscribeTo($i18n.EVENT_LOCALE_READY, function (event) {
+            $i18n.LocaleEnvironment.create()
                 .onLocaleReady(event);
         })
-        .subscribeTo(giant.EVENT_LOCALE_CHANGE, function (event) {
-            giant.LocaleEnvironment.create()
+        .subscribeTo($i18n.EVENT_LOCALE_CHANGE, function (event) {
+            $i18n.LocaleEnvironment.create()
                 .onLocaleChange(event);
         });
 });

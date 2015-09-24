@@ -1,14 +1,14 @@
-/*global giant */
+/*global $i18n */
 (function () {
     "use strict";
 
     module("LocaleBound");
 
     var LocaleBoundClass = $oop.Base.extend()
-        .addTrait(giant.LocaleBound)
+        .addTrait($i18n.LocaleBound)
         .addMethods({
             init: function () {
-                giant.LocaleBound.init.call(this);
+                $i18n.LocaleBound.init.call(this);
             },
 
             onCurrentLocaleReady: function () {
@@ -38,7 +38,7 @@
 
         localeBound.addMocks({
             onCurrentLocaleReady: function (event) {
-                strictEqual(event.sender, giant.LocaleEnvironment.create(),
+                strictEqual(event.sender, $i18n.LocaleEnvironment.create(),
                     "should set sender on event");
                 equal(event.eventName, 'locale.ready.current', "should set eventName on event");
             }
@@ -48,7 +48,7 @@
             "should be chainable");
 
         // should trigger
-        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+        $i18n.LocaleEnvironment.create().triggerSync($i18n.EVENT_CURRENT_LOCALE_READY);
 
         localeBound.unbindAll();
     });
@@ -59,7 +59,7 @@
         var localeBound = LocaleBoundClass.create()
             .bindToCurrentLocaleReady('onCurrentLocaleReady');
 
-        giant.LocaleEnvironment.addMocks({
+        $i18n.LocaleEnvironment.addMocks({
             subscribeTo: function () {
                 ok(false, "should not subscribe again");
             }
@@ -67,7 +67,7 @@
 
         localeBound.bindToCurrentLocaleReady('onCurrentLocaleReady');
 
-        giant.LocaleEnvironment.removeMocks();
+        $i18n.LocaleEnvironment.removeMocks();
     });
 
     test("Unbinding from 'current locale change'", function () {
@@ -92,7 +92,7 @@
             "should be chainable");
 
         // should NOT trigger
-        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+        $i18n.LocaleEnvironment.create().triggerSync($i18n.EVENT_CURRENT_LOCALE_READY);
     });
 
     test("Re-unbinding from 'current locale change'", function () {
@@ -102,7 +102,7 @@
             .bindToCurrentLocaleReady('onCurrentLocaleReady')
             .unbindFromCurrentLocaleReady('onCurrentLocaleReady');
 
-        giant.LocaleEnvironment.addMocks({
+        $i18n.LocaleEnvironment.addMocks({
             unsubscribeFrom: function () {
                 ok(false, "should not subscribe again");
             }
@@ -110,7 +110,7 @@
 
         localeBound.unbindFromCurrentLocaleReady('onCurrentLocaleReady');
 
-        giant.LocaleEnvironment.removeMocks();
+        $i18n.LocaleEnvironment.removeMocks();
     });
 
     test("Unbinding from all locale bindings", function () {
@@ -138,7 +138,7 @@
         strictEqual(localeBound.unbindAll(), localeBound, "should be chainable");
 
         // should NOT trigger
-        giant.LocaleEnvironment.create().triggerSync(giant.EVENT_CURRENT_LOCALE_READY);
+        $i18n.LocaleEnvironment.create().triggerSync($i18n.EVENT_CURRENT_LOCALE_READY);
 
         LocaleBoundClass.removeMocks();
     });
