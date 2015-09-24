@@ -4,7 +4,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
 
     var base = $oop.Base,
         self = base.extend()
-            .addTrait(giant.Evented);
+            .addTrait($event.Evented);
 
     /**
      * Creates or retrieves a LocaleEnvironment instance.
@@ -17,13 +17,13 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
      * Manages current locale settings.
      * @class
      * @extends $oop.Base
-     * @extends giant.Evented
+     * @extends $event.Evented
      */
     giant.LocaleEnvironment = self
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .setEventSpace(giant.eventSpace)
+        .setEventSpace($event.eventSpace)
         .addMethods(/** @lends giant.LocaleEnvironment# */{
             /** @ignore */
             init: function () {
@@ -102,7 +102,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
             },
 
             /**
-             * @param {giant.Event} event
+             * @param {$event.Event} event
              * @ignore
              */
             onLocaleReady: function (event) {

@@ -119,13 +119,13 @@
                 "should trigger ready event");
         }
 
-        giant.eventSpace
+        $event.eventSpace
             .subscribeTo(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
 
         ['localeEnvironment', '', 'readyLocales', 'locale/pt-br'].toItem()
             .setValue(true);
 
-        giant.eventSpace
+        $event.eventSpace
             .unsubscribeFrom(giant.EVENT_LOCALE_READY, 'locale'.toPath(), onLocaleReady);
     });
 }());

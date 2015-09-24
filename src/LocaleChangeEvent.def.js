@@ -2,14 +2,14 @@
 $oop.postpone(giant, 'LocaleChangeEvent', function () {
     "use strict";
 
-    var base = giant.Event,
+    var base = $event.Event,
         self = base.extend();
 
     /**
      * @name giant.LocaleChangeEvent.create
      * @function
      * @param {string} eventName
-     * @param {giant.EventSpace} eventSpace
+     * @param {$event.EventSpace} eventSpace
      * @returns {giant.LocaleChangeEvent}
      */
 
@@ -21,7 +21,7 @@ $oop.postpone(giant, 'LocaleChangeEvent', function () {
         .addMethods(/** @lends giant.LocaleChangeEvent# */{
             /**
              * @param {string} eventName
-             * @param {giant.EventSpace} eventSpace
+             * @param {$event.EventSpace} eventSpace
              * @ignore
              */
             init: function (eventName, eventSpace) {
@@ -58,10 +58,10 @@ $oop.postpone(giant, 'LocaleChangeEvent', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Event', function () {
+$oop.amendPostponed($event, 'Event', function () {
     "use strict";
 
-    giant.Event
+    $event.Event
         .addSurrogate(giant, 'LocaleChangeEvent', function (eventName) {
             var prefix = 'locale.change';
             return eventName.substr(0, prefix.length) === prefix;

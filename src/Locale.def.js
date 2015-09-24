@@ -4,7 +4,7 @@ $oop.postpone(giant, 'Locale', function () {
 
     var base = $oop.Base,
         self = base.extend()
-            .addTrait(giant.Evented);
+            .addTrait($event.Evented);
 
     /**
      * @name giant.Locale.create
@@ -18,14 +18,14 @@ $oop.postpone(giant, 'Locale', function () {
      * as current locale, as well as translating strings.
      * @class
      * @extends $oop.Base
-     * @extends giant.Evented
+     * @extends $event.Evented
      * @extends $utils.Stringifiable
      */
     giant.Locale = self
         .setInstanceMapper(function (localeKey) {
             return String(localeKey);
         })
-        .setEventSpace(giant.eventSpace)
+        .setEventSpace($event.eventSpace)
         .addPrivateMethods(/** @lends giant.Locale# */{
             /**
              * TODO: Replace eval with parsing. (long term)
