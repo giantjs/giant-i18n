@@ -4,7 +4,7 @@
 
     module("LocaleBound");
 
-    var LocaleBoundClass = giant.Base.extend()
+    var LocaleBoundClass = $oop.Base.extend()
         .addTrait(giant.LocaleBound)
         .addMethods({
             init: function () {

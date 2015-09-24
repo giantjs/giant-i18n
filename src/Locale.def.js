@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Locale', function () {
+$oop.postpone(giant, 'Locale', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend()
             .addTrait(giant.Evented);
 
@@ -17,7 +17,7 @@ giant.postpone(giant, 'Locale', function () {
      * Represents a locale, such as 'en-us', or 'de-de'. Provides an API for setting a locale
      * as current locale, as well as translating strings.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      * @extends giant.Evented
      * @extends giant.Stringifiable
      */
@@ -145,7 +145,7 @@ giant.postpone(giant, 'Locale', function () {
         });
 });
 
-giant.amendPostponed(giant, 'entityEventSpace', function () {
+$oop.amendPostponed(giant, 'entityEventSpace', function () {
     "use strict";
 
     giant.entityEventSpace
@@ -164,7 +164,7 @@ giant.amendPostponed(giant, 'entityEventSpace', function () {
         }));
 });
 
-giant.amendPostponed(giant, 'DocumentKey', function () {
+$oop.amendPostponed(giant, 'DocumentKey', function () {
     "use strict";
 
     giant.DocumentKey
@@ -179,7 +179,7 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
 (function () {
     "use strict";
 
-    giant.addGlobalConstants(/** @lends giant */{
+    $oop.addGlobalConstants.call(giant, /** @lends giant */{
         /**
          * Signals that a locale is ready for use.
          * @constant
@@ -200,7 +200,7 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
         }
     });
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * @returns {giant.Locale}
          */

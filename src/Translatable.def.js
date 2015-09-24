@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Translatable', function () {
+$oop.postpone(giant, 'Translatable', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -15,7 +15,7 @@ giant.postpone(giant, 'Translatable', function () {
     /**
      * Represents a string, that might manifest in different languages depending on the current locale.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      * @extends giant.Stringifiable
      */
     giant.Translatable = self
@@ -77,7 +77,7 @@ giant.postpone(giant, 'Translatable', function () {
 (function () {
     "use strict";
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Converts string to a translatable.
          * @returns {giant.Translatable}

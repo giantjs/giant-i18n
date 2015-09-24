@@ -1,14 +1,14 @@
 /*global giant */
-giant.postpone(giant, 'LocaleBound', function () {
+$oop.postpone(giant, 'LocaleBound', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
      * Adds locale binding functionality to the host class.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.LocaleBound = self
         .addMethods(/** @lends giant.LocaleBound# */{

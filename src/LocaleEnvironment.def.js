@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'LocaleEnvironment', function () {
+$oop.postpone(giant, 'LocaleEnvironment', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend()
             .addTrait(giant.Evented);
 
@@ -16,7 +16,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
     /**
      * Manages current locale settings.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      * @extends giant.Evented
      */
     giant.LocaleEnvironment = self
@@ -139,7 +139,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
 (function () {
     "use strict";
 
-    giant.addGlobalConstants(/** @lends giant */{
+    $oop.addGlobalConstants.call(giant, /** @lends giant */{
         /**
          * Signals that the current locale has changed.
          * Does not mean though that the new locale is loaded and is ready for use.
@@ -157,7 +157,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
     });
 }());
 
-giant.amendPostponed(giant, 'FieldKey', function () {
+$oop.amendPostponed(giant, 'FieldKey', function () {
     "use strict";
 
     'localeEnvironment//currentLocale'.toFieldKey()
@@ -167,7 +167,7 @@ giant.amendPostponed(giant, 'FieldKey', function () {
         });
 });
 
-giant.amendPostponed(giant, 'LocaleEnvironment', function () {
+$oop.amendPostponed(giant, 'LocaleEnvironment', function () {
     "use strict";
 
     giant.LocaleEnvironment.create()

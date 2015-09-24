@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'LocaleChangeEvent', function () {
+$oop.postpone(giant, 'LocaleChangeEvent', function () {
     "use strict";
 
     var base = giant.Event,
@@ -15,7 +15,7 @@ giant.postpone(giant, 'LocaleChangeEvent', function () {
 
     /**
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.LocaleChangeEvent = self
         .addMethods(/** @lends giant.LocaleChangeEvent# */{
@@ -58,7 +58,7 @@ giant.postpone(giant, 'LocaleChangeEvent', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Event', function () {
+$oop.amendPostponed(giant, 'Event', function () {
     "use strict";
 
     giant.Event

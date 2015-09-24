@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
+$oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
     "use strict";
 
     var base = giant.Document,
@@ -58,7 +58,7 @@ giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Document', function () {
+$oop.amendPostponed(giant, 'Document', function () {
     "use strict";
 
     giant.Document
