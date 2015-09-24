@@ -63,7 +63,7 @@ giant.postpone(giant, 'Locale', function () {
              * @ignore
              */
             init: function (localeKey) {
-                giant.isDocumentKey(localeKey, "Invalid locale key");
+                $assertion.isDocumentKey(localeKey, "Invalid locale key");
 
                 /**
                  * Document key identifying locale.
@@ -187,7 +187,7 @@ giant.amendPostponed(giant, 'DocumentKey', function () {
         EVENT_LOCALE_READY: 'locale.ready'
     });
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {giant.Locale} expr */
         isLocale: function (expr) {
             return giant.Locale.isBaseOf(expr);

@@ -104,7 +104,7 @@ giant.postpone(giant, 'LocaleDocument', function () {
              * @returns {giant.LocaleDocument}
              */
             setPluralFormula: function (pluralFormula) {
-                giant.isPluralFormula(pluralFormula, "Invalid plural formula");
+                $assertion.isPluralFormula(pluralFormula, "Invalid plural formula");
                 this.getField('pluralFormula').setValue(pluralFormula);
                 return this;
             },
@@ -158,7 +158,7 @@ giant.amendPostponed(giant, 'Document', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {string} expr */
         isPluralFormula: function (expr) {
             return giant.LocaleDocument.RE_PLURAL_FORMULA_VALIDATOR.test(expr);

@@ -56,7 +56,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @see giant.Locale#setAsCurrentLocale
              */
             setCurrentLocale: function (locale) {
-                giant.isLocale(locale, "Invalid locale");
+                $assertion.isLocale(locale, "Invalid locale");
                 this.entityKey.toDocument()
                     .setCurrentLocaleKey(locale.entityKey);
                 return this;
@@ -68,7 +68,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @returns {giant.LocaleEnvironment}
              */
             markLocaleAsReady: function (locale) {
-                giant.isLocale(locale, "Invalid locale");
+                $assertion.isLocale(locale, "Invalid locale");
                 this.entityKey.toDocument()
                     .addReadyLocale(locale.entityKey);
                 return this;
@@ -80,7 +80,7 @@ giant.postpone(giant, 'LocaleEnvironment', function () {
              * @returns {boolean}
              */
             isLocaleMarkedAsReady: function (locale) {
-                giant.isLocale(locale, "Invalid locale");
+                $assertion.isLocale(locale, "Invalid locale");
                 return !!this.entityKey.toDocument()
                     .getReadyLocale(locale.entityKey);
             },

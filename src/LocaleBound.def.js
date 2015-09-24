@@ -24,7 +24,7 @@ giant.postpone(giant, 'LocaleBound', function () {
              * @returns {giant.LocaleBound}
              */
             bindToCurrentLocaleReady: function (methodName) {
-                giant.isFunction(this[methodName], "Attempting to bind non-method");
+                $assertion.isFunction(this[methodName], "Attempting to bind non-method");
 
                 var eventName = giant.EVENT_CURRENT_LOCALE_READY,
                     localeBindings = this.localeBindings,
@@ -52,7 +52,7 @@ giant.postpone(giant, 'LocaleBound', function () {
              * @returns {giant.LocaleBound}
              */
             unbindFromCurrentLocaleReady: function (methodName) {
-                giant.isFunction(this[methodName], "Attempting to unbind non-method");
+                $assertion.isFunction(this[methodName], "Attempting to unbind non-method");
 
                 var eventName = giant.EVENT_CURRENT_LOCALE_READY,
                     localeBindings = this.localeBindings,

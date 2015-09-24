@@ -32,7 +32,7 @@ giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
              * @returns {giant.LocaleEnvironmentDocument}
              */
             setCurrentLocaleKey: function (localeKey) {
-                giant.isDocumentKey(localeKey, "Invalid locale key");
+                $assertion.isDocumentKey(localeKey, "Invalid locale key");
                 this.getField('currentLocale').setValue(localeKey.toString());
                 return this;
             },
@@ -42,7 +42,7 @@ giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
              * @returns {giant.LocaleEnvironmentDocument}
              */
             addReadyLocale: function (localeKey) {
-                giant.isDocumentKey(localeKey, "Invalid locale key");
+                $assertion.isDocumentKey(localeKey, "Invalid locale key");
                 this.getField('readyLocales').getItem(localeKey.toString()).setValue(true);
                 return this;
             },
@@ -52,7 +52,7 @@ giant.postpone(giant, 'LocaleEnvironmentDocument', function () {
              * @returns {boolean}
              */
             getReadyLocale: function (localeKey) {
-                giant.isDocumentKey(localeKey, "Invalid locale key");
+                $assertion.isDocumentKey(localeKey, "Invalid locale key");
                 return this.getField('readyLocales').getItem(localeKey.toString()).getValue();
             }
         });
