@@ -2,19 +2,19 @@
 $oop.postpone(giant, 'LocaleDocument', function () {
     "use strict";
 
-    var base = giant.Document,
+    var base = $entity.Document,
         self = base.extend();
 
     /**
      * @name giant.LocaleDocument.create
      * @function
-     * @param {giant.DocumentKey} localeKey
+     * @param {$entity.DocumentKey} localeKey
      * @returns {giant.LocaleDocument}
      */
 
     /**
      * @class
-     * @extends giant.Document
+     * @extends $entity.Document
      */
     giant.LocaleDocument = self
         .addConstants(/** @lends giant.LocaleDocument */{
@@ -146,10 +146,10 @@ $oop.postpone(giant, 'LocaleDocument', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Document', function () {
+$oop.amendPostponed($entity, 'Document', function () {
     "use strict";
 
-    giant.Document
+    $entity.Document
         .addSurrogate(giant, 'LocaleDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'locale';
         });

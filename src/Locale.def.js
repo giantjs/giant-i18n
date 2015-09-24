@@ -9,7 +9,7 @@ $oop.postpone(giant, 'Locale', function () {
     /**
      * @name giant.Locale.create
      * @function
-     * @param {giant.DocumentKey} localeKey
+     * @param {$entity.DocumentKey} localeKey
      * @returns {giant.Locale}
      */
 
@@ -59,7 +59,7 @@ $oop.postpone(giant, 'Locale', function () {
         })
         .addMethods(/** @lends giant.Locale# */{
             /**
-             * @param {giant.DocumentKey} localeKey
+             * @param {$entity.DocumentKey} localeKey
              * @ignore
              */
             init: function (localeKey) {
@@ -67,7 +67,7 @@ $oop.postpone(giant, 'Locale', function () {
 
                 /**
                  * Document key identifying locale.
-                 * @type {giant.DocumentKey}
+                 * @type {$entity.DocumentKey}
                  */
                 this.entityKey = localeKey;
 
@@ -145,12 +145,12 @@ $oop.postpone(giant, 'Locale', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'entityEventSpace', function () {
+$oop.amendPostponed($entity, 'entityEventSpace', function () {
     "use strict";
 
-    giant.entityEventSpace
+    $entity.entityEventSpace
         .subscribeTo(
-        giant.EVENT_ENTITY_CHANGE,
+        $entity.EVENT_ENTITY_CHANGE,
         'entity>document>localeEnvironment>>readyLocales'.toPath(),
         (function (event) {
             var itemKey = event.affectedKey,
@@ -164,11 +164,11 @@ $oop.amendPostponed(giant, 'entityEventSpace', function () {
         }));
 });
 
-$oop.amendPostponed(giant, 'DocumentKey', function () {
+$oop.amendPostponed($entity, 'DocumentKey', function () {
     "use strict";
 
-    giant.DocumentKey
-        .addMethods(/** @lends giant.DocumentKey */{
+    $entity.DocumentKey
+        .addMethods(/** @lends $entity.DocumentKey */{
             /** @returns {giant.Locale} */
             toLocale: function () {
                 return giant.Locale.create(this);

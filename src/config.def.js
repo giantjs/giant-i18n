@@ -1,8 +1,8 @@
 /*global giant */
-$oop.amendPostponed(giant, 'config', function () {
+$oop.amendPostponed($entity, 'config', function () {
     "use strict";
 
-    giant.config
+    $entity.config
         .appendNode('document>field'.toPath(), {
             'locale/name'         : {fieldType: 'string'},
             /** Reserved. Not used currently. */

@@ -18,9 +18,11 @@ var $data = $data || require('giant-data');
 /** @namespace */
 var $event = $event || require('giant-event');
 
+/** @namespace */
+var $entity = $entity || require('giant-entity');
+
 if (typeof require === 'function') {
     require('giant-templating');
-    require('giant-entity');
 }
 
 /**

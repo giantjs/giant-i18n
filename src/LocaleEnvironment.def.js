@@ -30,7 +30,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
                 /**
                  * Document key identifying environment.
                  * Permanently set to 'localeEnvironment/'.
-                 * @type {giant.DocumentKey}
+                 * @type {$entity.DocumentKey}
                  */
                 this.entityKey = 'localeEnvironment/'.toDocumentKey();
 
@@ -88,7 +88,7 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
             /**
              * Triggered when the 'currentLocale' field changes on the localeEnvironment document.
              * TODO: Add handler for when the entire localeEnvironment document changes.
-             * @param {giant.EntityChangeEvent} event
+             * @param {$entity.EntityChangeEvent} event
              * @ignore
              */
             onCurrentLocaleChange: function (event) {
@@ -157,11 +157,11 @@ $oop.postpone(giant, 'LocaleEnvironment', function () {
     });
 }());
 
-$oop.amendPostponed(giant, 'FieldKey', function () {
+$oop.amendPostponed($entity, 'FieldKey', function () {
     "use strict";
 
     'localeEnvironment//currentLocale'.toFieldKey()
-        .subscribeTo(giant.EVENT_ENTITY_CHANGE, function (event) {
+        .subscribeTo($entity.EVENT_ENTITY_CHANGE, function (event) {
             giant.LocaleEnvironment.create()
                 .onCurrentLocaleChange(event);
         });

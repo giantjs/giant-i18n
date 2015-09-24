@@ -22,7 +22,7 @@
             localeDocument.setPluralFormula("foo bar baz");
         }, "should raise exception on invalid arguments");
 
-        giant.Field.addMocks({
+        $entity.Field.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/pluralFormula'.toFieldKey()),
                     "should set the correct field");
@@ -34,7 +34,7 @@
         strictEqual(localeDocument.setPluralFormula('nplurals=2; plural=(n != 1);'), localeDocument,
             "should be chainable");
 
-        giant.Field.removeMocks();
+        $entity.Field.removeMocks();
     });
 
     test("Translation getter", function () {
@@ -62,7 +62,7 @@
 
         var localeDocument = 'locale/foo'.toDocument();
 
-        giant.Item.addMocks({
+        $entity.Item.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/translations/hello'.toItemKey()),
                     "should set the correct item");
@@ -73,7 +73,7 @@
         strictEqual(localeDocument.setTranslation('hello', ['world']), localeDocument,
             "should be chainable");
 
-        giant.Item.removeMocks();
+        $entity.Item.removeMocks();
     });
 
     test("Translations setter", function () {
@@ -81,7 +81,7 @@
 
         var localeDocument = 'locale/foo'.toDocument();
 
-        giant.Field.addMocks({
+        $entity.Field.addMocks({
             setValue: function (value) {
                 ok(this.entityKey.equals('locale/foo/translations'.toFieldKey()),
                     "should set the correct field");
@@ -97,6 +97,6 @@
             'apple': ['apple', 'apples']
         }), localeDocument, "should be chainable");
 
-        giant.Field.removeMocks();
+        $entity.Field.removeMocks();
     });
 }());

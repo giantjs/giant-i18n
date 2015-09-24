@@ -179,7 +179,7 @@
         'localeEnvironment/'.toDocument()
             .unsetNode();
 
-        giant.Field.addMocks({
+        $entity.Field.addMocks({
             touchNode: function () {
                 equal(this.entityKey.toString(), 'locale/pt-br/translations',
                     "should touch locale entity when locale is not marked ready");
@@ -188,7 +188,7 @@
 
         'pt-br'.toLocale().setAsCurrentLocale();
 
-        giant.Field.removeMocks();
+        $entity.Field.removeMocks();
 
         'localeEnvironment/'.toDocument()
             .unsetNode();

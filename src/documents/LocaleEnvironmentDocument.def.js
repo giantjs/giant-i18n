@@ -2,25 +2,25 @@
 $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
     "use strict";
 
-    var base = giant.Document,
+    var base = $entity.Document,
         self = base.extend();
 
     /**
      * @name giant.LocaleEnvironmentDocument.create
      * @function
-     * @param {giant.DocumentKey} localeEnvironmentKey
+     * @param {$entity.DocumentKey} localeEnvironmentKey
      * @returns {giant.LocaleEnvironmentDocument}
      */
 
     /**
      * @class
-     * @extends giant.Document
+     * @extends $entity.Document
      */
     giant.LocaleEnvironmentDocument = self
         .addMethods(/** @lends giant.LocaleEnvironmentDocument# */{
             /**
              * Retrieves the current document key.
-             * @returns {giant.DocumentKey}
+             * @returns {$entity.DocumentKey}
              */
             getCurrentLocaleKey: function () {
                 var localeRef = this.getField('currentLocale').getValue();
@@ -28,7 +28,7 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
             },
 
             /**
-             * @param {giant.DocumentKey} localeKey
+             * @param {$entity.DocumentKey} localeKey
              * @returns {giant.LocaleEnvironmentDocument}
              */
             setCurrentLocaleKey: function (localeKey) {
@@ -38,7 +38,7 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
             },
 
             /**
-             * @param {giant.DocumentKey} localeKey
+             * @param {$entity.DocumentKey} localeKey
              * @returns {giant.LocaleEnvironmentDocument}
              */
             addReadyLocale: function (localeKey) {
@@ -48,7 +48,7 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
             },
 
             /**
-             * @param {giant.DocumentKey} localeKey
+             * @param {$entity.DocumentKey} localeKey
              * @returns {boolean}
              */
             getReadyLocale: function (localeKey) {
@@ -58,10 +58,10 @@ $oop.postpone(giant, 'LocaleEnvironmentDocument', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Document', function () {
+$oop.amendPostponed($entity, 'Document', function () {
     "use strict";
 
-    giant.Document
+    $entity.Document
         .addSurrogate(giant, 'LocaleEnvironmentDocument', function (documentKey) {
             return documentKey && documentKey.documentType === 'localeEnvironment';
         });
