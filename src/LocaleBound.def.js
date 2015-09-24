@@ -14,8 +14,8 @@ $oop.postpone(giant, 'LocaleBound', function () {
         .addMethods(/** @lends giant.LocaleBound# */{
             /** @ignore */
             init: function () {
-                /** @type {giant.Tree} */
-                this.localeBindings = giant.Tree.create();
+                /** @type {$data.Tree} */
+                this.localeBindings = $data.Tree.create();
             },
 
             /**

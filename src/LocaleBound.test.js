@@ -18,7 +18,7 @@
     test("Instantiation", function () {
         var localeBound = LocaleBoundClass.create();
 
-        ok(localeBound.localeBindings.isA(giant.Tree),
+        ok(localeBound.localeBindings.isA($data.Tree),
             "should initialize localeBindings property");
         deepEqual(localeBound.localeBindings.items, {}, "should set localeBindings contents");
     });
