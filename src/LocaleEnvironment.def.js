@@ -1,4 +1,3 @@
-/*global $i18n */
 $oop.postpone($i18n, 'LocaleEnvironment', function () {
     "use strict";
 

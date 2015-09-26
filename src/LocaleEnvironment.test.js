@@ -1,4 +1,3 @@
-/*global $i18n */
 (function () {
     "use strict";
 

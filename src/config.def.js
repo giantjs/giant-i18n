@@ -1,4 +1,3 @@
-/*global $i18n */
 $oop.amendPostponed($entity, 'config', function () {
     "use strict";
 
