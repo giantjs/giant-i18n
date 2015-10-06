@@ -1,6 +1,6 @@
 {
   "name": "giant-i18n",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Internationalization module for Giant",
   "keywords": [
     "internationalization",
@@ -18,13 +18,13 @@
     "url": "git@github.com:giantjs/giant-i18n.git"
   },
   "peerDependencies": {
-    "giant-assertion": "0.1.0",
-    "giant-data": "0.1.0",
-    "giant-entity": "0.1.0",
-    "giant-event": "0.1.0",
-    "giant-oop": "0.1.0",
-    "giant-templating": "0.1.0",
-    "giant-utils": "0.1.0"
+    "giant-assertion": "0.2.0",
+    "giant-data": "0.2.0",
+    "giant-entity": "0.2.0",
+    "giant-event": "0.2.0",
+    "giant-oop": "0.2.0",
+    "giant-templating": "0.2.0",
+    "giant-utils": "0.2.0"
   },
   "dependencies": {
     "q": "^1.4.0"
