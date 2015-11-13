@@ -27,8 +27,7 @@
     "giant-event": "0.2.0",
     "giant-oop": "0.2.0",
     "giant-templating": "0.2.0",
-    "giant-utils": "0.2.0",
-    "q": "^1.4.0"
+    "giant-utils": "0.2.0"
   },
   "devDependencies": {
     "giant-asset": "0.2.0",
